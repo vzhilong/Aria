@@ -23,10 +23,10 @@ import butterknife.OnClick;
 import com.arialyy.simple.base.BaseActivity;
 import com.arialyy.simple.databinding.ActivityMainBinding;
 import com.arialyy.simple.download.DownloadActivity;
-import com.arialyy.simple.download.FtpDownloadActivity;
+//import com.arialyy.simple.download.FtpDownloadActivity;
 import com.arialyy.simple.download.group.DownloadGroupActivity;
-import com.arialyy.simple.download.group.FTPDirDownloadActivity;
-import com.arialyy.simple.upload.FtpUploadActivity;
+//import com.arialyy.simple.download.group.FTPDirDownloadActivity;
+//import com.arialyy.simple.upload.FtpUploadActivity;
 import com.arialyy.simple.upload.HttpUploadActivity;
 
 /**
@@ -60,13 +60,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         startActivity(new Intent(this, DownloadGroupActivity.class));
         break;
       case R.id.ftp_download:
-        startActivity(new Intent(this, FtpDownloadActivity.class));
+//        startActivity(new Intent(this, FtpDownloadActivity.class));
         break;
       case R.id.ftp_dir_download:
-        startActivity(new Intent(this, FTPDirDownloadActivity.class));
+//        startActivity(new Intent(this, FTPDirDownloadActivity.class));
         break;
       case R.id.ftp_upload:
-        startActivity(new Intent(this, FtpUploadActivity.class));
+//        startActivity(new Intent(this, FtpUploadActivity.class));
         break;
     }
   }

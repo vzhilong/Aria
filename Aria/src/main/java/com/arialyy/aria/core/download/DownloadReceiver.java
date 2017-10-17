@@ -101,19 +101,19 @@ public class DownloadReceiver extends AbsReceiver {
   /**
    * 加载ftp单任务下载地址
    */
-  public FtpDownloadTarget loadFtp(@NonNull String url) {
-    return loadFtp(url, false);
-  }
+//  public FtpDownloadTarget loadFtp(@NonNull String url) {
+//    return loadFtp(url, false);
+//  }
 
   /**
    * 加载ftp单任务下载地址
    *
    * @param refreshInfo 是否刷新下载信息
    */
-  public FtpDownloadTarget loadFtp(@NonNull String url, boolean refreshInfo) {
-    CheckUtil.checkDownloadUrl(url);
-    return new FtpDownloadTarget(url, targetName, refreshInfo);
-  }
+//  public FtpDownloadTarget loadFtp(@NonNull String url, boolean refreshInfo) {
+//    CheckUtil.checkDownloadUrl(url);
+//    return new FtpDownloadTarget(url, targetName, refreshInfo);
+//  }
 
   /**
    * 使用任务组实体执行任务组的实体执行任务组的下载操作
@@ -128,10 +128,10 @@ public class DownloadReceiver extends AbsReceiver {
   /**
    * 加载ftp文件夹下载地址
    */
-  public FtpDirDownloadTarget loadFtpDir(@NonNull String dirUrl) {
-    CheckUtil.checkDownloadUrl(dirUrl);
-    return new FtpDirDownloadTarget(dirUrl, targetName);
-  }
+//  public FtpDirDownloadTarget loadFtpDir(@NonNull String dirUrl) {
+//    CheckUtil.checkDownloadUrl(dirUrl);
+//    return new FtpDirDownloadTarget(dirUrl, targetName);
+//  }
 
   /**
    * 将当前类注册到Aria

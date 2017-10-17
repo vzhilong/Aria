@@ -71,13 +71,6 @@ class Uploader extends AbsFileer<UploadEntity, UploadTaskEntity> {
   }
 
   @Override protected AbsThreadTask selectThreadTask(SubThreadConfig<UploadTaskEntity> config) {
-    switch (mTaskEntity.requestType) {
-      case AbsTaskEntity.FTP:
-      case AbsTaskEntity.FTP_DIR:
-        return new FtpThreadTask(mConstance, mListener, config);
-      case AbsTaskEntity.HTTP:
         return new HttpThreadTask(mConstance, (IUploadListener) mListener, config);
-    }
-    return null;
   }
 }

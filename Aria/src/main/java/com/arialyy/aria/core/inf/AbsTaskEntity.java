@@ -34,11 +34,11 @@ public abstract class AbsTaskEntity<ENTITY extends AbsEntity> extends DbEntity {
   /**
    * FTP当文件下载
    */
-  public static final int FTP = 0x12;
+//  public static final int FTP = 0x12;
   /**
    * FTP文件夹下载，为避免登录过多，子任务由单线程进行处理
    */
-  public static final int FTP_DIR = 0x13;
+//  public static final int FTP_DIR = 0x13;
 
   /**
    * Task实体对应的key

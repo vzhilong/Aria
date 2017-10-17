@@ -116,7 +116,7 @@ public abstract class AbsFileer<ENTITY extends AbsNormalEntity, TASK_ENTITY exte
    * 设置新任务的最大线程数
    */
   protected int getNewTaskThreadNum() {
-    return mEntity.getFileSize() <= SUB_LEN || mTaskEntity.requestType == AbsTaskEntity.FTP_DIR ? 1
+    return mEntity.getFileSize() <= SUB_LEN ? 1
         : AriaManager.getInstance(mContext).getDownloadConfig().getThreadNum();
   }
 

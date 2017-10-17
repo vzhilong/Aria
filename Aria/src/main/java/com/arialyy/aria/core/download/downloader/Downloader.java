@@ -90,14 +90,9 @@ class Downloader extends AbsFileer<DownloadEntity, DownloadTaskEntity> {
   }
 
   @Override protected AbsThreadTask selectThreadTask(SubThreadConfig<DownloadTaskEntity> config) {
-    switch (mTaskEntity.requestType) {
-      case AbsTaskEntity.FTP:
-      case AbsTaskEntity.FTP_DIR:
-        return new FtpThreadTask(mConstance, (IDownloadListener) mListener, config);
-      case AbsTaskEntity.HTTP:
+
         return new HttpThreadTask(mConstance, (IDownloadListener) mListener, config);
-    }
-    return null;
+
   }
 
   private void failDownload(String errorMsg) {

@@ -102,16 +102,6 @@ public class SimpleDownloadUtil implements IUtil, Runnable {
    */
   private Runnable createInfoThread() {
     switch (mTaskEntity.requestType) {
-      case AbsTaskEntity.FTP:
-        return new FtpFileInfoThread(mTaskEntity, new OnFileInfoCallback() {
-          @Override public void onComplete(String url, int code) {
-            mDownloader.start();
-          }
-
-          @Override public void onFail(String url, String errorMsg) {
-            failDownload(errorMsg);
-          }
-        });
       case AbsTaskEntity.HTTP:
         return new HttpFileInfoThread(mTaskEntity, new OnFileInfoCallback() {
           @Override public void onComplete(String url, int code) {

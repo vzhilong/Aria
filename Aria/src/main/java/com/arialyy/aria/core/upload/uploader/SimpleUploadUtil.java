@@ -47,19 +47,20 @@ public class SimpleUploadUtil implements IUtil, Runnable {
 
   @Override public void run() {
     mListener.onPre();
-    new FtpFileInfoThread(mTaskEntity, new OnFileInfoCallback() {
-      @Override public void onComplete(String url, int code) {
-        if (code == FtpFileInfoThread.CODE_COMPLETE) {
-          mListener.onComplete();
-        } else {
-          mUploader.start();
-        }
-      }
-
-      @Override public void onFail(String url, String errorMsg) {
-        mListener.onFail(true);
-      }
-    }).start();
+    mUploader.start();
+//    new FtpFileInfoThread(mTaskEntity, new OnFileInfoCallback() {
+//      @Override public void onComplete(String url, int code) {
+//        if (code == FtpFileInfoThread.CODE_COMPLETE) {
+//          mListener.onComplete();
+//        } else {
+//          mUploader.start();
+//        }
+//      }
+//
+//      @Override public void onFail(String url, String errorMsg) {
+//        mListener.onFail(true);
+//      }
+//    }).start();
   }
 
   @Override public long getFileSize() {

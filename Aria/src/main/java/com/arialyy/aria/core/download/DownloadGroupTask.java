@@ -20,7 +20,7 @@ import android.os.Looper;
 import android.util.Log;
 import com.arialyy.aria.core.AriaManager;
 import com.arialyy.aria.core.download.downloader.DownloadGroupUtil;
-import com.arialyy.aria.core.download.downloader.FtpDirDownloadUtil;
+//import com.arialyy.aria.core.download.downloader.FtpDirDownloadUtil;
 import com.arialyy.aria.core.inf.AbsGroupTask;
 import com.arialyy.aria.core.inf.AbsTaskEntity;
 import com.arialyy.aria.core.scheduler.ISchedulers;
@@ -43,9 +43,7 @@ public class DownloadGroupTask extends AbsGroupTask<DownloadGroupTaskEntity> {
       case AbsTaskEntity.HTTP:
         mUtil = new DownloadGroupUtil(mListener, mTaskEntity);
         break;
-      case AbsTaskEntity.FTP_DIR:
-        mUtil = new FtpDirDownloadUtil(mListener, mTaskEntity);
-        break;
+
     }
   }
 
