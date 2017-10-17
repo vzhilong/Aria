@@ -38,7 +38,7 @@ class BaseDListener<ENTITY extends AbsEntity, TASK_ENTITY extends AbsTaskEntity<
     protected TASK_ENTITY mTaskEntity;
     protected TASK mTask;
     boolean isWait = false;
-    private int RUN_SAVE_INTERVAL = 5 * 1000;  //5s保存一次下载中的进度
+    private int RUN_SAVE_INTERVAL = 2 * 1000;  //5s保存一次下载中的进度
     private long mLastLen = 0;   //上一次发送长度
     private boolean isFirst = true;
     private boolean isConvertSpeed = false;
@@ -49,8 +49,6 @@ class BaseDListener<ENTITY extends AbsEntity, TASK_ENTITY extends AbsTaskEntity<
         this.mTask = new WeakReference<>(task).get();
         this.mEntity = mTask.getTaskEntity().getEntity();
         this.mTaskEntity = mTask.getTaskEntity();
-        final AriaManager manager = AriaManager.getInstance();
-        isConvertSpeed = manager.getDownloadConfig().isConvertSpeed();
         mLastLen = mEntity.getCurrentProgress();
         mLastSaveTime = System.currentTimeMillis();
     }
@@ -135,11 +133,7 @@ class BaseDListener<ENTITY extends AbsEntity, TASK_ENTITY extends AbsTaskEntity<
     }
 
     private void handleSpeed(long speed) {
-        if (isConvertSpeed) {
-            mEntity.setConvertSpeed(CommonUtil.formatFileSize(speed < 0 ? 0 : speed) + "/s");
-        } else {
-            mEntity.setSpeed(speed < 0 ? 0 : speed);
-        }
+        mEntity.setSpeed(speed < 0 ? 0 : speed);
         mEntity.setPercent((int) (mEntity.getCurrentProgress() * 100 / mEntity.getFileSize()));
     }
 

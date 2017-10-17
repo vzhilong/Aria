@@ -64,11 +64,6 @@ class Configuration {
         int connectTimeOut = 5000;
 
         /**
-         * 是否需要转换速度单位，转换完成后为：1b/s、1k/s、1m/s、1g/s、1t/s，如果不需要将返回byte长度
-         */
-        boolean isConvertSpeed = false;
-
-        /**
          * 执行队列类型
          *
          * @see QueueMod
@@ -106,16 +101,6 @@ class Configuration {
         public BaseConfig setReTryInterval(int reTryInterval) {
             this.reTryInterval = reTryInterval;
             saveKey("reTryInterval", reTryInterval + "");
-            return this;
-        }
-
-        public boolean isConvertSpeed() {
-            return isConvertSpeed;
-        }
-
-        public BaseConfig setConvertSpeed(boolean convertSpeed) {
-            isConvertSpeed = convertSpeed;
-            saveKey("isConvertSpeed", isConvertSpeed + "");
             return this;
         }
 

@@ -24,7 +24,6 @@ import com.arialyy.aria.core.inf.AbsTaskEntity;
 import com.arialyy.aria.core.inf.IEntity;
 import com.arialyy.aria.core.inf.IUploadListener;
 import com.arialyy.aria.core.scheduler.ISchedulers;
-import com.arialyy.aria.util.CommonUtil;
 
 import java.lang.ref.WeakReference;
 
@@ -49,8 +48,6 @@ class BaseUListener<ENTITY extends AbsEntity, TASK_ENTITY extends AbsTaskEntity<
         this.mTask = new WeakReference<>(task).get();
         this.mEntity = this.mTask.getTaskEntity().getEntity();
         this.mTaskEntity = this.mTask.getTaskEntity();
-        final AriaManager manager = AriaManager.getInstance();
-        isConvertSpeed = manager.getDownloadConfig().isConvertSpeed();
         mLastLen = mEntity.getCurrentProgress();
         mLastSaveTime = System.currentTimeMillis();
     }
@@ -121,11 +118,7 @@ class BaseUListener<ENTITY extends AbsEntity, TASK_ENTITY extends AbsTaskEntity<
     }
 
     private void handleSpeed(long speed) {
-        if (isConvertSpeed) {
-            mEntity.setConvertSpeed(CommonUtil.formatFileSize(speed < 0 ? 0 : speed) + "/s");
-        } else {
-            mEntity.setSpeed(speed < 0 ? 0 : speed);
-        }
+        mEntity.setSpeed(speed < 0 ? 0 : speed);
         mEntity.setPercent((int) (mEntity.getCurrentProgress() * 100 / mEntity.getFileSize()));
     }
 

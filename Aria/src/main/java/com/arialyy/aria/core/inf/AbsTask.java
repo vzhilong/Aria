@@ -55,31 +55,6 @@ public abstract class AbsTask<TASK_ENTITY extends AbsTaskEntity> implements ITas
         return mTaskEntity.getEntity().getCurrentProgress();
     }
 
-    /**
-     * 获取单位转换后的进度
-     *
-     * @return 如：已经下载3mb的大小，则返回{@code 3mb}
-     */
-    @Override
-    public String getConvertCurrentProgress() {
-        if (mTaskEntity.getEntity().getCurrentProgress() == 0) {
-            return "0b";
-        }
-        return CommonUtil.formatFileSize(mTaskEntity.getEntity().getCurrentProgress());
-    }
-
-    /**
-     * 转换单位后的文件长度
-     *
-     * @return 如果文件长度为0，则返回0m，否则返回转换后的长度1b、1kb、1mb、1gb、1tb
-     */
-    @Override
-    public String getConvertFileSize() {
-        if (mTaskEntity.getEntity().getFileSize() == 0) {
-            return "0mb";
-        }
-        return CommonUtil.formatFileSize(mTaskEntity.getEntity().getFileSize());
-    }
 
     /**
      * 获取文件大小
@@ -145,27 +120,6 @@ public abstract class AbsTask<TASK_ENTITY extends AbsTaskEntity> implements ITas
         return mTaskEntity.getEntity().getSpeed();
     }
 
-    /**
-     * @return 返回转换单位后的速度，需要你在配置文件中配置，转换完成后为：1b/s、1kb/s、1mb/s、1gb/s、1tb/s
-     * <pre>
-     *   {@code
-     *    <xml>
-     *      <download>
-     *        ...
-     *        <convertSpeed value="true"/>
-     *      </download>
-     *
-     *      或在代码中设置
-     *      Aria.get(this).getDownloadConfig().setConvertSpeed(true);
-     *    </xml>
-     *   }
-     * </pre>
-     * 才能生效
-     */
-    @Override
-    public String getConvertSpeed() {
-        return mTaskEntity.getEntity().getConvertSpeed();
-    }
 
     @Override
     public TASK_ENTITY getTaskEntity() {

@@ -79,12 +79,6 @@ class ConfigHelper extends DefaultHandler {
                     String caPath = attributes.getValue("path");
                     loadCA(caName, caPath);
                     break;
-                case "convertSpeed":
-                    loadConvertSpeed(value);
-                    break;
-                case "maxSpeed":
-                    loadMaxSpeed(value);
-                    break;
                 case "queueMod":
                     loadQueueMod(value);
                     break;
@@ -103,26 +97,6 @@ class ConfigHelper extends DefaultHandler {
         }
         if (isUploadConfig) {
             mUploadConfig.queueMod = mod;
-        }
-    }
-
-    private void loadMaxSpeed(String value) {
-        double maxSpeed = 0.0;
-        if (!TextUtils.isEmpty(value)) {
-            maxSpeed = Double.parseDouble(value);
-        }
-        if (isDownloadConfig) {
-            mDownloadConfig.msxSpeed = maxSpeed;
-        }
-    }
-
-    private void loadConvertSpeed(String value) {
-        boolean open = Boolean.parseBoolean(value);
-        if (isDownloadConfig) {
-            mDownloadConfig.isConvertSpeed = open;
-        }
-        if (isUploadConfig) {
-            mUploadConfig.isConvertSpeed = open;
         }
     }
 

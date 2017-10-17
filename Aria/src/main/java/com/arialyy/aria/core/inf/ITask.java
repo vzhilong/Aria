@@ -59,11 +59,6 @@ public interface ITask<TASK_ENTITY extends AbsTaskEntity> {
     long getSpeed();
 
     /**
-     * 转换单位后的速度
-     */
-    String getConvertSpeed();
-
-    /**
      * 获取百分比进度
      */
     int getPercent();
@@ -74,21 +69,10 @@ public interface ITask<TASK_ENTITY extends AbsTaskEntity> {
     long getFileSize();
 
     /**
-     * 转换单位后的文件长度
-     */
-    String getConvertFileSize();
-
-    /**
      * 获取当前进度
      */
     long getCurrentProgress();
 
-    /**
-     * 获取单位转换后的进度
-     *
-     * @return 返回 3mb
-     */
-    String getConvertCurrentProgress();
 
     void setTargetName(String targetName);
 }

@@ -173,7 +173,7 @@ public abstract class AbsTarget<TARGET extends AbsTarget, ENTITY extends AbsEnti
      */
     @Override
     public void start() {
-        AriaManager.getInstance(AriaManager.APP)
+        AriaManager.getInstance()
                 .setCmd(CommonUtil.createNormalCmd(mTargetName, mTaskEntity, NormalCmdFactory.TASK_START,
                         checkTaskType()))
                 .exe();
@@ -203,7 +203,7 @@ public abstract class AbsTarget<TARGET extends AbsTarget, ENTITY extends AbsEnti
 
     @Override
     public void stop() {
-        AriaManager.getInstance(AriaManager.APP)
+        AriaManager.getInstance()
                 .setCmd(CommonUtil.createNormalCmd(mTargetName, mTaskEntity, NormalCmdFactory.TASK_STOP,
                         checkTaskType()))
                 .exe();
@@ -214,7 +214,7 @@ public abstract class AbsTarget<TARGET extends AbsTarget, ENTITY extends AbsEnti
      */
     @Override
     public void resume() {
-        AriaManager.getInstance(AriaManager.APP)
+        AriaManager.getInstance()
                 .setCmd(CommonUtil.createNormalCmd(mTargetName, mTaskEntity, NormalCmdFactory.TASK_START,
                         checkTaskType()))
                 .exe();
@@ -225,7 +225,7 @@ public abstract class AbsTarget<TARGET extends AbsTarget, ENTITY extends AbsEnti
      */
     @Override
     public void cancel() {
-        AriaManager.getInstance(AriaManager.APP)
+        AriaManager.getInstance()
                 .setCmd(CommonUtil.createNormalCmd(mTargetName, mTaskEntity, NormalCmdFactory.TASK_CANCEL,
                         checkTaskType()))
                 .exe();
@@ -241,7 +241,7 @@ public abstract class AbsTarget<TARGET extends AbsTarget, ENTITY extends AbsEnti
                 CommonUtil.createNormalCmd(mTargetName, mTaskEntity, NormalCmdFactory.TASK_STOP, taskType));
         cmds.add(CommonUtil.createNormalCmd(mTargetName, mTaskEntity, NormalCmdFactory.TASK_START,
                 taskType));
-        AriaManager.getInstance(AriaManager.APP).setCmds(cmds).exe();
+        AriaManager.getInstance().setCmds(cmds).exe();
     }
 
     /**
@@ -254,7 +254,7 @@ public abstract class AbsTarget<TARGET extends AbsTarget, ENTITY extends AbsEnti
         CancelCmd cancelCmd = (CancelCmd) CommonUtil.createNormalCmd(mTargetName, mTaskEntity,
                 NormalCmdFactory.TASK_CANCEL, checkTaskType());
         cancelCmd.removeFile = removeFile;
-        AriaManager.getInstance(AriaManager.APP).setCmd(cancelCmd).exe();
+        AriaManager.getInstance().setCmd(cancelCmd).exe();
     }
 
     /**
