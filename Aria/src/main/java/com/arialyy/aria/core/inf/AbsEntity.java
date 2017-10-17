@@ -41,16 +41,19 @@ public abstract class AbsEntity extends DbEntity implements IEntity, Parcelable 
      * 扩展字段
      */
     private String str = "";
+
     /**
      * 文件大小
      */
     private long fileSize = 1;
 
     private int state = STATE_WAIT;
+
     /**
      * 当前下载进度
      */
     private long currentProgress = 0;
+
     /**
      * 完成时间
      */
@@ -64,6 +67,20 @@ public abstract class AbsEntity extends DbEntity implements IEntity, Parcelable 
 
     private boolean isComplete = false;
 
+    /**
+     * 服务器地址
+     */
+    private String url = "";
+
+    /**
+     * 文件名
+     */
+    private String fileName = "";
+
+    private boolean isRedirect = false; //是否重定向
+
+    private String redirectUrl = ""; //重定向链接
+
     public AbsEntity() {
     }
 
@@ -75,8 +92,12 @@ public abstract class AbsEntity extends DbEntity implements IEntity, Parcelable 
         this.state = in.readInt();
         this.currentProgress = in.readLong();
         this.completeTime = in.readLong();
-        this.isComplete = in.readByte() != 0;
         this.percent = in.readInt();
+        this.isComplete = in.readByte() != 0;
+        this.url = in.readString();
+        this.fileName = in.readString();
+        this.isRedirect = in.readByte() != 0;
+        this.redirectUrl = in.readString();
     }
 
     public boolean isComplete() {
@@ -156,6 +177,39 @@ public abstract class AbsEntity extends DbEntity implements IEntity, Parcelable 
      */
     public abstract String getKey();
 
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public boolean isRedirect() {
+        return isRedirect;
+    }
+
+    public void setRedirect(boolean redirect) {
+        isRedirect = redirect;
+    }
+
+    public String getRedirectUrl() {
+        return redirectUrl;
+    }
+
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -170,7 +224,11 @@ public abstract class AbsEntity extends DbEntity implements IEntity, Parcelable 
         dest.writeInt(this.state);
         dest.writeLong(this.currentProgress);
         dest.writeLong(this.completeTime);
-        dest.writeByte(this.isComplete ? (byte) 1 : (byte) 0);
         dest.writeInt(this.percent);
+        dest.writeByte(this.isComplete ? (byte) 1 : (byte) 0);
+        dest.writeString(this.url);
+        dest.writeString(this.fileName);
+        dest.writeByte(this.isRedirect ? (byte) 1 : (byte) 0);
+        dest.writeString(this.redirectUrl);
     }
 }

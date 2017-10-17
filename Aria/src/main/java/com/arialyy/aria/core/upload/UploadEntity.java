@@ -18,14 +18,14 @@ package com.arialyy.aria.core.upload;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.arialyy.aria.core.inf.AbsNormalEntity;
+import com.arialyy.aria.core.inf.AbsEntity;
 import com.arialyy.aria.orm.Primary;
 
 /**
  * Created by lyy on 2017/2/9.
  * 上传文件实体
  */
-public class UploadEntity extends AbsNormalEntity implements Parcelable {
+public class UploadEntity extends AbsEntity implements Parcelable {
     public static final Creator<UploadEntity> CREATOR = new Creator<UploadEntity>() {
         @Override
         public UploadEntity createFromParcel(Parcel source) {
@@ -37,6 +37,7 @@ public class UploadEntity extends AbsNormalEntity implements Parcelable {
             return new UploadEntity[size];
         }
     };
+
     @Primary
     private String filePath;  //文件路径
 

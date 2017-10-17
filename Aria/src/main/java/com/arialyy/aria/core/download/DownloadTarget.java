@@ -91,7 +91,6 @@ public class DownloadTarget
         if (entity == null) {
             entity = new DownloadEntity();
             entity.setUrl(downloadUrl);
-            entity.setGroupChild(false);
             entity.save();
         }
         File file = new File(entity.getDownloadPath());

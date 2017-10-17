@@ -20,7 +20,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
-import com.arialyy.aria.core.inf.AbsNormalEntity;
+import com.arialyy.aria.core.inf.AbsEntity;
 import com.arialyy.aria.core.inf.AbsTaskEntity;
 import com.arialyy.aria.orm.Primary;
 import com.arialyy.aria.util.CommonUtil;
@@ -29,7 +29,7 @@ import com.arialyy.aria.util.CommonUtil;
  * Created by lyy on 2015/12/25.
  * 下载实体
  */
-public class DownloadEntity extends AbsNormalEntity implements Parcelable {
+public class DownloadEntity extends AbsEntity implements Parcelable {
     public static final Creator<DownloadEntity> CREATOR = new Creator<DownloadEntity>() {
         @Override
         public DownloadEntity createFromParcel(Parcel source) {
@@ -41,12 +41,10 @@ public class DownloadEntity extends AbsNormalEntity implements Parcelable {
             return new DownloadEntity[size];
         }
     };
+
     @Primary
     private String downloadPath = ""; //保存路径
-    /**
-     * 所属任务组
-     */
-    private String groupName = "";
+
     /**
      * 通过{@link AbsTaskEntity#md5Key}从服务器的返回信息中获取的文件md5信息，如果服务器没有返回，则不会设置该信息
      * 如果你已经设置了该任务的MD5信息，Aria也不会从服务器返回的信息中获取该信息
@@ -67,7 +65,6 @@ public class DownloadEntity extends AbsNormalEntity implements Parcelable {
     protected DownloadEntity(Parcel in) {
         super(in);
         this.downloadPath = in.readString();
-        this.groupName = in.readString();
         this.md5Code = in.readString();
         this.disposition = in.readString();
         this.serverFileName = in.readString();
@@ -102,22 +99,6 @@ public class DownloadEntity extends AbsNormalEntity implements Parcelable {
         this.serverFileName = serverFileName;
     }
 
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
-    }
-
-    /**
-     * {@link #getUrl()}
-     */
-    @Deprecated
-    public String getDownloadUrl() {
-        return getUrl();
-    }
-
     public String getDownloadPath() {
         return downloadPath;
     }
@@ -141,7 +122,6 @@ public class DownloadEntity extends AbsNormalEntity implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.downloadPath);
-        dest.writeString(this.groupName);
         dest.writeString(this.md5Code);
         dest.writeString(this.disposition);
         dest.writeString(this.serverFileName);
@@ -153,8 +133,6 @@ public class DownloadEntity extends AbsNormalEntity implements Parcelable {
                 + "downloadPath='"
                 + downloadPath
                 + '\''
-                + ", groupName='"
-                + groupName
                 + '\''
                 + ", md5Code='"
                 + md5Code

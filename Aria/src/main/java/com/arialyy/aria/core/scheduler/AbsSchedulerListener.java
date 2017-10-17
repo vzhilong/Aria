@@ -15,13 +15,13 @@
  */
 package com.arialyy.aria.core.scheduler;
 
-import com.arialyy.aria.core.inf.AbsNormalEntity;
+import com.arialyy.aria.core.inf.AbsEntity;
 import com.arialyy.aria.core.inf.ITask;
 
 /**
  * Created by Aria.Lao on 2017/6/7.
  */
-public class AbsSchedulerListener<TASK extends ITask, SUB_ENTITY extends AbsNormalEntity> implements ISchedulerListener<TASK> {
+public class AbsSchedulerListener<TASK extends ITask, SUB_ENTITY extends AbsEntity> implements ISchedulerListener<TASK> {
 
     @Override
     public void onPre(TASK task) {

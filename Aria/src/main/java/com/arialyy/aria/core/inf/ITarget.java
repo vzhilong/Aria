@@ -31,11 +31,6 @@ public interface ITarget<TARGET extends ITarget> {
     long getSize();
 
     /**
-     * 转换后的大小
-     */
-    String getConvertSize();
-
-    /**
      * 获取任务进度百分比
      */
     int getPercent();

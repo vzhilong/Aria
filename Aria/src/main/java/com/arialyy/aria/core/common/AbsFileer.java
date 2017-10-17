@@ -20,7 +20,7 @@ import android.util.SparseArray;
 
 import com.arialyy.aria.core.AriaManager;
 import com.arialyy.aria.core.download.DownloadTaskEntity;
-import com.arialyy.aria.core.inf.AbsNormalEntity;
+import com.arialyy.aria.core.inf.AbsEntity;
 import com.arialyy.aria.core.inf.AbsTaskEntity;
 import com.arialyy.aria.core.inf.IDownloadListener;
 import com.arialyy.aria.core.inf.IEventListener;
@@ -39,7 +39,7 @@ import java.util.concurrent.Executors;
  * Created by AriaL on 2017/7/1.
  * 文件下载器
  */
-public abstract class AbsFileer<ENTITY extends AbsNormalEntity, TASK_ENTITY extends AbsTaskEntity<ENTITY>>
+public abstract class AbsFileer<ENTITY extends AbsEntity, TASK_ENTITY extends AbsTaskEntity<ENTITY>>
         implements Runnable, IUtil {
     /**
      * 小于1m的文件不启用多线程

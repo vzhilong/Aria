@@ -22,7 +22,6 @@ import android.util.Log;
 import com.arialyy.aria.core.AriaManager;
 import com.arialyy.aria.core.download.DownloadTask;
 import com.arialyy.aria.core.inf.AbsEntity;
-import com.arialyy.aria.core.inf.AbsNormalEntity;
 import com.arialyy.aria.core.inf.AbsTask;
 import com.arialyy.aria.core.inf.AbsTaskEntity;
 import com.arialyy.aria.core.inf.IEntity;
@@ -34,8 +33,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-//import com.arialyy.aria.core.inf.GroupSendParams;
-
 /**
  * Created by lyy on 2017/6/4.
  * 事件调度器，用于处理任务状态的调度
@@ -46,7 +43,7 @@ abstract class AbsSchedulers<TASK_ENTITY extends AbsTaskEntity, TASK extends Abs
 
     protected QUEUE mQueue;
 
-    private Map<String, AbsSchedulerListener<TASK, AbsNormalEntity>> mObservers =
+    private Map<String, AbsSchedulerListener<TASK, AbsEntity>> mObservers =
             new ConcurrentHashMap<>();
 
     /**
@@ -57,7 +54,7 @@ abstract class AbsSchedulers<TASK_ENTITY extends AbsTaskEntity, TASK extends Abs
     @Override
     public void register(Object obj) {
         String targetName = obj.getClass().getName();
-        AbsSchedulerListener<TASK, AbsNormalEntity> listener = mObservers.get(targetName);
+        AbsSchedulerListener<TASK, AbsEntity> listener = mObservers.get(targetName);
         if (listener == null) {
             listener = createListener(targetName);
             if (listener != null) {
@@ -71,9 +68,9 @@ abstract class AbsSchedulers<TASK_ENTITY extends AbsTaskEntity, TASK extends Abs
 
     @Override
     public void unRegister(Object obj) {
-        for (Iterator<Map.Entry<String, AbsSchedulerListener<TASK, AbsNormalEntity>>> iter =
+        for (Iterator<Map.Entry<String, AbsSchedulerListener<TASK, AbsEntity>>> iter =
              mObservers.entrySet().iterator(); iter.hasNext(); ) {
-            Map.Entry<String, AbsSchedulerListener<TASK, AbsNormalEntity>> entry = iter.next();
+            Map.Entry<String, AbsSchedulerListener<TASK, AbsEntity>> entry = iter.next();
             if (entry.getKey().equals(obj.getClass().getName())) iter.remove();
         }
     }
@@ -83,11 +80,11 @@ abstract class AbsSchedulers<TASK_ENTITY extends AbsTaskEntity, TASK extends Abs
      *
      * @param targetName 通过观察者创建对应的Aria事件代理
      */
-    private AbsSchedulerListener<TASK, AbsNormalEntity> createListener(String targetName) {
-        AbsSchedulerListener<TASK, AbsNormalEntity> listener = null;
+    private AbsSchedulerListener<TASK, AbsEntity> createListener(String targetName) {
+        AbsSchedulerListener<TASK, AbsEntity> listener = null;
         try {
             Class clazz = Class.forName(targetName + getProxySuffix());
-            listener = (AbsSchedulerListener<TASK, AbsNormalEntity>) clazz.newInstance();
+            listener = (AbsSchedulerListener<TASK, AbsEntity>) clazz.newInstance();
         } catch (ClassNotFoundException e) {
             Log.e(TAG, targetName + "，没有Aria的Download或Upload注解方法");
         } catch (InstantiationException e) {
@@ -154,7 +151,7 @@ abstract class AbsSchedulers<TASK_ENTITY extends AbsTaskEntity, TASK extends Abs
     }
 
     private void callback(int state, TASK task,
-                          AbsSchedulerListener<TASK, AbsNormalEntity> listener) {
+                          AbsSchedulerListener<TASK, AbsEntity> listener) {
         if (listener != null) {
             if (task == null) {
                 Log.e(TAG, "TASK 为null，回调失败");

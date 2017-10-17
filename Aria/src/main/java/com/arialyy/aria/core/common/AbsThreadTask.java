@@ -20,7 +20,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.arialyy.aria.core.AriaManager;
-import com.arialyy.aria.core.inf.AbsNormalEntity;
+import com.arialyy.aria.core.inf.AbsEntity;
 import com.arialyy.aria.core.inf.AbsTaskEntity;
 import com.arialyy.aria.core.inf.IEventListener;
 import com.arialyy.aria.core.upload.UploadEntity;
@@ -38,7 +38,7 @@ import java.util.TimerTask;
  * Created by lyy on 2017/1/18.
  * 任务线程
  */
-public abstract class AbsThreadTask<ENTITY extends AbsNormalEntity, TASK_ENTITY extends AbsTaskEntity<ENTITY>>
+public abstract class AbsThreadTask<ENTITY extends AbsEntity, TASK_ENTITY extends AbsTaskEntity<ENTITY>>
         implements Runnable {
     /**
      * 线程重试次数
