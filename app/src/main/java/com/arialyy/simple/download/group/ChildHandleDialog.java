@@ -132,10 +132,10 @@ import java.util.List;
   @OnClick({ R.id.start, R.id.stop }) void onClick(View view) {
     switch (view.getId()) {
       case R.id.start:
-        Aria.download(this).load(mUrls).getSubTaskManager().startSubTask(mChildEntity.getUrl());
+        Aria.download().load(mUrls).getSubTaskManager().startSubTask(mChildEntity.getUrl());
         break;
       case R.id.stop:
-        Aria.download(this).load(mUrls).getSubTaskManager().stopSubTask(mChildEntity.getUrl());
+        Aria.download().load(mUrls).getSubTaskManager().stopSubTask(mChildEntity.getUrl());
         break;
       //case R.id.cancel:
       //  Aria.download(this).load(mUrls).getSubTaskManager().cancelSubTask(mChildEntity.getUrl());

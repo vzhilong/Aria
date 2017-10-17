@@ -25,8 +25,6 @@ import android.util.Log;
 import com.arialyy.aria.core.command.ICmd;
 import com.arialyy.aria.core.common.QueueMod;
 import com.arialyy.aria.core.download.DownloadEntity;
-import com.arialyy.aria.core.download.DownloadGroupEntity;
-import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
 import com.arialyy.aria.core.download.DownloadReceiver;
 import com.arialyy.aria.core.download.DownloadTaskEntity;
 import com.arialyy.aria.core.inf.IReceiver;
@@ -50,6 +48,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
+//import com.arialyy.aria.core.download.DownloadGroupEntity;
+//import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
 
 /**
  * Created by lyy on 2016/12/1.
@@ -218,10 +219,10 @@ public class AriaManager {
                 DbEntity.deleteData(DownloadEntity.class, "url=?", key);
                 DbEntity.deleteData(DownloadTaskEntity.class, "key=? and isGroupTask='false'", key);
                 break;
-            case 2:
-                DbEntity.deleteData(DownloadGroupEntity.class, "groupName=?", key);
-                DbEntity.deleteData(DownloadGroupTaskEntity.class, "key=?", key);
-                break;
+//            case 2:
+//                DbEntity.deleteData(DownloadGroupEntity.class, "groupName=?", key);
+//                DbEntity.deleteData(DownloadGroupTaskEntity.class, "key=?", key);
+//                break;
             case 3:
                 DbEntity.deleteData(UploadEntity.class, "filePath=?", key);
                 DbEntity.deleteData(UploadTaskEntity.class, "key=?", key);

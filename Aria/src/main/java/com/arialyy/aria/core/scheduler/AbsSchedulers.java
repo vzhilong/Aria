@@ -25,7 +25,6 @@ import com.arialyy.aria.core.inf.AbsEntity;
 import com.arialyy.aria.core.inf.AbsNormalEntity;
 import com.arialyy.aria.core.inf.AbsTask;
 import com.arialyy.aria.core.inf.AbsTaskEntity;
-import com.arialyy.aria.core.inf.GroupSendParams;
 import com.arialyy.aria.core.inf.IEntity;
 import com.arialyy.aria.core.queue.ITaskQueue;
 import com.arialyy.aria.core.upload.UploadTask;
@@ -34,6 +33,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+//import com.arialyy.aria.core.inf.GroupSendParams;
 
 /**
  * Created by lyy on 2017/6/4.
@@ -99,9 +100,6 @@ abstract class AbsSchedulers<TASK_ENTITY extends AbsTaskEntity, TASK extends Abs
 
     @Override
     public boolean handleMessage(Message msg) {
-        if (msg.arg1 == IS_SUB_TASK) {
-            return handleSubEvent(msg);
-        }
 
         TASK task = (TASK) msg.obj;
         if (task == null) {
@@ -112,42 +110,6 @@ abstract class AbsSchedulers<TASK_ENTITY extends AbsTaskEntity, TASK extends Abs
         return true;
     }
 
-    /**
-     * 处理任务组子任务事件
-     */
-    private boolean handleSubEvent(Message msg) {
-        GroupSendParams params = (GroupSendParams) msg.obj;
-        if (mObservers.size() > 0) {
-            Set<String> keys = mObservers.keySet();
-            for (String key : keys) {
-                AbsSchedulerListener<TASK, AbsNormalEntity> listener = mObservers.get(key);
-                switch (msg.what) {
-                    case SUB_PRE:
-                        listener.onSubTaskPre((TASK) params.groupTask, params.entity);
-                        break;
-                    case SUB_START:
-                        listener.onSubTaskStart((TASK) params.groupTask, params.entity);
-                        break;
-                    case SUB_STOP:
-                        listener.onSubTaskStop((TASK) params.groupTask, params.entity);
-                        break;
-                    case SUB_FAIL:
-                        listener.onSubTaskFail((TASK) params.groupTask, params.entity);
-                        break;
-                    case SUB_RUNNING:
-                        listener.onSubTaskRunning((TASK) params.groupTask, params.entity);
-                        break;
-                    case SUB_CANCEL:
-                        listener.onSubTaskCancel((TASK) params.groupTask, params.entity);
-                        break;
-                    case SUB_COMPLETE:
-                        listener.onSubTaskComplete((TASK) params.groupTask, params.entity);
-                        break;
-                }
-            }
-        }
-        return true;
-    }
 
     /**
      * 处理普通任务事件

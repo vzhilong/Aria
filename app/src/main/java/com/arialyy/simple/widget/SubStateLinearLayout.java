@@ -105,7 +105,7 @@ public class SubStateLinearLayout extends LinearLayout implements View.OnClickLi
       if (position != -1) {
         TextView child = ((TextView) getChildAt(position));
         int p = getPercent(entity);
-        child.setText(entity.getFileName() + ": " + p + "%" + "   | " + entity.getConvertSpeed());
+        child.setText(entity.getFileName() + ": " + p + "%" + "   | " + entity.getSpeed());
         child.invalidate();
       }
     }

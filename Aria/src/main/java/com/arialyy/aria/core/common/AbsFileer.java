@@ -15,7 +15,6 @@
  */
 package com.arialyy.aria.core.common;
 
-import android.content.Context;
 import android.util.Log;
 import android.util.SparseArray;
 

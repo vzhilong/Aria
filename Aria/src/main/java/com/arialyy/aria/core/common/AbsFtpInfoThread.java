@@ -20,7 +20,6 @@ import android.util.Log;
 
 import com.arialyy.aria.core.AriaManager;
 import com.arialyy.aria.core.download.DownloadEntity;
-import com.arialyy.aria.core.download.DownloadGroupEntity;
 import com.arialyy.aria.core.inf.AbsEntity;
 import com.arialyy.aria.core.inf.AbsTaskEntity;
 import com.arialyy.aria.core.upload.UploadEntity;
@@ -31,6 +30,8 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 
 import java.io.IOException;
+
+//import com.arialyy.aria.core.download.DownloadGroupEntity;
 
 /**
  * Created by Aria.Lao on 2017/7/25.
@@ -125,8 +126,6 @@ public abstract class AbsFtpInfoThread<ENTITY extends AbsEntity, TASK_ENTITY ext
             url = ((DownloadEntity) mEntity).getUrl();
         } else if (mEntity instanceof UploadEntity) {
             url = ((UploadEntity) mEntity).getUrl();
-        } else if (mEntity instanceof DownloadGroupEntity) {
-            url = mEntity.getKey();
         } else {
             failDownload("未知实体");
             Log.e(TAG, "未知实体");

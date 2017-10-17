@@ -31,8 +31,8 @@ import com.arialyy.simple.databinding.DialogFragmentDownloadBinding;
 
   @Override protected void init(Bundle savedInstanceState) {
     super.init(savedInstanceState);
-    Aria.download(this).register();
-    DownloadEntity entity = Aria.download(this).getDownloadEntity(DOWNLOAD_URL);
+    Aria.download().register();
+    DownloadEntity entity = Aria.download().getDownloadEntity(DOWNLOAD_URL);
     if (entity != null) {
       getBinding().setFileSize(CommonUtil.formatFileSize(entity.getFileSize()));
       getBinding().setProgress((int) (entity.getCurrentProgress() * 100 / entity.getFileSize()));
@@ -45,14 +45,14 @@ import com.arialyy.simple.databinding.DialogFragmentDownloadBinding;
 
   @Override public void onDestroy() {
     super.onDestroy();
-    Aria.download(this).unRegister();
+    Aria.download().unRegister();
   }
 
   @Download.onPre(DOWNLOAD_URL) protected void onPre(DownloadTask task) {
   }
 
   @Download.onTaskStart(DOWNLOAD_URL) void taskStart(DownloadTask task) {
-    getBinding().setFileSize(task.getConvertFileSize());
+
   }
 
   @Download.onTaskRunning(DOWNLOAD_URL) protected void running(DownloadTask task) {
@@ -62,7 +62,7 @@ import com.arialyy.simple.databinding.DialogFragmentDownloadBinding;
     } else {
       getBinding().setProgress(task.getPercent());
     }
-    getBinding().setSpeed(task.getConvertSpeed());
+    getBinding().setSpeed(task.getSpeed() + "");
   }
 
   @Download.onTaskResume(DOWNLOAD_URL) void taskResume(DownloadTask task) {
@@ -96,16 +96,16 @@ import com.arialyy.simple.databinding.DialogFragmentDownloadBinding;
   @OnClick({ R.id.start, R.id.stop, R.id.cancel }) public void onClick(View view) {
     switch (view.getId()) {
       case R.id.start:
-        Aria.download(this)
+        Aria.download()
             .load(DOWNLOAD_URL)
             .setDownloadPath(Environment.getExternalStorageDirectory().getPath() + "/放置江湖.apk")
             .start();
         break;
       case R.id.stop:
-        Aria.download(this).load(DOWNLOAD_URL).stop();
+        Aria.download().load(DOWNLOAD_URL).stop();
         break;
       case R.id.cancel:
-        Aria.download(this).load(DOWNLOAD_URL).cancel();
+        Aria.download().load(DOWNLOAD_URL).cancel();
         break;
     }
   }

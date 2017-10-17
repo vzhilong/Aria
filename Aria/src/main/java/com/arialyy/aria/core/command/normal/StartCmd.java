@@ -21,12 +21,10 @@ import android.util.Log;
 
 import com.arialyy.aria.core.AriaManager;
 import com.arialyy.aria.core.common.QueueMod;
-import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
 import com.arialyy.aria.core.download.DownloadTaskEntity;
 import com.arialyy.aria.core.inf.AbsTask;
 import com.arialyy.aria.core.inf.AbsTaskEntity;
 import com.arialyy.aria.core.inf.IEntity;
-import com.arialyy.aria.core.queue.DownloadGroupTaskQueue;
 import com.arialyy.aria.core.queue.DownloadTaskQueue;
 import com.arialyy.aria.core.queue.UploadTaskQueue;
 import com.arialyy.aria.core.upload.UploadTaskEntity;
@@ -123,13 +121,6 @@ class StartCmd<T extends AbsTaskEntity> extends AbsNormalCmd<T> {
                         waitList.addAll(dEntity);
                     }
                     break;
-                case 2:
-                    List<DownloadGroupTaskEntity> dgEntity =
-                            DbEntity.findDatas(DownloadGroupTaskEntity.class, "state=?", "3");
-                    if (dgEntity != null && !dgEntity.isEmpty()) {
-                        waitList.addAll(dgEntity);
-                    }
-                    break;
                 case 3:
                     List<UploadTaskEntity> uEntity =
                             DbEntity.findDatas(UploadTaskEntity.class, "groupName=? and state=?", "", "3");
@@ -147,8 +138,6 @@ class StartCmd<T extends AbsTaskEntity> extends AbsNormalCmd<T> {
                     mQueue = DownloadTaskQueue.getInstance();
                 } else if (te instanceof UploadTaskEntity) {
                     mQueue = UploadTaskQueue.getInstance();
-                } else if (te instanceof DownloadGroupTaskEntity) {
-                    mQueue = DownloadGroupTaskQueue.getInstance();
                 }
                 createTask(te);
             }

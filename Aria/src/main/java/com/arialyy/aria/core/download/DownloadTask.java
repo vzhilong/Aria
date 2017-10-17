@@ -20,7 +20,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import com.arialyy.aria.core.AriaManager;
 import com.arialyy.aria.core.common.IUtil;
 import com.arialyy.aria.core.download.downloader.SimpleDownloadUtil;
 import com.arialyy.aria.core.inf.AbsNormalTask;
@@ -42,7 +41,6 @@ public class DownloadTask extends AbsNormalTask<DownloadTaskEntity> {
     private DownloadTask(DownloadTaskEntity taskEntity, Handler outHandler) {
         mTaskEntity = taskEntity;
         mOutHandler = outHandler;
-        mContext = AriaManager.APP;
         mListener = new DownloadListener(this, mOutHandler);
         mUtil = new SimpleDownloadUtil(taskEntity, mListener);
         mEntity = taskEntity.getEntity();

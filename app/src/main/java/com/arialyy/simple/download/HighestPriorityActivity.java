@@ -72,11 +72,11 @@ public class HighestPriorityActivity extends BaseActivity<ActivityHighestPriorit
     setTitle("最高优先级任务");
     getBinding().setTaskName("任务名：" + mTaskName + " （最高优先级任务）");
     initWidget();
-    Aria.download(this).register();
+    Aria.download().register();
   }
 
   private void initWidget() {
-    DownloadTarget target = Aria.download(this).load(DOWNLOAD_URL);
+    DownloadTarget target = Aria.download().load(DOWNLOAD_URL);
     mPb.setProgress(target.getPercent());
     if (target.getTaskState() == IEntity.STATE_STOP) {
       mStart.setText("恢复");
@@ -86,7 +86,7 @@ public class HighestPriorityActivity extends BaseActivity<ActivityHighestPriorit
       setBtState(false);
     }
     mSize.setText(target.getConvertFileSize());
-    List<DownloadEntity> temp = Aria.download(this).getSimpleTaskList();
+    List<DownloadEntity> temp = Aria.download().getSimpleTaskList();
     if (temp != null && !temp.isEmpty()) {
       for (DownloadEntity entity : temp) {
         if (entity.getUrl().equals(DOWNLOAD_URL)) continue;
@@ -146,14 +146,14 @@ public class HighestPriorityActivity extends BaseActivity<ActivityHighestPriorit
                   + ".apk")
               .setHighestPriority();
         } else if (text.equals("恢复")) {
-          Aria.download(this).load(DOWNLOAD_URL).resume();
+          Aria.download().load(DOWNLOAD_URL).resume();
         }
         break;
       case R.id.stop:
         Aria.download(this).load(DOWNLOAD_URL).pause();
         break;
       case R.id.cancel:
-        Aria.download(this).load(DOWNLOAD_URL).cancel();
+        Aria.download().load(DOWNLOAD_URL).cancel();
         break;
     }
   }

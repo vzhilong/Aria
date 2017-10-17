@@ -62,7 +62,8 @@ public class Aria {
      * @param obj 支持类型有【Activity、Service、Application、DialogFragment、Fragment、PopupWindow、Dialog】
      */
     public static DownloadReceiver download() {
-        return get().download(obj);
+        return null;
+//        return get().download(obj);
     }
 
     /**
@@ -71,7 +72,8 @@ public class Aria {
      * @param obj 支持类型有【Activity、Service、Application、DialogFragment、Fragment、PopupWindow、Dialog】
      */
     public static UploadReceiver upload() {
-        return get().upload(obj);
+        return null;
+//        return get().upload(obj);
     }
 
     public void init(Application app) {

@@ -16,7 +16,8 @@
 
 package com.arialyy.aria.core.queue;
 
-import com.arialyy.aria.core.download.DownloadGroupTask;
+//import com.arialyy.aria.core.download.DownloadGroupTask;
+
 import com.arialyy.aria.core.download.DownloadTask;
 import com.arialyy.aria.core.download.DownloadTaskEntity;
 import com.arialyy.aria.core.inf.AbsTask;

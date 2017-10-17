@@ -29,7 +29,7 @@ import static java.util.Collections.unmodifiableSet;
  */
 public class ProxyHelper {
     public static volatile ProxyHelper INSTANCE = null;
-    public Set<String> downloadCounter, uploadCounter, downloadGroupCounter, downloadGroupSubCounter;
+    public Set<String> downloadCounter, uploadCounter;
 
     private ProxyHelper() {
         init();
@@ -48,21 +48,11 @@ public class ProxyHelper {
         try {
             Class clazz = Class.forName("com.arialyy.aria.ProxyClassCounter");
             Method download = clazz.getMethod("getDownloadCounter");
-            Method downloadGroup = clazz.getMethod("getDownloadGroupCounter");
-            Method downloadGroupSub = clazz.getMethod("getDownloadGroupSubCounter");
             Method upload = clazz.getMethod("getUploadCounter");
             Object object = clazz.newInstance();
             Object dc = download.invoke(object);
             if (dc != null) {
                 downloadCounter = unmodifiableSet((Set<String>) dc);
-            }
-            Object dgc = downloadGroup.invoke(object);
-            if (dgc != null) {
-                downloadGroupCounter = unmodifiableSet((Set<String>) dgc);
-            }
-            Object dgsc = downloadGroupSub.invoke(object);
-            if (dgsc != null) {
-                downloadGroupSubCounter = unmodifiableSet((Set<? extends String>) dgsc);
             }
             Object uc = upload.invoke(object);
             if (uc != null) {

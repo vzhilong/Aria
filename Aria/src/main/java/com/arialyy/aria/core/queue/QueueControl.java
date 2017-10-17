@@ -64,7 +64,7 @@ public class QueueControl implements Handler.Callback {
     /**
      * 队列类型为任务组下载队列
      */
-    public static final int TYPE_SIMPLE_DOWNLOAD_GROUP_QUEUE = 0xc2;
+//    public static final int TYPE_SIMPLE_DOWNLOAD_GROUP_QUEUE = 0xc2;
     /**
      * 队列类型为单文件上传队列
      */
@@ -78,9 +78,6 @@ public class QueueControl implements Handler.Callback {
         switch (type) {
             case TYPE_SIMPLE_DOWNLOAD_QUEUE:
                 queue = DownloadTaskQueue.getInstance();
-                break;
-            case TYPE_SIMPLE_DOWNLOAD_GROUP_QUEUE:
-                queue = DownloadGroupTaskQueue.getInstance();
                 break;
             case TYPE_SIMPLE_UPLOAD_QUEUE:
                 queue = UploadTaskQueue.getInstance();

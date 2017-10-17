@@ -3,11 +3,9 @@ package com.arialyy.aria.core.command.normal;
 import android.util.Log;
 
 import com.arialyy.aria.core.AriaManager;
-import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
 import com.arialyy.aria.core.download.DownloadTaskEntity;
 import com.arialyy.aria.core.inf.AbsTaskEntity;
 import com.arialyy.aria.core.inf.IEntity;
-import com.arialyy.aria.core.queue.DownloadGroupTaskQueue;
 import com.arialyy.aria.core.queue.DownloadTaskQueue;
 import com.arialyy.aria.core.queue.UploadTaskQueue;
 import com.arialyy.aria.core.upload.UploadTaskEntity;
@@ -16,6 +14,9 @@ import com.arialyy.aria.util.NetUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+//import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
+//import com.arialyy.aria.core.queue.DownloadGroupTaskQueue;
 
 /**
  * Created by AriaL on 2017/6/13.
@@ -62,13 +63,6 @@ final class ResumeAllCmd<T extends AbsTaskEntity> extends AbsNormalCmd<T> {
                         DbEntity.findDatas(DownloadTaskEntity.class, "isGroupTask=?", "false");
                 if (dTaskEntity != null && !dTaskEntity.isEmpty()) {
                     tempList.addAll(dTaskEntity);
-                }
-                break;
-            case 2:
-                List<DownloadGroupTaskEntity> groupTask =
-                        DbEntity.findAllData(DownloadGroupTaskEntity.class);
-                if (groupTask != null && !groupTask.isEmpty()) {
-                    tempList.addAll(groupTask);
                 }
                 break;
             case 3:
@@ -134,8 +128,6 @@ final class ResumeAllCmd<T extends AbsTaskEntity> extends AbsNormalCmd<T> {
             mQueue = DownloadTaskQueue.getInstance();
         } else if (te instanceof UploadTaskEntity) {
             mQueue = UploadTaskQueue.getInstance();
-        } else if (te instanceof DownloadGroupTaskEntity) {
-            mQueue = DownloadGroupTaskQueue.getInstance();
         }
         int exeNum = mQueue.getCurrentExePoolNum();
         if (exeNum == 0 || exeNum < mQueue.getMaxTaskNum()) {

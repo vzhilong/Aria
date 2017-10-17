@@ -20,16 +20,17 @@ import android.util.Log;
 
 import com.arialyy.aria.core.command.AbsCmd;
 import com.arialyy.aria.core.command.ICmd;
-import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
 import com.arialyy.aria.core.download.DownloadTaskEntity;
 import com.arialyy.aria.core.inf.AbsEntity;
 import com.arialyy.aria.core.inf.AbsTask;
 import com.arialyy.aria.core.inf.AbsTaskEntity;
-import com.arialyy.aria.core.queue.DownloadGroupTaskQueue;
 import com.arialyy.aria.core.queue.DownloadTaskQueue;
 import com.arialyy.aria.core.queue.UploadTaskQueue;
 import com.arialyy.aria.core.upload.UploadTaskEntity;
 import com.arialyy.aria.util.CommonUtil;
+
+//import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
+//import com.arialyy.aria.core.queue.DownloadGroupTaskQueue;
 
 /**
  * Created by lyy on 2016/8/22.
@@ -45,7 +46,7 @@ public abstract class AbsNormalCmd<T extends AbsTaskEntity> extends AbsCmd<T> {
 
     /**
      * @param targetName 产生任务的对象名
-     * @param taskType   下载任务类型{@link ICmd#TASK_TYPE_DOWNLOAD}、{@link ICmd#TASK_TYPE_DOWNLOAD_GROUP}、{@link
+     * @param taskType   下载任务类型{@link ICmd#TASK_TYPE_DOWNLOAD}、{@link
      *                   ICmd#TASK_TYPE_UPLOAD}
      */
     AbsNormalCmd(String targetName, T entity, int taskType) {
@@ -59,12 +60,6 @@ public abstract class AbsNormalCmd<T extends AbsTaskEntity> extends AbsCmd<T> {
                 return;
             }
             mQueue = DownloadTaskQueue.getInstance();
-        } else if (taskType == ICmd.TASK_TYPE_DOWNLOAD_GROUP) {
-            if (!(entity instanceof DownloadGroupTaskEntity)) {
-                Log.w(TAG, "任务类型错误，任务类型应该为ICM.TASK_TYPE_DOWNLOAD_GROUP");
-                return;
-            }
-            mQueue = DownloadGroupTaskQueue.getInstance();
         } else if (taskType == ICmd.TASK_TYPE_UPLOAD) {
             if (!(entity instanceof UploadTaskEntity)) {
                 Log.w(TAG, "任务类型错误，任务类型应该为ICM.TASK_TYPE_UPLOAD");

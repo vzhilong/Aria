@@ -72,40 +72,40 @@ public interface ISchedulers<Task extends AbsTask> extends Handler.Callback {
      */
     int RESUME = 8;
 
-    /**
-     * 任务组子任务预处理
-     */
-    int SUB_PRE = 0xa1;
-
-    /**
-     * 任务组子任务开始
-     */
-    int SUB_START = 0xa2;
-
-    /**
-     * 任务组子任务停止
-     */
-    int SUB_STOP = 0xa3;
-
-    /**
-     * 任务组子任务取消
-     */
-    int SUB_CANCEL = 0xa4;
-
-    /**
-     * 任务组子任务失败
-     */
-    int SUB_FAIL = 0xa5;
-
-    /**
-     * 任务组子任务执行执行中
-     */
-    int SUB_RUNNING = 0xa6;
-
-    /**
-     * 任务组子任务完成
-     */
-    int SUB_COMPLETE = 0xa7;
+//    /**
+//     * 任务组子任务预处理
+//     */
+//    int SUB_PRE = 0xa1;
+//
+//    /**
+//     * 任务组子任务开始
+//     */
+//    int SUB_START = 0xa2;
+//
+//    /**
+//     * 任务组子任务停止
+//     */
+//    int SUB_STOP = 0xa3;
+//
+//    /**
+//     * 任务组子任务取消
+//     */
+//    int SUB_CANCEL = 0xa4;
+//
+//    /**
+//     * 任务组子任务失败
+//     */
+//    int SUB_FAIL = 0xa5;
+//
+//    /**
+//     * 任务组子任务执行执行中
+//     */
+//    int SUB_RUNNING = 0xa6;
+//
+//    /**
+//     * 任务组子任务完成
+//     */
+//    int SUB_COMPLETE = 0xa7;
 
     /**
      * 将当前类注册到Aria

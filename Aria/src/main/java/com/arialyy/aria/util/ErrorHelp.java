@@ -17,7 +17,6 @@ package com.arialyy.aria.util;
 
 import com.arialyy.aria.core.ErrorEntity;
 import com.arialyy.aria.core.download.DownloadEntity;
-import com.arialyy.aria.core.download.DownloadGroupEntity;
 import com.arialyy.aria.core.inf.AbsEntity;
 import com.arialyy.aria.core.upload.UploadEntity;
 
@@ -45,8 +44,6 @@ public class ErrorHelp {
         String key = entity.getKey();
         if (entity instanceof DownloadEntity) {
             name = ((DownloadEntity) entity).getFileName();
-        } else if (entity instanceof DownloadGroupEntity) {
-            name = ((DownloadGroupEntity) entity).getGroupName();
         } else if (entity instanceof UploadEntity) {
             name = ((UploadEntity) entity).getFileName();
         }

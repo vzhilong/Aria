@@ -24,7 +24,6 @@ import com.arialyy.aria.core.command.ICmd;
 import com.arialyy.aria.core.command.normal.CancelCmd;
 import com.arialyy.aria.core.command.normal.NormalCmdFactory;
 import com.arialyy.aria.core.common.RequestEnum;
-import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
 import com.arialyy.aria.core.download.DownloadTaskEntity;
 import com.arialyy.aria.core.upload.UploadTaskEntity;
 import com.arialyy.aria.util.CommonUtil;
@@ -33,6 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+//import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
 
 /**
  * Created by AriaL on 2017/7/3.
@@ -183,8 +184,6 @@ public abstract class AbsTarget<TARGET extends AbsTarget, ENTITY extends AbsEnti
         int taskType = 0;
         if (mTaskEntity instanceof DownloadTaskEntity) {
             taskType = ICmd.TASK_TYPE_DOWNLOAD;
-        } else if (mTaskEntity instanceof DownloadGroupTaskEntity) {
-            taskType = ICmd.TASK_TYPE_DOWNLOAD_GROUP;
         } else if (mTaskEntity instanceof UploadTaskEntity) {
             taskType = ICmd.TASK_TYPE_UPLOAD;
         }

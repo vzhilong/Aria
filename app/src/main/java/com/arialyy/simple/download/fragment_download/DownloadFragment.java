@@ -45,11 +45,11 @@ public class DownloadFragment extends AbsFragment<FragmentDownloadBinding> {
   private static final String DOWNLOAD_URL = "https://res5.d.cn/2137e42d610b3488d9420c6421529386eee5bdbfd9be1fafe0a05d6dabaec8c156ddbd00581055bbaeac03904fb63310e80010680235d16bd4c040b50096a0c20dd1c4b0854529a1.apk";
 
   @Override protected void init(Bundle savedInstanceState) {
-    if (Aria.download(this).taskExists(DOWNLOAD_URL)) {
-      DownloadTarget target = Aria.download(this).load(DOWNLOAD_URL);
+    if (Aria.download().taskExists(DOWNLOAD_URL)) {
+      DownloadTarget target = Aria.download().load(DOWNLOAD_URL);
       getBinding().setProgress(target.getPercent());
     }
-    DownloadEntity entity = Aria.download(this).getDownloadEntity(DOWNLOAD_URL);
+    DownloadEntity entity = Aria.download().getDownloadEntity(DOWNLOAD_URL);
     if (entity != null) {
       getBinding().setFileSize(CommonUtil.formatFileSize(entity.getFileSize()));
       int state = entity.getState();
@@ -57,22 +57,22 @@ public class DownloadFragment extends AbsFragment<FragmentDownloadBinding> {
     } else {
       setBtState(true);
     }
-    Aria.download(this).register();
+    Aria.download().register();
   }
 
   @OnClick({ R.id.start, R.id.stop, R.id.cancel }) public void onClick(View view) {
     switch (view.getId()) {
       case R.id.start:
-        Aria.download(this)
+        Aria.download()
             .load(DOWNLOAD_URL)
             .setDownloadPath(Environment.getExternalStorageDirectory().getPath() + "/王者军团.apk")
             .start();
         break;
       case R.id.stop:
-        Aria.download(this).load(DOWNLOAD_URL).pause();
+        Aria.download().load(DOWNLOAD_URL).pause();
         break;
       case R.id.cancel:
-        Aria.download(this).load(DOWNLOAD_URL).cancel();
+        Aria.download().load(DOWNLOAD_URL).cancel();
         break;
     }
   }

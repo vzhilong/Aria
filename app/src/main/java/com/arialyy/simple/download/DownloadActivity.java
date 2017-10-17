@@ -96,8 +96,8 @@ public class DownloadActivity extends BaseActivity<ActivityDownloadMeanBinding> 
         startActivity(new Intent(this, MultiTaskActivity.class));
         break;
       case R.id.dialog_task:
-        DownloadDialog dialog = new DownloadDialog(this);
-        dialog.show();
+//        DownloadDialog dialog = new DownloadDialog(this);
+//        dialog.show();
         //DownloadDialogFragment dialog = new DownloadDialogFragment(this);
         //dialog.show(getSupportFragmentManager(), "dialog");
         break;

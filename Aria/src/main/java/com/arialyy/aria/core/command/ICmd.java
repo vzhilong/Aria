@@ -27,7 +27,7 @@ public interface ICmd {
     /**
      * 任务组下载任务
      */
-    int TASK_TYPE_DOWNLOAD_GROUP = 0x02;
+//    int TASK_TYPE_DOWNLOAD_GROUP = 0x02;
     /**
      * 上传任务
      */

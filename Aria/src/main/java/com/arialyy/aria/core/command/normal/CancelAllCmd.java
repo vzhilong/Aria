@@ -16,7 +16,8 @@
 
 package com.arialyy.aria.core.command.normal;
 
-import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
+//import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
+
 import com.arialyy.aria.core.download.DownloadTaskEntity;
 import com.arialyy.aria.core.inf.AbsTaskEntity;
 import com.arialyy.aria.core.upload.UploadTaskEntity;
@@ -46,26 +47,25 @@ public class CancelAllCmd<T extends AbsTaskEntity> extends AbsNormalCmd<T> {
     @Override
     public void executeCmd() {
         removeAll();
-        if (mTaskEntity instanceof DownloadTaskEntity
-                || mTaskEntity instanceof DownloadGroupTaskEntity) {
+        if (mTaskEntity instanceof DownloadTaskEntity) {
             handleDownloadRemove();
-            handleDownloadGroupRemove();
+//            handleDownloadGroupRemove();
         } else if (mTaskEntity instanceof UploadTaskEntity) {
-            handleUploadRemove();
+//            handleUploadRemove();
             handleUploadRemove();
         }
     }
 
-    /**
-     * 处理下载任务组的删除操作
-     */
-    private void handleDownloadGroupRemove() {
-        List<DownloadGroupTaskEntity> allEntity = DbEntity.findAllData(DownloadGroupTaskEntity.class);
-        if (allEntity == null || allEntity.size() == 0) return;
-        for (DownloadGroupTaskEntity entity : allEntity) {
-            CommonUtil.delDownloadGroupTaskConfig(removeFile, entity);
-        }
-    }
+//    /**
+//     * 处理下载任务组的删除操作
+//     */
+//    private void handleDownloadGroupRemove() {
+//        List<DownloadGroupTaskEntity> allEntity = DbEntity.findAllData(DownloadGroupTaskEntity.class);
+//        if (allEntity == null || allEntity.size() == 0) return;
+//        for (DownloadGroupTaskEntity entity : allEntity) {
+//            CommonUtil.delDownloadGroupTaskConfig(removeFile, entity);
+//        }
+//    }
 
     /**
      * 处理上传的删除

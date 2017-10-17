@@ -51,16 +51,6 @@ public class UploadReceiver extends AbsReceiver<UploadEntity> {
     }
 
     /**
-     * 加载FTP单文件上传任务
-     *
-     * @param filePath 文件路径
-     */
-//  public FtpUploadTarget loadFtp(@NonNull String filePath) {
-//    CheckUtil.checkUploadPath(filePath);
-//    return new FtpUploadTarget(filePath, targetName);
-//  }
-
-    /**
      * 通过上传路径获取上传实体
      */
     public UploadEntity getUploadEntity(String filePath) {

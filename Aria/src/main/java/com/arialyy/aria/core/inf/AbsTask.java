@@ -15,10 +15,7 @@
  */
 package com.arialyy.aria.core.inf;
 
-import android.content.Context;
 import android.os.Handler;
-
-import com.arialyy.aria.util.CommonUtil;
 
 /**
  * Created by AriaL on 2017/6/29.
@@ -31,7 +28,6 @@ public abstract class AbsTask<TASK_ENTITY extends AbsTaskEntity> implements ITas
     public boolean needRetry = true;
     protected TASK_ENTITY mTaskEntity;
     protected Handler mOutHandler;
-    protected Context mContext;
     protected boolean isHeighestTask = false;
     /**
      * 用于生成该任务对象的hash码

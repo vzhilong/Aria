@@ -56,11 +56,11 @@ public class HttpUploadActivity extends BaseActivity<ActivityUploadBinding> {
   }
 
   @OnClick(R.id.stop) void stop() {
-    Aria.upload(this).load(FILE_PATH).cancel();
+    Aria.upload().load(FILE_PATH).cancel();
   }
 
   @OnClick(R.id.remove) void remove() {
-    Aria.upload(this).load(FILE_PATH).cancel();
+    Aria.upload().load(FILE_PATH).cancel();
   }
 
   @Upload.onPre public void onPre(UploadTask task) {
@@ -68,7 +68,7 @@ public class HttpUploadActivity extends BaseActivity<ActivityUploadBinding> {
 
   @Upload.onTaskStart public void taskStart(UploadTask task) {
     L.d(TAG, "upload start");
-    getBinding().setFileSize(task.getConvertFileSize());
+    getBinding().setFileSize(task.getSpeed() + "");
   }
 
   @Upload.onTaskStop public void taskStop(UploadTask task) {
@@ -84,7 +84,7 @@ public class HttpUploadActivity extends BaseActivity<ActivityUploadBinding> {
   }
 
   @Upload.onTaskRunning public void taskRunning(UploadTask task) {
-    getBinding().setSpeed(task.getConvertSpeed());
+    getBinding().setSpeed(task.getSpeed() + "");
     getBinding().setProgress(task.getPercent());
   }
 

@@ -57,8 +57,8 @@ public class DownloadDialog extends AbsDialog {
   }
 
   private void init() {
-    Aria.download(this).register();
-    DownloadEntity entity = Aria.download(this).getDownloadEntity(DOWNLOAD_URL);
+    Aria.download().register();
+    DownloadEntity entity = Aria.download().getDownloadEntity(DOWNLOAD_URL);
     if (entity != null) {
       mSize.setText(CommonUtil.formatFileSize(entity.getFileSize()));
       int p = (int) (entity.getCurrentProgress() * 100 / entity.getFileSize());
@@ -73,16 +73,16 @@ public class DownloadDialog extends AbsDialog {
   @OnClick({ R.id.start, R.id.stop, R.id.cancel }) public void onClick(View view) {
     switch (view.getId()) {
       case R.id.start:
-        Aria.download(this)
+        Aria.download()
             .load(DOWNLOAD_URL)
             .setDownloadPath(Environment.getExternalStorageDirectory().getPath() + "/飞机大战.apk")
             .start();
         break;
       case R.id.stop:
-        Aria.download(this).load(DOWNLOAD_URL).pause();
+        Aria.download().load(DOWNLOAD_URL).pause();
         break;
       case R.id.cancel:
-        Aria.download(this).load(DOWNLOAD_URL).cancel();
+        Aria.download().load(DOWNLOAD_URL).cancel();
         break;
     }
   }
@@ -94,19 +94,17 @@ public class DownloadDialog extends AbsDialog {
 
   @Download.onTaskStop public void onTaskStop(DownloadTask task) {
     setBtState(true);
-    mSpeed.setText(task.getConvertSpeed());
   }
 
   @Download.onTaskCancel public void onTaskCancel(DownloadTask task) {
     setBtState(true);
     mPb.setProgress(0);
-    mSpeed.setText(task.getConvertSpeed());
+    mSpeed.setText(task.getSpeed() + "");
   }
 
   @Download.onTaskRunning public void onTaskRunning(DownloadTask task) {
     if (task.getKey().equals(DOWNLOAD_URL)) {
       mPb.setProgress(task.getPercent());
-      mSpeed.setText(task.getConvertSpeed());
     }
   }
 

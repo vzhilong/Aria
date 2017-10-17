@@ -19,7 +19,6 @@ package com.arialyy.aria.core.download.downloader;
 import com.arialyy.aria.core.common.IUtil;
 import com.arialyy.aria.core.common.OnFileInfoCallback;
 import com.arialyy.aria.core.download.DownloadTaskEntity;
-import com.arialyy.aria.core.inf.AbsTaskEntity;
 import com.arialyy.aria.core.inf.IDownloadListener;
 import com.arialyy.aria.util.ErrorHelp;
 
@@ -105,20 +104,16 @@ public class SimpleDownloadUtil implements IUtil, Runnable {
      * 通过链接类型创建不同的获取文件信息的线程
      */
     private Runnable createInfoThread() {
-        switch (mTaskEntity.requestType) {
-            case AbsTaskEntity.HTTP:
-                return new HttpFileInfoThread(mTaskEntity, new OnFileInfoCallback() {
-                    @Override
-                    public void onComplete(String url, int code) {
-                        mDownloader.start();
-                    }
+        return new HttpFileInfoThread(mTaskEntity, new OnFileInfoCallback() {
+            @Override
+            public void onComplete(String url, int code) {
+                mDownloader.start();
+            }
 
-                    @Override
-                    public void onFail(String url, String errorMsg) {
-                        failDownload(errorMsg);
-                    }
-                });
-        }
-        return null;
+            @Override
+            public void onFail(String url, String errorMsg) {
+                failDownload(errorMsg);
+            }
+        });
     }
 }
