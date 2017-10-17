@@ -94,26 +94,19 @@ public class SimpleDownloadUtil implements IUtil, Runnable {
     public void run() {
         mListener.onPre();
         if (mTaskEntity.getEntity().getFileSize() <= 1 || mTaskEntity.refreshInfo) {
-            new Thread(createInfoThread()).start();
+            new Thread(new HttpFileInfoThread(mTaskEntity, new OnFileInfoCallback() {
+                @Override
+                public void onComplete(String url, int code) {
+                    mDownloader.start();
+                }
+
+                @Override
+                public void onFail(String url, String errorMsg) {
+                    failDownload(errorMsg);
+                }
+            })).start();
         } else {
             mDownloader.start();
         }
-    }
-
-    /**
-     * 通过链接类型创建不同的获取文件信息的线程
-     */
-    private Runnable createInfoThread() {
-        return new HttpFileInfoThread(mTaskEntity, new OnFileInfoCallback() {
-            @Override
-            public void onComplete(String url, int code) {
-                mDownloader.start();
-            }
-
-            @Override
-            public void onFail(String url, String errorMsg) {
-                failDownload(errorMsg);
-            }
-        });
     }
 }

@@ -33,8 +33,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-//import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
-
 /**
  * Created by AriaL on 2017/7/3.
  */
@@ -75,16 +73,6 @@ public abstract class AbsTarget<TARGET extends AbsTarget, ENTITY extends AbsEnti
     @Override
     public long getSize() {
         return mEntity == null ? 0 : mEntity.getFileSize();
-    }
-
-    /**
-     * 获取单位转换后的文件大小
-     *
-     * @return 文件大小{@code xxx mb}
-     */
-    @Override
-    public String getConvertSize() {
-        return mEntity == null ? "0b" : CommonUtil.formatFileSize(mEntity.getFileSize());
     }
 
     /**

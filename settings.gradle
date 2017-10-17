@@ -1,1 +1,1 @@
-include ':Aria', ':AriaAnnotations', ':AriaCompiler'
+include ':Aria', ':AriaAnnotations', ':AriaCompiler', ':myapplication'

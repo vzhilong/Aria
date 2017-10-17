@@ -23,7 +23,6 @@ import com.arialyy.aria.core.inf.AbsTaskEntity;
 import com.arialyy.aria.core.inf.IDownloadListener;
 import com.arialyy.aria.core.inf.IEntity;
 import com.arialyy.aria.core.scheduler.ISchedulers;
-import com.arialyy.aria.util.CommonUtil;
 
 import java.lang.ref.WeakReference;
 
@@ -61,7 +60,6 @@ class BaseDListener<ENTITY extends AbsEntity, TASK_ENTITY extends AbsTaskEntity<
     @Override
     public void onPostPre(long fileSize) {
         mEntity.setFileSize(fileSize);
-        mEntity.setConvertFileSize(CommonUtil.formatFileSize(fileSize));
         saveData(IEntity.STATE_POST_PRE, -1);
         sendInState2Target(ISchedulers.POST_PRE);
     }

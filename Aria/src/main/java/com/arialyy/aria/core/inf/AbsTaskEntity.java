@@ -36,15 +36,6 @@ public abstract class AbsTaskEntity<ENTITY extends AbsEntity> extends DbEntity {
     public String key = "";
 
     /**
-     * 账号和密码
-     */
-    @Ignore
-    public String userName, userPw, account, serverIp;
-
-    @Ignore
-    public int port;
-
-    /**
      * 刷新信息 {@code true} 重新刷新下载信息
      */
     @Ignore

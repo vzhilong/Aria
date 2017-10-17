@@ -45,10 +45,6 @@ public abstract class AbsEntity extends DbEntity implements IEntity, Parcelable 
      * 文件大小
      */
     private long fileSize = 1;
-    /**
-     * 转换后的文件大小
-     */
-    private String convertFileSize = "";
 
     private int state = STATE_WAIT;
     /**
@@ -76,7 +72,6 @@ public abstract class AbsEntity extends DbEntity implements IEntity, Parcelable 
         this.failNum = in.readInt();
         this.str = in.readString();
         this.fileSize = in.readLong();
-        this.convertFileSize = in.readString();
         this.state = in.readInt();
         this.currentProgress = in.readLong();
         this.completeTime = in.readLong();
@@ -90,14 +85,6 @@ public abstract class AbsEntity extends DbEntity implements IEntity, Parcelable 
 
     public void setComplete(boolean complete) {
         isComplete = complete;
-    }
-
-    public String getConvertFileSize() {
-        return convertFileSize;
-    }
-
-    public void setConvertFileSize(String convertFileSize) {
-        this.convertFileSize = convertFileSize;
     }
 
     public int getFailNum() {
@@ -180,7 +167,6 @@ public abstract class AbsEntity extends DbEntity implements IEntity, Parcelable 
         dest.writeInt(this.failNum);
         dest.writeString(this.str);
         dest.writeLong(this.fileSize);
-        dest.writeString(this.convertFileSize);
         dest.writeInt(this.state);
         dest.writeLong(this.currentProgress);
         dest.writeLong(this.completeTime);

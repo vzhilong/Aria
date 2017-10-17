@@ -124,15 +124,6 @@ public abstract class AbsDownloadTarget<TARGET extends AbsTarget, ENTITY extends
     }
 
     /**
-     * 获取单位转换后的文件大小
-     *
-     * @return 文件大小{@code xxx mb}
-     */
-    public String getConvertFileSize() {
-        return getConvertSize();
-    }
-
-    /**
      * 添加任务
      */
     public void add() {

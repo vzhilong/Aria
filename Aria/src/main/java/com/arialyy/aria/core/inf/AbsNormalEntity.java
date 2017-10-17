@@ -33,11 +33,6 @@ public abstract class AbsNormalEntity extends AbsEntity implements Parcelable {
      */
     private String fileName = "";
 
-    /**
-     * 是否是任务组里面的下载实体
-     */
-    private boolean isGroupChild = false;
-
     private boolean isRedirect = false; //是否重定向
     private String redirectUrl = ""; //重定向链接
 
@@ -48,7 +43,6 @@ public abstract class AbsNormalEntity extends AbsEntity implements Parcelable {
         super(in);
         this.url = in.readString();
         this.fileName = in.readString();
-        this.isGroupChild = in.readByte() != 0;
         this.isRedirect = in.readByte() != 0;
         this.redirectUrl = in.readString();
     }
@@ -59,14 +53,6 @@ public abstract class AbsNormalEntity extends AbsEntity implements Parcelable {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public boolean isGroupChild() {
-        return isGroupChild;
-    }
-
-    public void setGroupChild(boolean groupChild) {
-        isGroupChild = groupChild;
     }
 
     public String getFileName() {
@@ -103,7 +89,6 @@ public abstract class AbsNormalEntity extends AbsEntity implements Parcelable {
         super.writeToParcel(dest, flags);
         dest.writeString(this.url);
         dest.writeString(this.fileName);
-        dest.writeByte(this.isGroupChild ? (byte) 1 : (byte) 0);
         dest.writeByte(this.isRedirect ? (byte) 1 : (byte) 0);
         dest.writeString(this.redirectUrl);
     }
