@@ -19,16 +19,11 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Application;
-import android.app.Dialog;
-import android.app.Service;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.PopupWindow;
 
 import com.arialyy.aria.core.command.ICmd;
 import com.arialyy.aria.core.common.QueueMod;
@@ -72,14 +67,13 @@ public class AriaManager {
     private static final String TAG = "AriaManager";
     private static final String DOWNLOAD = "_download";
     private static final String UPLOAD = "_upload";
+    public static Application APP;
     @SuppressLint("StaticFieldLeak")
     private static volatile AriaManager INSTANCE = null;
     private Map<String, IReceiver> mReceivers = new ConcurrentHashMap<>();
     private List<ICmd> mCommands = new ArrayList<>();
     private Configuration.DownloadConfig mDConfig;
     private Configuration.UploadConfig mUConfig;
-
-    public static Application APP;
 
     private AriaManager() {
         DbUtil.init(APP);
@@ -242,31 +236,31 @@ public class AriaManager {
     private IReceiver putReceiver(boolean isDownload, Object obj) {
         final String key = getKey(isDownload, obj);
         IReceiver receiver = mReceivers.get(key);
-        boolean needRmReceiver = false;
-        final WidgetLiftManager widgetLiftManager = new WidgetLiftManager();
-        if (obj instanceof Dialog) {
-            needRmReceiver = widgetLiftManager.handleDialogLift((Dialog) obj);
-        } else if (obj instanceof PopupWindow) {
-            needRmReceiver = widgetLiftManager.handlePopupWindowLift((PopupWindow) obj);
-        } else if (obj instanceof DialogFragment) {
-            needRmReceiver = widgetLiftManager.handleDialogFragmentLift((DialogFragment) obj);
-        } else if (obj instanceof android.app.DialogFragment) {
-            needRmReceiver = widgetLiftManager.handleDialogFragmentLift((android.app.DialogFragment) obj);
-        }
+//        boolean needRmReceiver = false;
+//        final WidgetLiftManager widgetLiftManager = new WidgetLiftManager();
+//        if (obj instanceof Dialog) {
+//            needRmReceiver = widgetLiftManager.handleDialogLift((Dialog) obj);
+//        } else if (obj instanceof PopupWindow) {
+//            needRmReceiver = widgetLiftManager.handlePopupWindowLift((PopupWindow) obj);
+//        } else if (obj instanceof DialogFragment) {
+//            needRmReceiver = widgetLiftManager.handleDialogFragmentLift((DialogFragment) obj);
+//        } else if (obj instanceof android.app.DialogFragment) {
+//            needRmReceiver = widgetLiftManager.handleDialogFragmentLift((android.app.DialogFragment) obj);
+//        }
 
         if (receiver == null) {
             if (isDownload) {
                 DownloadReceiver dReceiver = new DownloadReceiver();
                 dReceiver.targetName = obj.getClass().getName();
                 dReceiver.obj = obj;
-                dReceiver.needRmReceiver = needRmReceiver;
+//                dReceiver.needRmReceiver = needRmReceiver;
                 mReceivers.put(key, dReceiver);
                 receiver = dReceiver;
             } else {
                 UploadReceiver uReceiver = new UploadReceiver();
                 uReceiver.targetName = obj.getClass().getName();
                 uReceiver.obj = obj;
-                uReceiver.needRmReceiver = needRmReceiver;
+//                uReceiver.needRmReceiver = needRmReceiver;
                 mReceivers.put(key, uReceiver);
                 receiver = uReceiver;
             }
@@ -278,42 +272,7 @@ public class AriaManager {
      * 根据功能类型和控件类型获取对应的key
      */
     private String getKey(boolean isDownload, Object obj) {
-        String clsName = obj.getClass().getName();
-        String key = "";
-        if (!(obj instanceof Activity)) {
-            if (obj instanceof DialogFragment) {
-                key = clsName + "_" + ((DialogFragment) obj).getActivity().getClass().getName();
-            } else if (obj instanceof android.app.DialogFragment) {
-                key = clsName + "_" + ((android.app.DialogFragment) obj).getActivity().getClass().getName();
-            } else if (obj instanceof android.support.v4.app.Fragment) {
-                key = clsName + "_" + ((Fragment) obj).getActivity().getClass().getName();
-            } else if (obj instanceof android.app.Fragment) {
-                key = clsName + "_" + ((android.app.Fragment) obj).getActivity().getClass().getName();
-            } else if (obj instanceof Dialog) {
-                Activity activity = ((Dialog) obj).getOwnerActivity();
-                if (activity != null) {
-                    key = clsName + "_" + activity.getClass().getName();
-                } else {
-                    key = clsName;
-                }
-            } else if (obj instanceof PopupWindow) {
-                Context context = ((PopupWindow) obj).getContentView().getContext();
-                if (context instanceof Activity) {
-                    key = clsName + "_" + context.getClass().getName();
-                } else {
-                    key = clsName;
-                }
-            } else if (obj instanceof Service) {
-                key = clsName;
-            } else if (obj instanceof Application) {
-                key = clsName;
-            }
-        }
-        if (obj instanceof Activity || obj instanceof Service) {
-            key = clsName;
-        } else if (obj instanceof Application) {
-            key = clsName;
-        }
+        String key = obj.getClass().getName();
         if (TextUtils.isEmpty(key)) {
             throw new IllegalArgumentException("未知类型");
         }
