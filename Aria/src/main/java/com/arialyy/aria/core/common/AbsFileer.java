@@ -51,7 +51,6 @@ public abstract class AbsFileer<ENTITY extends AbsNormalEntity, TASK_ENTITY exte
     protected TASK_ENTITY mTaskEntity;
     protected ENTITY mEntity;
     protected File mConfigFile;//信息配置文件
-    protected Context mContext;
     protected File mTempFile; //下载的文件
     protected boolean isNewTask = true;
     protected StateConstance mConstance;
@@ -64,7 +63,6 @@ public abstract class AbsFileer<ENTITY extends AbsNormalEntity, TASK_ENTITY exte
         mListener = listener;
         mTaskEntity = taskEntity;
         mEntity = mTaskEntity.getEntity();
-        mContext = AriaManager.APP;
         mConstance = new StateConstance();
     }
 
@@ -120,7 +118,7 @@ public abstract class AbsFileer<ENTITY extends AbsNormalEntity, TASK_ENTITY exte
      */
     protected int getNewTaskThreadNum() {
         return mEntity.getFileSize() <= SUB_LEN ? 1
-                : AriaManager.getInstance(mContext).getDownloadConfig().getThreadNum();
+                : AriaManager.getInstance().getDownloadConfig().getThreadNum();
     }
 
     /**

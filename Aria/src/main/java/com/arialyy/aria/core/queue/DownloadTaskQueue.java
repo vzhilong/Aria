@@ -64,7 +64,7 @@ public class DownloadTaskQueue
 
     @Override
     public int getConfigMaxNum() {
-        return AriaManager.getInstance(AriaManager.APP).getDownloadConfig().oldMaxTaskNum;
+        return AriaManager.getInstance().getDownloadConfig().oldMaxTaskNum;
     }
 
     /**
@@ -85,7 +85,7 @@ public class DownloadTaskQueue
                 }
             }
         }
-        int maxSize = AriaManager.getInstance(AriaManager.APP).getDownloadConfig().getMaxTaskNum();
+        int maxSize = AriaManager.getInstance().getDownloadConfig().getMaxTaskNum();
         int currentSize = mExecutePool.size();
         if (currentSize == 0 || currentSize < maxSize) {
             startTask(task);

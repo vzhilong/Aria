@@ -56,7 +56,7 @@ class StartCmd<T extends AbsTaskEntity> extends AbsNormalCmd<T> {
         }
         String mod;
         int maxTaskNum;
-        AriaManager manager = AriaManager.getInstance(AriaManager.APP);
+        AriaManager manager = AriaManager.getInstance();
         if (isDownloadCmd) {
             mod = manager.getDownloadConfig().getQueueMod();
             maxTaskNum = manager.getDownloadConfig().getMaxTaskNum();

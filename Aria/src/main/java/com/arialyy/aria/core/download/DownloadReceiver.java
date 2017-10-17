@@ -52,7 +52,7 @@ public class DownloadReceiver extends AbsReceiver {
      */
     @Deprecated
     public void setMaxSpeed(double maxSpeed) {
-        AriaManager.getInstance(AriaManager.APP).getDownloadConfig().setMsxSpeed(maxSpeed);
+        AriaManager.getInstance().getDownloadConfig().setMsxSpeed(maxSpeed);
     }
 
     /**
@@ -148,7 +148,7 @@ public class DownloadReceiver extends AbsReceiver {
             DownloadGroupSchedulers.getInstance().unRegister(obj);
         }
         if (needRmReceiver) {
-            AriaManager.getInstance(AriaManager.APP).removeReceiver(obj);
+            AriaManager.getInstance().removeReceiver(obj);
         }
     }
 
@@ -240,7 +240,7 @@ public class DownloadReceiver extends AbsReceiver {
      */
     @Override
     public void stopAllTask() {
-        AriaManager.getInstance(AriaManager.APP)
+        AriaManager.getInstance()
                 .setCmd(NormalCmdFactory.getInstance()
                         .createCmd(targetName, new DownloadTaskEntity(), NormalCmdFactory.TASK_STOP_ALL,
                                 ICmd.TASK_TYPE_DOWNLOAD))
@@ -253,7 +253,7 @@ public class DownloadReceiver extends AbsReceiver {
      * 2.如果队列执行队列已经满了，则将所有任务添加到等待队列中
      */
     public void resumeAllTask() {
-        AriaManager.getInstance(AriaManager.APP)
+        AriaManager.getInstance()
                 .setCmd(NormalCmdFactory.getInstance()
                         .createCmd(targetName, new DownloadTaskEntity(), NormalCmdFactory.TASK_RESUME_ALL,
                                 ICmd.TASK_TYPE_DOWNLOAD))
@@ -268,7 +268,7 @@ public class DownloadReceiver extends AbsReceiver {
      */
     @Override
     public void removeAllTask(boolean removeFile) {
-        final AriaManager ariaManager = AriaManager.getInstance(AriaManager.APP);
+        final AriaManager ariaManager = AriaManager.getInstance();
         CancelAllCmd cancelCmd =
                 (CancelAllCmd) CommonUtil.createNormalCmd(targetName, new DownloadTaskEntity(),
                         NormalCmdFactory.TASK_CANCEL_ALL, ICmd.TASK_TYPE_DOWNLOAD);

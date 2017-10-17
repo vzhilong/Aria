@@ -75,7 +75,7 @@ abstract class AbsTaskQueue<TASK extends AbsTask, TASK_ENTITY extends AbsTaskEnt
 
     @Override
     public int getMaxTaskNum() {
-        return AriaManager.getInstance(AriaManager.APP).getDownloadConfig().getMaxTaskNum();
+        return AriaManager.getInstance().getDownloadConfig().getMaxTaskNum();
     }
 
     @Override

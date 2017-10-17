@@ -45,7 +45,7 @@ public class SubTaskManager {
      */
     public void startSubTask(String url) {
         if (checkUrl(url)) {
-            AriaManager.getInstance(AriaManager.APP)
+            AriaManager.getInstance()
                     .setCmd(
                             CommonUtil.createGroupCmd(mTargetName, mEntity, GroupCmdFactory.SUB_TASK_START, url))
                     .exe();
@@ -59,7 +59,7 @@ public class SubTaskManager {
      */
     public void stopSubTask(String url) {
         if (checkUrl(url)) {
-            AriaManager.getInstance(AriaManager.APP)
+            AriaManager.getInstance()
                     .setCmd(
                             CommonUtil.createGroupCmd(mTargetName, mEntity, GroupCmdFactory.SUB_TASK_STOP, url))
                     .exe();
@@ -73,7 +73,7 @@ public class SubTaskManager {
      */
     public void cancelSubTask(String url) {
         if (checkUrl(url)) {
-            AriaManager.getInstance(AriaManager.APP)
+            AriaManager.getInstance()
                     .setCmd(
                             CommonUtil.createGroupCmd(mTargetName, mEntity, GroupCmdFactory.SUB_TASK_CANCEL, url))
                     .exe();

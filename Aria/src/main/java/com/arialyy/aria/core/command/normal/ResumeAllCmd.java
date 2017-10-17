@@ -108,7 +108,7 @@ final class ResumeAllCmd<T extends AbsTaskEntity> extends AbsNormalCmd<T> {
      */
     private void resumeWaitTask() {
         int maxTaskNum;
-        AriaManager manager = AriaManager.getInstance(AriaManager.APP);
+        AriaManager manager = AriaManager.getInstance();
         if (isDownloadCmd) {
             maxTaskNum = manager.getDownloadConfig().getMaxTaskNum();
         } else {

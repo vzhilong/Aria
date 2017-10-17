@@ -49,7 +49,7 @@ class BaseUListener<ENTITY extends AbsEntity, TASK_ENTITY extends AbsTaskEntity<
         this.mTask = new WeakReference<>(task).get();
         this.mEntity = this.mTask.getTaskEntity().getEntity();
         this.mTaskEntity = this.mTask.getTaskEntity();
-        final AriaManager manager = AriaManager.getInstance(AriaManager.APP);
+        final AriaManager manager = AriaManager.getInstance();
         isConvertSpeed = manager.getDownloadConfig().isConvertSpeed();
         mLastLen = mEntity.getCurrentProgress();
         mLastSaveTime = System.currentTimeMillis();

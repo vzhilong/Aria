@@ -97,7 +97,7 @@ public abstract class AbsDownloadTarget<TARGET extends AbsTarget, ENTITY extends
      * 6、把任务设置为最高优先级任务后，将自动执行任务，不需要重新调用start()启动任务
      */
     protected void setHighestPriority() {
-        AriaManager.getInstance(AriaManager.APP)
+        AriaManager.getInstance()
                 .setCmd(CommonUtil.createNormalCmd(mTargetName, mTaskEntity,
                         NormalCmdFactory.TASK_HIGHEST_PRIORITY, checkTaskType()))
                 .exe();
@@ -136,7 +136,7 @@ public abstract class AbsDownloadTarget<TARGET extends AbsTarget, ENTITY extends
      * 添加任务
      */
     public void add() {
-        AriaManager.getInstance(AriaManager.APP)
+        AriaManager.getInstance()
                 .setCmd(CommonUtil.createNormalCmd(mTargetName, mTaskEntity, NormalCmdFactory.TASK_CREATE,
                         checkTaskType()))
                 .exe();

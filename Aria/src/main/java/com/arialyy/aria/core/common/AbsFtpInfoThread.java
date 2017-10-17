@@ -53,7 +53,7 @@ public abstract class AbsFtpInfoThread<ENTITY extends AbsEntity, TASK_ENTITY ext
         mTaskEntity = taskEntity;
         mEntity = taskEntity.getEntity();
         mConnectTimeOut =
-                AriaManager.getInstance(AriaManager.APP).getDownloadConfig().getConnectTimeOut();
+                AriaManager.getInstance().getDownloadConfig().getConnectTimeOut();
         mCallback = callback;
         if (mEntity instanceof UploadEntity) {
             isUpload = true;

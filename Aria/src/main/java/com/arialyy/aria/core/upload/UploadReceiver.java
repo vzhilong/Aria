@@ -82,7 +82,7 @@ public class UploadReceiver extends AbsReceiver<UploadEntity> {
 
     @Override
     public void stopAllTask() {
-        AriaManager.getInstance(AriaManager.APP)
+        AriaManager.getInstance()
                 .setCmd(NormalCmdFactory.getInstance()
                         .createCmd(targetName, new UploadTaskEntity(), NormalCmdFactory.TASK_STOP_ALL, ICmd.TASK_TYPE_UPLOAD))
                 .exe();
@@ -96,7 +96,7 @@ public class UploadReceiver extends AbsReceiver<UploadEntity> {
      */
     @Override
     public void removeAllTask(boolean removeFile) {
-        final AriaManager am = AriaManager.getInstance(AriaManager.APP);
+        final AriaManager am = AriaManager.getInstance();
 
         am.setCmd(CommonUtil.createNormalCmd(targetName, new DownloadTaskEntity(),
                 NormalCmdFactory.TASK_CANCEL_ALL, ICmd.TASK_TYPE_UPLOAD)).exe();
@@ -133,7 +133,7 @@ public class UploadReceiver extends AbsReceiver<UploadEntity> {
             UploadSchedulers.getInstance().unRegister(obj);
         }
         if (needRmReceiver) {
-            AriaManager.getInstance(AriaManager.APP).removeReceiver(obj);
+            AriaManager.getInstance().removeReceiver(obj);
         }
     }
 }

@@ -43,7 +43,7 @@ class HttpFileInfoThread implements Runnable {
         this.mTaskEntity = taskEntity;
         mEntity = taskEntity.getEntity();
         mConnectTimeOut =
-                AriaManager.getInstance(AriaManager.APP).getDownloadConfig().getConnectTimeOut();
+                AriaManager.getInstance().getDownloadConfig().getConnectTimeOut();
         onFileInfoListener = callback;
     }
 

@@ -160,7 +160,7 @@ abstract class AbsSchedulers<TASK_ENTITY extends AbsTaskEntity, TASK extends Abs
                 }
             case CANCEL:
                 mQueue.removeTaskFormQueue(task.getKey());
-                if (mQueue.getCurrentExePoolNum() < AriaManager.getInstance(AriaManager.APP)
+                if (mQueue.getCurrentExePoolNum() < AriaManager.getInstance()
                         .getUploadConfig()
                         .getMaxTaskNum()) {
                     startNextTask();
@@ -247,11 +247,11 @@ abstract class AbsSchedulers<TASK_ENTITY extends AbsTaskEntity, TASK extends Abs
         long interval = 2000;
         int num = 10;
         if (task instanceof DownloadTask) {
-            interval = AriaManager.getInstance(AriaManager.APP).getDownloadConfig().getReTryInterval();
-            num = AriaManager.getInstance(AriaManager.APP).getDownloadConfig().getReTryNum();
+            interval = AriaManager.getInstance().getDownloadConfig().getReTryInterval();
+            num = AriaManager.getInstance().getDownloadConfig().getReTryNum();
         } else if (task instanceof UploadTask) {
-            interval = AriaManager.getInstance(AriaManager.APP).getUploadConfig().getReTryInterval();
-            num = AriaManager.getInstance(AriaManager.APP).getUploadConfig().getReTryNum();
+            interval = AriaManager.getInstance().getUploadConfig().getReTryInterval();
+            num = AriaManager.getInstance().getUploadConfig().getReTryNum();
         }
 
         final int reTryNum = num;

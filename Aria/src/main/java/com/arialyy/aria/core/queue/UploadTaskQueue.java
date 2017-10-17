@@ -59,7 +59,7 @@ public class UploadTaskQueue extends AbsTaskQueue<UploadTask, UploadTaskEntity> 
 
     @Override
     public int getConfigMaxNum() {
-        return AriaManager.getInstance(AriaManager.APP).getUploadConfig().oldMaxTaskNum;
+        return AriaManager.getInstance().getUploadConfig().oldMaxTaskNum;
     }
 
     @Override

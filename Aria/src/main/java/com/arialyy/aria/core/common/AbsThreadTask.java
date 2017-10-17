@@ -65,7 +65,7 @@ public abstract class AbsThreadTask<ENTITY extends AbsNormalEntity, TASK_ENTITY 
 
     protected AbsThreadTask(StateConstance constance, IEventListener listener,
                             SubThreadConfig<TASK_ENTITY> info) {
-        AriaManager manager = AriaManager.getInstance(AriaManager.APP);
+        AriaManager manager = AriaManager.getInstance();
         STATE = constance;
         STATE.CONNECT_TIME_OUT = manager.getDownloadConfig().getConnectTimeOut();
         STATE.READ_TIME_OUT = manager.getDownloadConfig().getIOTimeOut();
@@ -75,7 +75,7 @@ public abstract class AbsThreadTask<ENTITY extends AbsNormalEntity, TASK_ENTITY 
         mEntity = mTaskEntity.getEntity();
         mConfigFPath = info.CONFIG_FILE_PATH;
         mBufSize = manager.getDownloadConfig().getBuffSize();
-        setMaxSpeed(AriaManager.getInstance(AriaManager.APP).getDownloadConfig().getMsxSpeed());
+        setMaxSpeed(AriaManager.getInstance().getDownloadConfig().getMsxSpeed());
         mTaskType = getTaskType();
         mLastSaveTime = System.currentTimeMillis();
     }
