@@ -110,18 +110,6 @@ public class DownloadTaskQueue
         }
     }
 
-    /**
-     * 最大下载速度
-     */
-    public void setMaxSpeed(double maxSpeed) {
-        Map<String, DownloadTask> tasks = mExecutePool.getAllTask();
-        Set<String> keys = tasks.keySet();
-        for (String key : keys) {
-            DownloadTask task = tasks.get(key);
-            task.setMaxSpeed(maxSpeed);
-        }
-    }
-
     @Override
     public DownloadTask createTask(String target, DownloadTaskEntity entity) {
         DownloadTask task = null;

@@ -240,10 +240,7 @@ class Configuration {
          * 下载线程数，下载线程数不能小于1
          */
         int threadNum = 3;
-        /**
-         * 设置最大下载速度，单位：kb, 为0表示不限速
-         */
-        double msxSpeed = 0.0;
+
 
         private DownloadConfig() {
             loadConfig();
@@ -276,16 +273,6 @@ class Configuration {
             return this;
         }
 
-        public double getMsxSpeed() {
-            return msxSpeed;
-        }
-
-        public DownloadConfig setMsxSpeed(double msxSpeed) {
-            this.msxSpeed = msxSpeed;
-            saveKey("msxSpeed", String.valueOf(msxSpeed));
-            DownloadTaskQueue.getInstance().setMaxSpeed(msxSpeed);
-            return this;
-        }
 
         public int getBuffSize() {
             return buffSize;

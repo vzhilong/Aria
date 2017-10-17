@@ -86,10 +86,6 @@ public class SimpleDownloadUtil implements IUtil, Runnable {
         start();
     }
 
-    public void setMaxSpeed(double maxSpeed) {
-        mDownloader.setMaxSpeed(maxSpeed);
-    }
-
     private void failDownload(String msg) {
         mListener.onFail(true);
         ErrorHelp.saveError("HTTP_DOWNLOAD", mTaskEntity.getEntity(), msg, "");

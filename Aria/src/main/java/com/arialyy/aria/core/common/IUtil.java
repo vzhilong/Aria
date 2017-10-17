@@ -59,8 +59,4 @@ public interface IUtil {
      */
     void resume();
 
-    /**
-     * 设置最大下载速度
-     */
-    void setMaxSpeed(double maxSpeed);
 }

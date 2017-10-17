@@ -70,16 +70,6 @@ public abstract class AbsFileer<ENTITY extends AbsNormalEntity, TASK_ENTITY exte
         mTaskEntity.isNewTask = newTask;
     }
 
-    @Override
-    public void setMaxSpeed(double maxSpeed) {
-        for (int i = 0; i < mThreadNum; i++) {
-            AbsThreadTask task = mTask.get(i);
-            if (task != null) {
-                task.setMaxSpeed(maxSpeed);
-            }
-        }
-    }
-
     public StateConstance getConstance() {
         return mConstance;
     }

@@ -30,7 +30,6 @@ import com.arialyy.aria.util.NetUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -75,22 +74,12 @@ public abstract class AbsThreadTask<ENTITY extends AbsNormalEntity, TASK_ENTITY 
         mEntity = mTaskEntity.getEntity();
         mConfigFPath = info.CONFIG_FILE_PATH;
         mBufSize = manager.getDownloadConfig().getBuffSize();
-        setMaxSpeed(AriaManager.getInstance().getDownloadConfig().getMsxSpeed());
         mTaskType = getTaskType();
         mLastSaveTime = System.currentTimeMillis();
     }
 
     protected abstract String getTaskType();
 
-    public void setMaxSpeed(double maxSpeed) {
-        if (-0.9999 < maxSpeed && maxSpeed < 0.00001) {
-            mSleepTime = 0;
-        } else {
-            BigDecimal db = new BigDecimal(
-                    ((mBufSize / 1024) * (filterVersion() ? 1 : STATE.THREAD_NUM) / maxSpeed) * 1000);
-            mSleepTime = db.setScale(0, BigDecimal.ROUND_HALF_UP).longValue();
-        }
-    }
 
     private boolean filterVersion() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;

@@ -309,10 +309,6 @@ public abstract class AbsGroupUtil implements IUtil {
         mListener.onResume(mCurrentLocation);
     }
 
-    @Override
-    public void setMaxSpeed(double maxSpeed) {
-
-    }
 
     private void closeTimer(boolean isRunning) {
         this.isRunning = isRunning;
