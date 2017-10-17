@@ -180,6 +180,7 @@ public class AriaManager {
         return (receiver instanceof DownloadReceiver) ? (DownloadReceiver) receiver : null;
     }
 
+
     /**
      * 处理上传操作
      */

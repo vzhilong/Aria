@@ -78,26 +78,6 @@ public class DownloadReceiver extends AbsReceiver {
         CheckUtil.checkDownloadUrl(url);
         return new DownloadTarget(url, targetName, refreshInfo);
     }
-//
-//    /**
-//     * 加载下载地址，如果任务组的中的下载地址改变了，则任务从新的一个任务组
-//     */
-//    public DownloadGroupTarget load(List<String> urls) {
-//        CheckUtil.checkDownloadUrls(urls);
-//        return new DownloadGroupTarget(urls, targetName);
-//    }
-//
-//
-//    /**
-//     * 使用任务组实体执行任务组的实体执行任务组的下载操作
-//     *
-//     * @param groupEntity 如果加载的任务实体没有子项的下载地址，
-//     *                    那么你需要使用{@link DownloadGroupTarget#setGroupUrl(List)}设置子项的下载地址
-//     */
-//    public DownloadGroupTarget load(DownloadGroupEntity groupEntity) {
-//        return new DownloadGroupTarget(groupEntity, targetName);
-//    }
-
 
     /**
      * 将当前类注册到Aria
@@ -151,24 +131,6 @@ public class DownloadReceiver extends AbsReceiver {
                 entity.getDownloadPath());
     }
 
-//    /**
-//     * 通过下载链接获取保存在数据库的下载任务组实体
-//     */
-//    public DownloadGroupTaskEntity getDownloadGroupTask(List<String> urls) {
-//        CheckUtil.checkDownloadUrls(urls);
-//        String hashCode = CommonUtil.getMd5Code(urls);
-//        return DbEntity.findFirst(DownloadGroupTaskEntity.class, "key=?", hashCode);
-//    }
-//
-//    /**
-//     * 通过任务组key，获取任务组实体
-//     * 如果是http，key为所有子任务下载地址拼接后取md5
-//     * 如果是ftp，key为ftp服务器的文件夹路径
-//     */
-//    public DownloadGroupTaskEntity getDownloadGroupTask(String key) {
-//        return DbEntity.findFirst(DownloadGroupTaskEntity.class, "key=?", key);
-//    }
-
     /**
      * 下载任务是否存在
      */
@@ -185,29 +147,6 @@ public class DownloadReceiver extends AbsReceiver {
         return DownloadEntity.findDatas(DownloadEntity.class, "isGroupChild=? and downloadPath!=''",
                 "false");
     }
-
-//    /**
-//     * 获取任务组列表
-//     */
-//    public List<DownloadGroupEntity> getGroupTaskList() {
-//        return DownloadEntity.findAllData(DownloadGroupEntity.class);
-//    }
-//
-//    /**
-//     * 获取普通任务和任务组的任务列表
-//     */
-//    public List<AbsEntity> getTotleTaskList() {
-//        List<AbsEntity> list = new ArrayList<>();
-//        List<DownloadEntity> simpleTask = getSimpleTaskList();
-//        List<DownloadGroupEntity> groupTask = getGroupTaskList();
-//        if (simpleTask != null && !simpleTask.isEmpty()) {
-//            list.addAll(simpleTask);
-//        }
-//        if (groupTask != null && !groupTask.isEmpty()) {
-//            list.addAll(groupTask);
-//        }
-//        return list;
-//    }
 
     /**
      * 停止所有正在下载的任务，并清空等待队列。

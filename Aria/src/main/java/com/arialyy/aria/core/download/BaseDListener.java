@@ -39,7 +39,6 @@ class BaseDListener<ENTITY extends AbsEntity, TASK_ENTITY extends AbsTaskEntity<
     private int RUN_SAVE_INTERVAL = 2 * 1000;  //5s保存一次下载中的进度
     private long mLastLen = 0;   //上一次发送长度
     private boolean isFirst = true;
-    private boolean isConvertSpeed = false;
     private long mLastSaveTime;
 
     BaseDListener(TASK task, Handler outHandler) {
