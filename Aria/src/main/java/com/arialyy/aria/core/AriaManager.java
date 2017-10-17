@@ -17,11 +17,8 @@ package com.arialyy.aria.core;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.os.Build;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -77,7 +74,6 @@ public class AriaManager {
 
     private AriaManager() {
         DbUtil.init(APP);
-        regAppLifeCallback(APP);
         initConfig();
     }
 
@@ -329,16 +325,6 @@ public class AriaManager {
         }
     }
 
-    /**
-     * 注册APP生命周期回调
-     */
-    private void regAppLifeCallback(Context context) {
-        Context app = context.getApplicationContext();
-        if (app instanceof Application) {
-            LifeCallback mLifeCallback = new LifeCallback();
-            ((Application) app).registerActivityLifecycleCallbacks(mLifeCallback);
-        }
-    }
 
     /**
      * 移除指定对象的receiver
@@ -372,47 +358,6 @@ public class AriaManager {
                 }
                 iter.remove();
             }
-        }
-    }
-
-    /**
-     * Activity生命周期
-     */
-    private class LifeCallback implements Application.ActivityLifecycleCallbacks {
-
-        @Override
-        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
-        }
-
-        @Override
-        public void onActivityStarted(Activity activity) {
-
-        }
-
-        @Override
-        public void onActivityResumed(Activity activity) {
-
-        }
-
-        @Override
-        public void onActivityPaused(Activity activity) {
-
-        }
-
-        @Override
-        public void onActivityStopped(Activity activity) {
-
-        }
-
-        @Override
-        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
-        }
-
-        @Override
-        public void onActivityDestroyed(Activity activity) {
-            destroySchedulerListener(activity);
         }
     }
 }
