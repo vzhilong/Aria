@@ -17,6 +17,7 @@
 package com.arialyy.aria.core.command.normal;
 
 import android.text.TextUtils;
+
 import com.arialyy.aria.core.inf.AbsTask;
 import com.arialyy.aria.core.inf.AbsTaskEntity;
 
@@ -25,28 +26,29 @@ import com.arialyy.aria.core.inf.AbsTaskEntity;
  * 取消命令
  */
 public class CancelCmd<T extends AbsTaskEntity> extends AbsNormalCmd<T> {
-  /**
-   * removeFile {@code true} 删除已经下载完成的任务，不仅删除下载记录，还会删除已经下载完成的文件，{@code false}
-   * 如果文件已经下载完成，只删除下载记录
-   */
-  public boolean removeFile = false;
+    /**
+     * removeFile {@code true} 删除已经下载完成的任务，不仅删除下载记录，还会删除已经下载完成的文件，{@code false}
+     * 如果文件已经下载完成，只删除下载记录
+     */
+    public boolean removeFile = false;
 
-  CancelCmd(String targetName, T entity, int taskType) {
-    super(targetName, entity, taskType);
-  }
+    CancelCmd(String targetName, T entity, int taskType) {
+        super(targetName, entity, taskType);
+    }
 
-  @Override public void executeCmd() {
-    if (!canExeCmd) return;
-    AbsTask task = getTask();
-    if (task == null) {
-      task = createTask();
+    @Override
+    public void executeCmd() {
+        if (!canExeCmd) return;
+        AbsTask task = getTask();
+        if (task == null) {
+            task = createTask();
+        }
+        if (task != null) {
+            mTaskEntity.removeFile = removeFile;
+            if (!TextUtils.isEmpty(mTargetName)) {
+                task.setTargetName(mTargetName);
+            }
+            removeTask();
+        }
     }
-    if (task != null) {
-      mTaskEntity.removeFile = removeFile;
-      if (!TextUtils.isEmpty(mTargetName)) {
-        task.setTargetName(mTargetName);
-      }
-      removeTask();
-    }
-  }
 }

@@ -16,6 +16,7 @@
 package com.arialyy.aria.core.command.group;
 
 import android.util.Log;
+
 import com.arialyy.aria.core.command.AbsCmd;
 import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
 import com.arialyy.aria.core.inf.AbsGroupTask;
@@ -29,45 +30,45 @@ import com.arialyy.aria.util.CommonUtil;
  * 任务组命令
  */
 public abstract class AbsGroupCmd<T extends AbsGroupTaskEntity> extends AbsCmd<T> {
-  /**
-   * 需要控制的子任务url
-   */
-  String childUrl;
+    /**
+     * 需要控制的子任务url
+     */
+    String childUrl;
 
-  AbsGroupTask tempTask;
+    AbsGroupTask tempTask;
 
-  /**
-   * @param targetName 创建任务的对象名
-   */
-  AbsGroupCmd(String targetName, T entity) {
-    mTargetName = targetName;
-    mTaskEntity = entity;
-    TAG = CommonUtil.getClassName(this);
-    if (entity instanceof DownloadGroupTaskEntity) {
-      mQueue = DownloadGroupTaskQueue.getInstance();
-      isDownloadCmd = true;
+    /**
+     * @param targetName 创建任务的对象名
+     */
+    AbsGroupCmd(String targetName, T entity) {
+        mTargetName = targetName;
+        mTaskEntity = entity;
+        TAG = CommonUtil.getClassName(this);
+        if (entity instanceof DownloadGroupTaskEntity) {
+            mQueue = DownloadGroupTaskQueue.getInstance();
+            isDownloadCmd = true;
+        }
     }
-  }
 
-  /**
-   * 创建任务
-   *
-   * @return 创建的任务
-   */
-  AbsTask createTask() {
-    tempTask = (AbsGroupTask) mQueue.createTask(mTargetName, mTaskEntity);
-    return tempTask;
-  }
-
-  boolean checkTask() {
-    tempTask = (AbsGroupTask) mQueue.getTask(mTaskEntity.getEntity().getKey());
-    if (tempTask == null) {
-      createTask();
-      if (tempTask.isComplete()) {
-        Log.w(TAG, "任务已完成");
-        return false;
-      }
+    /**
+     * 创建任务
+     *
+     * @return 创建的任务
+     */
+    AbsTask createTask() {
+        tempTask = (AbsGroupTask) mQueue.createTask(mTargetName, mTaskEntity);
+        return tempTask;
     }
-    return true;
-  }
+
+    boolean checkTask() {
+        tempTask = (AbsGroupTask) mQueue.getTask(mTaskEntity.getEntity().getKey());
+        if (tempTask == null) {
+            createTask();
+            if (tempTask.isComplete()) {
+                Log.w(TAG, "任务已完成");
+                return false;
+            }
+        }
+        return true;
+    }
 }

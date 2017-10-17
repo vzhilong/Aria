@@ -16,17 +16,18 @@
 package com.arialyy.aria.core.download.downloader;
 
 import android.util.Log;
+
 import com.arialyy.aria.core.common.AbsFileer;
 import com.arialyy.aria.core.common.AbsThreadTask;
 import com.arialyy.aria.core.common.SubThreadConfig;
 import com.arialyy.aria.core.download.DownloadEntity;
 import com.arialyy.aria.core.download.DownloadTaskEntity;
-import com.arialyy.aria.core.inf.AbsTaskEntity;
 import com.arialyy.aria.core.inf.IDownloadListener;
 import com.arialyy.aria.orm.DbEntity;
 import com.arialyy.aria.util.BufferedRandomAccessFile;
 import com.arialyy.aria.util.CommonUtil;
 import com.arialyy.aria.util.ErrorHelp;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -35,71 +36,74 @@ import java.io.IOException;
  * 文件下载器
  */
 class Downloader extends AbsFileer<DownloadEntity, DownloadTaskEntity> {
-  private String TAG = "Downloader";
+    private String TAG = "Downloader";
 
-  Downloader(IDownloadListener listener, DownloadTaskEntity taskEntity) {
-    super(listener, taskEntity);
-  }
+    Downloader(IDownloadListener listener, DownloadTaskEntity taskEntity) {
+        super(listener, taskEntity);
+    }
 
-  @Override protected void checkTask() {
-    mConfigFile = new File(CommonUtil.getFileConfigPath(true, mEntity.getFileName()));
-    mTempFile = new File(mEntity.getDownloadPath());
-    if (!mTaskEntity.isSupportBP) {
-      isNewTask = true;
-      return;
-    }
-    if (mTaskEntity.isNewTask) {
-      isNewTask = true;
-      return;
-    }
-    if (!mConfigFile.exists()) { //记录文件被删除，则重新下载
-      isNewTask = true;
-      CommonUtil.createFile(mConfigFile.getPath());
-    } else if (!mTempFile.exists()) {
-      isNewTask = true;
-    } else if (DbEntity.findFirst(DownloadEntity.class, "url=?", mEntity.getUrl()) == null) {
-      isNewTask = true;
-    } else {
-      isNewTask = checkConfigFile();
-    }
-  }
-
-  @Override protected void handleNewTask() {
-    CommonUtil.createFile(mTempFile.getPath());
-    BufferedRandomAccessFile file = null;
-    try {
-      file = new BufferedRandomAccessFile(new File(mTempFile.getPath()), "rwd", 8192);
-      //设置文件长度
-      file.setLength(mEntity.getFileSize());
-    } catch (IOException e) {
-      failDownload("下载失败【downloadUrl:"
-          + mEntity.getUrl()
-          + "】\n【filePath:"
-          + mEntity.getDownloadPath()
-          + "】\n"
-          + CommonUtil.getPrintException(e));
-    } finally {
-      if (file != null) {
-        try {
-          file.close();
-        } catch (IOException e) {
-          e.printStackTrace();
+    @Override
+    protected void checkTask() {
+        mConfigFile = new File(CommonUtil.getFileConfigPath(true, mEntity.getFileName()));
+        mTempFile = new File(mEntity.getDownloadPath());
+        if (!mTaskEntity.isSupportBP) {
+            isNewTask = true;
+            return;
         }
-      }
+        if (mTaskEntity.isNewTask) {
+            isNewTask = true;
+            return;
+        }
+        if (!mConfigFile.exists()) { //记录文件被删除，则重新下载
+            isNewTask = true;
+            CommonUtil.createFile(mConfigFile.getPath());
+        } else if (!mTempFile.exists()) {
+            isNewTask = true;
+        } else if (DbEntity.findFirst(DownloadEntity.class, "url=?", mEntity.getUrl()) == null) {
+            isNewTask = true;
+        } else {
+            isNewTask = checkConfigFile();
+        }
     }
-  }
 
-  @Override protected AbsThreadTask selectThreadTask(SubThreadConfig<DownloadTaskEntity> config) {
+    @Override
+    protected void handleNewTask() {
+        CommonUtil.createFile(mTempFile.getPath());
+        BufferedRandomAccessFile file = null;
+        try {
+            file = new BufferedRandomAccessFile(new File(mTempFile.getPath()), "rwd", 8192);
+            //设置文件长度
+            file.setLength(mEntity.getFileSize());
+        } catch (IOException e) {
+            failDownload("下载失败【downloadUrl:"
+                    + mEntity.getUrl()
+                    + "】\n【filePath:"
+                    + mEntity.getDownloadPath()
+                    + "】\n"
+                    + CommonUtil.getPrintException(e));
+        } finally {
+            if (file != null) {
+                try {
+                    file.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
+    protected AbsThreadTask selectThreadTask(SubThreadConfig<DownloadTaskEntity> config) {
 
         return new HttpThreadTask(mConstance, (IDownloadListener) mListener, config);
 
-  }
+    }
 
-  private void failDownload(String errorMsg) {
-    closeTimer();
-    Log.e(TAG, errorMsg);
-    mConstance.isRunning = false;
-    mListener.onFail(false);
-    ErrorHelp.saveError("", mEntity, "", errorMsg);
-  }
+    private void failDownload(String errorMsg) {
+        closeTimer();
+        Log.e(TAG, errorMsg);
+        mConstance.isRunning = false;
+        mListener.onFail(false);
+        ErrorHelp.saveError("", mEntity, "", errorMsg);
+    }
 }

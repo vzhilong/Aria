@@ -28,91 +28,101 @@ import com.arialyy.aria.util.ErrorHelp;
  * HTTP\FTP单任务下载工具
  */
 public class SimpleDownloadUtil implements IUtil, Runnable {
-  private static final String TAG = "SimpleDownloadUtil";
-  private IDownloadListener mListener;
-  private Downloader mDownloader;
-  private DownloadTaskEntity mTaskEntity;
+    private static final String TAG = "SimpleDownloadUtil";
+    private IDownloadListener mListener;
+    private Downloader mDownloader;
+    private DownloadTaskEntity mTaskEntity;
 
-  public SimpleDownloadUtil(DownloadTaskEntity entity, IDownloadListener downloadListener) {
-    mTaskEntity = entity;
-    mListener = downloadListener;
-    mDownloader = new Downloader(downloadListener, entity);
-  }
-
-  @Override public long getFileSize() {
-    return mDownloader.getFileSize();
-  }
-
-  /**
-   * 获取当前下载位置
-   */
-  @Override public long getCurrentLocation() {
-    return mDownloader.getCurrentLocation();
-  }
-
-  @Override public boolean isRunning() {
-    return mDownloader.isRunning();
-  }
-
-  /**
-   * 取消下载
-   */
-  @Override public void cancel() {
-    mDownloader.cancel();
-  }
-
-  /**
-   * 停止下载
-   */
-  @Override public void stop() {
-    mDownloader.stop();
-  }
-
-  /**
-   * 多线程断点续传下载文件，开始下载
-   */
-  @Override public void start() {
-    new Thread(this).start();
-  }
-
-  @Override public void resume() {
-    start();
-  }
-
-  public void setMaxSpeed(double maxSpeed) {
-    mDownloader.setMaxSpeed(maxSpeed);
-  }
-
-  private void failDownload(String msg) {
-    mListener.onFail(true);
-    ErrorHelp.saveError("HTTP_DOWNLOAD", mTaskEntity.getEntity(), msg, "");
-  }
-
-  @Override public void run() {
-    mListener.onPre();
-    if (mTaskEntity.getEntity().getFileSize() <= 1 || mTaskEntity.refreshInfo) {
-      new Thread(createInfoThread()).start();
-    } else {
-      mDownloader.start();
+    public SimpleDownloadUtil(DownloadTaskEntity entity, IDownloadListener downloadListener) {
+        mTaskEntity = entity;
+        mListener = downloadListener;
+        mDownloader = new Downloader(downloadListener, entity);
     }
-  }
 
-  /**
-   * 通过链接类型创建不同的获取文件信息的线程
-   */
-  private Runnable createInfoThread() {
-    switch (mTaskEntity.requestType) {
-      case AbsTaskEntity.HTTP:
-        return new HttpFileInfoThread(mTaskEntity, new OnFileInfoCallback() {
-          @Override public void onComplete(String url, int code) {
+    @Override
+    public long getFileSize() {
+        return mDownloader.getFileSize();
+    }
+
+    /**
+     * 获取当前下载位置
+     */
+    @Override
+    public long getCurrentLocation() {
+        return mDownloader.getCurrentLocation();
+    }
+
+    @Override
+    public boolean isRunning() {
+        return mDownloader.isRunning();
+    }
+
+    /**
+     * 取消下载
+     */
+    @Override
+    public void cancel() {
+        mDownloader.cancel();
+    }
+
+    /**
+     * 停止下载
+     */
+    @Override
+    public void stop() {
+        mDownloader.stop();
+    }
+
+    /**
+     * 多线程断点续传下载文件，开始下载
+     */
+    @Override
+    public void start() {
+        new Thread(this).start();
+    }
+
+    @Override
+    public void resume() {
+        start();
+    }
+
+    public void setMaxSpeed(double maxSpeed) {
+        mDownloader.setMaxSpeed(maxSpeed);
+    }
+
+    private void failDownload(String msg) {
+        mListener.onFail(true);
+        ErrorHelp.saveError("HTTP_DOWNLOAD", mTaskEntity.getEntity(), msg, "");
+    }
+
+    @Override
+    public void run() {
+        mListener.onPre();
+        if (mTaskEntity.getEntity().getFileSize() <= 1 || mTaskEntity.refreshInfo) {
+            new Thread(createInfoThread()).start();
+        } else {
             mDownloader.start();
-          }
-
-          @Override public void onFail(String url, String errorMsg) {
-            failDownload(errorMsg);
-          }
-        });
+        }
     }
-    return null;
-  }
+
+    /**
+     * 通过链接类型创建不同的获取文件信息的线程
+     */
+    private Runnable createInfoThread() {
+        switch (mTaskEntity.requestType) {
+            case AbsTaskEntity.HTTP:
+                return new HttpFileInfoThread(mTaskEntity, new OnFileInfoCallback() {
+                    @Override
+                    public void onComplete(String url, int code) {
+                        mDownloader.start();
+                    }
+
+                    @Override
+                    public void onFail(String url, String errorMsg) {
+                        failDownload(errorMsg);
+                    }
+                });
+        }
+        return null;
+    }
 }

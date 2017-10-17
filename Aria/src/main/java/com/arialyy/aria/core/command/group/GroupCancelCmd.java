@@ -22,16 +22,17 @@ import com.arialyy.aria.core.inf.AbsGroupTaskEntity;
  * 删除任务组
  */
 class GroupCancelCmd<T extends AbsGroupTaskEntity> extends AbsGroupCmd<T> {
-  /**
-   * @param targetName 创建任务的对象名
-   */
-  GroupCancelCmd(String targetName, T entity) {
-    super(targetName, entity);
-  }
-
-  @Override public void executeCmd() {
-    if (checkTask()) {
-      tempTask.cancelSubTask(childUrl);
+    /**
+     * @param targetName 创建任务的对象名
+     */
+    GroupCancelCmd(String targetName, T entity) {
+        super(targetName, entity);
     }
-  }
+
+    @Override
+    public void executeCmd() {
+        if (checkTask()) {
+            tempTask.cancelSubTask(childUrl);
+        }
+    }
 }

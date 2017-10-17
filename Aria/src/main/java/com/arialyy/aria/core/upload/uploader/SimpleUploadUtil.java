@@ -16,7 +16,6 @@
 package com.arialyy.aria.core.upload.uploader;
 
 import com.arialyy.aria.core.common.IUtil;
-import com.arialyy.aria.core.common.OnFileInfoCallback;
 import com.arialyy.aria.core.inf.IUploadListener;
 import com.arialyy.aria.core.upload.UploadEntity;
 import com.arialyy.aria.core.upload.UploadTaskEntity;
@@ -27,27 +26,28 @@ import com.arialyy.aria.util.CheckUtil;
  * 简单的文件上传工具
  */
 public class SimpleUploadUtil implements IUtil, Runnable {
-  private static final String TAG = "SimpleUploadUtil";
+    private static final String TAG = "SimpleUploadUtil";
 
-  private UploadEntity mUploadEntity;
-  private UploadTaskEntity mTaskEntity;
-  private IUploadListener mListener;
-  private Uploader mUploader;
+    private UploadEntity mUploadEntity;
+    private UploadTaskEntity mTaskEntity;
+    private IUploadListener mListener;
+    private Uploader mUploader;
 
-  public SimpleUploadUtil(UploadTaskEntity taskEntity, IUploadListener listener) {
-    mTaskEntity = taskEntity;
-    CheckUtil.checkTaskEntity(taskEntity);
-    mUploadEntity = taskEntity.getEntity();
-    if (listener == null) {
-      throw new IllegalArgumentException("上传监听不能为空");
+    public SimpleUploadUtil(UploadTaskEntity taskEntity, IUploadListener listener) {
+        mTaskEntity = taskEntity;
+        CheckUtil.checkTaskEntity(taskEntity);
+        mUploadEntity = taskEntity.getEntity();
+        if (listener == null) {
+            throw new IllegalArgumentException("上传监听不能为空");
+        }
+        mListener = listener;
+        mUploader = new Uploader(mListener, taskEntity);
     }
-    mListener = listener;
-    mUploader = new Uploader(mListener, taskEntity);
-  }
 
-  @Override public void run() {
-    mListener.onPre();
-    mUploader.start();
+    @Override
+    public void run() {
+        mListener.onPre();
+        mUploader.start();
 //    new FtpFileInfoThread(mTaskEntity, new OnFileInfoCallback() {
 //      @Override public void onComplete(String url, int code) {
 //        if (code == FtpFileInfoThread.CODE_COMPLETE) {
@@ -61,37 +61,45 @@ public class SimpleUploadUtil implements IUtil, Runnable {
 //        mListener.onFail(true);
 //      }
 //    }).start();
-  }
+    }
 
-  @Override public long getFileSize() {
-    return mUploader.getFileSize();
-  }
+    @Override
+    public long getFileSize() {
+        return mUploader.getFileSize();
+    }
 
-  @Override public long getCurrentLocation() {
-    return mUploader.getCurrentLocation();
-  }
+    @Override
+    public long getCurrentLocation() {
+        return mUploader.getCurrentLocation();
+    }
 
-  @Override public boolean isRunning() {
-    return mUploader.isRunning();
-  }
+    @Override
+    public boolean isRunning() {
+        return mUploader.isRunning();
+    }
 
-  @Override public void cancel() {
-    mUploader.cancel();
-  }
+    @Override
+    public void cancel() {
+        mUploader.cancel();
+    }
 
-  @Override public void stop() {
-    mUploader.stop();
-  }
+    @Override
+    public void stop() {
+        mUploader.stop();
+    }
 
-  @Override public void start() {
-    new Thread(this).start();
-  }
+    @Override
+    public void start() {
+        new Thread(this).start();
+    }
 
-  @Override public void resume() {
-    mUploader.cancel();
-  }
+    @Override
+    public void resume() {
+        mUploader.cancel();
+    }
 
-  @Override public void setMaxSpeed(double maxSpeed) {
-    mUploader.setMaxSpeed(maxSpeed);
-  }
+    @Override
+    public void setMaxSpeed(double maxSpeed) {
+        mUploader.setMaxSpeed(maxSpeed);
+    }
 }

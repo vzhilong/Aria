@@ -18,12 +18,12 @@ package com.arialyy.aria.core.upload.uploader;
 import com.arialyy.aria.core.common.AbsFileer;
 import com.arialyy.aria.core.common.AbsThreadTask;
 import com.arialyy.aria.core.common.SubThreadConfig;
-import com.arialyy.aria.core.inf.AbsTaskEntity;
 import com.arialyy.aria.core.inf.IUploadListener;
 import com.arialyy.aria.core.upload.UploadEntity;
 import com.arialyy.aria.core.upload.UploadTaskEntity;
 import com.arialyy.aria.orm.DbEntity;
 import com.arialyy.aria.util.CommonUtil;
+
 import java.io.File;
 
 /**
@@ -32,45 +32,48 @@ import java.io.File;
  */
 class Uploader extends AbsFileer<UploadEntity, UploadTaskEntity> {
 
-  Uploader(IUploadListener listener, UploadTaskEntity taskEntity) {
-    super(listener, taskEntity);
-    mTempFile = new File(mEntity.getFilePath());
-  }
-
-  /**
-   * 检查任务是否是新任务，新任务条件：
-   * 1、文件不存在
-   * 2、记录文件不存在
-   * 3、记录文件缺失或不匹配
-   * 4、数据库记录不存在
-   * 5、不支持断点，则是新任务
-   */
-  protected void checkTask() {
-    mConfigFile = new File(CommonUtil.getFileConfigPath(false, mEntity.getFileName()));
-    if (!mTaskEntity.isSupportBP) {
-      isNewTask = true;
-      return;
+    Uploader(IUploadListener listener, UploadTaskEntity taskEntity) {
+        super(listener, taskEntity);
+        mTempFile = new File(mEntity.getFilePath());
     }
-    if (!mConfigFile.exists()) { //记录文件被删除，则重新下载
-      isNewTask = true;
-      CommonUtil.createFile(mConfigFile.getPath());
-    } else if (DbEntity.findFirst(UploadEntity.class, "filePath=?", mEntity.getFilePath())
-        == null) {
-      isNewTask = true;
-    } else {
-      isNewTask = checkConfigFile();
+
+    /**
+     * 检查任务是否是新任务，新任务条件：
+     * 1、文件不存在
+     * 2、记录文件不存在
+     * 3、记录文件缺失或不匹配
+     * 4、数据库记录不存在
+     * 5、不支持断点，则是新任务
+     */
+    protected void checkTask() {
+        mConfigFile = new File(CommonUtil.getFileConfigPath(false, mEntity.getFileName()));
+        if (!mTaskEntity.isSupportBP) {
+            isNewTask = true;
+            return;
+        }
+        if (!mConfigFile.exists()) { //记录文件被删除，则重新下载
+            isNewTask = true;
+            CommonUtil.createFile(mConfigFile.getPath());
+        } else if (DbEntity.findFirst(UploadEntity.class, "filePath=?", mEntity.getFilePath())
+                == null) {
+            isNewTask = true;
+        } else {
+            isNewTask = checkConfigFile();
+        }
     }
-  }
 
-  @Override protected void handleNewTask() {
+    @Override
+    protected void handleNewTask() {
 
-  }
+    }
 
-  @Override protected int getNewTaskThreadNum() {
-    return 1;
-  }
+    @Override
+    protected int getNewTaskThreadNum() {
+        return 1;
+    }
 
-  @Override protected AbsThreadTask selectThreadTask(SubThreadConfig<UploadTaskEntity> config) {
+    @Override
+    protected AbsThreadTask selectThreadTask(SubThreadConfig<UploadTaskEntity> config) {
         return new HttpThreadTask(mConstance, (IUploadListener) mListener, config);
-  }
+    }
 }

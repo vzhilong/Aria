@@ -22,16 +22,17 @@ import com.arialyy.aria.core.inf.AbsGroupTaskEntity;
  * 停止任务组的命令
  */
 class GroupStopCmd<T extends AbsGroupTaskEntity> extends AbsGroupCmd<T> {
-  /**
-   * @param targetName 创建任务的对象名
-   */
-  GroupStopCmd(String targetName, T entity) {
-    super(targetName, entity);
-  }
-
-  @Override public void executeCmd() {
-    if (checkTask()) {
-      tempTask.stopSubTask(childUrl);
+    /**
+     * @param targetName 创建任务的对象名
+     */
+    GroupStopCmd(String targetName, T entity) {
+        super(targetName, entity);
     }
-  }
+
+    @Override
+    public void executeCmd() {
+        if (checkTask()) {
+            tempTask.stopSubTask(childUrl);
+        }
+    }
 }

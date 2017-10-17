@@ -17,9 +17,10 @@
 package com.arialyy.aria.core.command.normal;
 
 import android.util.Log;
+
 import com.arialyy.aria.core.inf.AbsTask;
-import com.arialyy.aria.core.inf.IEntity;
 import com.arialyy.aria.core.inf.AbsTaskEntity;
+import com.arialyy.aria.core.inf.IEntity;
 
 /**
  * Created by lyy on 2016/8/22.
@@ -27,18 +28,19 @@ import com.arialyy.aria.core.inf.AbsTaskEntity;
  */
 class AddCmd<T extends AbsTaskEntity> extends AbsNormalCmd<T> {
 
-  AddCmd(String targetName, T entity, int taskType) {
-    super(targetName, entity, taskType);
-  }
-
-  @Override public void executeCmd() {
-    if (!canExeCmd) return;
-    AbsTask task = getTask();
-    if (task == null) {
-      mTaskEntity.getEntity().setState(IEntity.STATE_WAIT);
-      createTask();
-    } else {
-      Log.w(TAG, "添加命令执行失败，【该任务已经存在】");
+    AddCmd(String targetName, T entity, int taskType) {
+        super(targetName, entity, taskType);
     }
-  }
+
+    @Override
+    public void executeCmd() {
+        if (!canExeCmd) return;
+        AbsTask task = getTask();
+        if (task == null) {
+            mTaskEntity.getEntity().setState(IEntity.STATE_WAIT);
+            createTask();
+        } else {
+            Log.w(TAG, "添加命令执行失败，【该任务已经存在】");
+        }
+    }
 }

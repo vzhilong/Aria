@@ -72,7 +72,6 @@ public class AriaManager {
     private static final String TAG = "AriaManager";
     private static final String DOWNLOAD = "_download";
     private static final String UPLOAD = "_upload";
-    public static Context APP;
     @SuppressLint("StaticFieldLeak")
     private static volatile AriaManager INSTANCE = null;
     private Map<String, IReceiver> mReceivers = new ConcurrentHashMap<>();
@@ -80,17 +79,22 @@ public class AriaManager {
     private Configuration.DownloadConfig mDConfig;
     private Configuration.UploadConfig mUConfig;
 
-    private AriaManager(Context context) {
-        DbUtil.init(context.getApplicationContext());
-        APP = context.getApplicationContext();
-        regAppLifeCallback(context);
+    public static Application APP;
+
+    private AriaManager() {
+        DbUtil.init(APP);
+        regAppLifeCallback(APP);
         initConfig();
     }
 
-    public static AriaManager getInstance(Context context) {
+    public static void init(Application app) {
+        APP = app;
+    }
+
+    public static AriaManager getInstance() {
         if (INSTANCE == null) {
             synchronized (LOCK) {
-                INSTANCE = new AriaManager(context);
+                INSTANCE = new AriaManager();
             }
         }
         return INSTANCE;

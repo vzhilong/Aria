@@ -22,6 +22,7 @@ import com.arialyy.aria.core.inf.AbsTaskEntity;
 import com.arialyy.aria.core.upload.UploadTaskEntity;
 import com.arialyy.aria.orm.DbEntity;
 import com.arialyy.aria.util.CommonUtil;
+
 import java.util.List;
 
 /**
@@ -29,61 +30,62 @@ import java.util.List;
  * 删除所有任务，并且删除所有回掉
  */
 public class CancelAllCmd<T extends AbsTaskEntity> extends AbsNormalCmd<T> {
-  /**
-   * removeFile {@code true} 删除已经下载完成的任务，不仅删除下载记录，还会删除已经下载完成的文件，{@code false}
-   * 如果文件已经下载完成，只删除下载记录
-   */
-  public boolean removeFile = false;
+    /**
+     * removeFile {@code true} 删除已经下载完成的任务，不仅删除下载记录，还会删除已经下载完成的文件，{@code false}
+     * 如果文件已经下载完成，只删除下载记录
+     */
+    public boolean removeFile = false;
 
-  /**
-   * @param targetName 产生任务的对象名
-   */
-  CancelAllCmd(String targetName, T entity, int taskType) {
-    super(targetName, entity, taskType);
-  }
-
-  @Override public void executeCmd() {
-    removeAll();
-    if (mTaskEntity instanceof DownloadTaskEntity
-        || mTaskEntity instanceof DownloadGroupTaskEntity) {
-      handleDownloadRemove();
-      handleDownloadGroupRemove();
-    } else if (mTaskEntity instanceof UploadTaskEntity) {
-      handleUploadRemove();
-      handleUploadRemove();
+    /**
+     * @param targetName 产生任务的对象名
+     */
+    CancelAllCmd(String targetName, T entity, int taskType) {
+        super(targetName, entity, taskType);
     }
-  }
 
-  /**
-   * 处理下载任务组的删除操作
-   */
-  private void handleDownloadGroupRemove() {
-    List<DownloadGroupTaskEntity> allEntity = DbEntity.findAllData(DownloadGroupTaskEntity.class);
-    if (allEntity == null || allEntity.size() == 0) return;
-    for (DownloadGroupTaskEntity entity : allEntity) {
-      CommonUtil.delDownloadGroupTaskConfig(removeFile, entity);
+    @Override
+    public void executeCmd() {
+        removeAll();
+        if (mTaskEntity instanceof DownloadTaskEntity
+                || mTaskEntity instanceof DownloadGroupTaskEntity) {
+            handleDownloadRemove();
+            handleDownloadGroupRemove();
+        } else if (mTaskEntity instanceof UploadTaskEntity) {
+            handleUploadRemove();
+            handleUploadRemove();
+        }
     }
-  }
 
-  /**
-   * 处理上传的删除
-   */
-  private void handleUploadRemove() {
-    List<UploadTaskEntity> allEntity = DbEntity.findAllData(UploadTaskEntity.class);
-    if (allEntity == null || allEntity.size() == 0) return;
-    for (UploadTaskEntity entity : allEntity) {
-      CommonUtil.delUploadTaskConfig(removeFile, entity);
+    /**
+     * 处理下载任务组的删除操作
+     */
+    private void handleDownloadGroupRemove() {
+        List<DownloadGroupTaskEntity> allEntity = DbEntity.findAllData(DownloadGroupTaskEntity.class);
+        if (allEntity == null || allEntity.size() == 0) return;
+        for (DownloadGroupTaskEntity entity : allEntity) {
+            CommonUtil.delDownloadGroupTaskConfig(removeFile, entity);
+        }
     }
-  }
 
-  /**
-   * 处理下载的删除
-   */
-  private void handleDownloadRemove() {
-    List<DownloadTaskEntity> allEntity = DbEntity.findAllData(DownloadTaskEntity.class);
-    if (allEntity == null || allEntity.size() == 0) return;
-    for (DownloadTaskEntity entity : allEntity) {
-      CommonUtil.delDownloadTaskConfig(removeFile, entity);
+    /**
+     * 处理上传的删除
+     */
+    private void handleUploadRemove() {
+        List<UploadTaskEntity> allEntity = DbEntity.findAllData(UploadTaskEntity.class);
+        if (allEntity == null || allEntity.size() == 0) return;
+        for (UploadTaskEntity entity : allEntity) {
+            CommonUtil.delUploadTaskConfig(removeFile, entity);
+        }
     }
-  }
+
+    /**
+     * 处理下载的删除
+     */
+    private void handleDownloadRemove() {
+        List<DownloadTaskEntity> allEntity = DbEntity.findAllData(DownloadTaskEntity.class);
+        if (allEntity == null || allEntity.size() == 0) return;
+        for (DownloadTaskEntity entity : allEntity) {
+            CommonUtil.delDownloadTaskConfig(removeFile, entity);
+        }
+    }
 }

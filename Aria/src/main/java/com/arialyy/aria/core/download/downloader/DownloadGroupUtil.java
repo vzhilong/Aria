@@ -16,11 +16,13 @@
 package com.arialyy.aria.core.download.downloader;
 
 import android.util.SparseArray;
+
 import com.arialyy.aria.core.common.IUtil;
 import com.arialyy.aria.core.common.OnFileInfoCallback;
 import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
 import com.arialyy.aria.core.download.DownloadTaskEntity;
 import com.arialyy.aria.core.inf.IEntity;
+
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,105 +32,110 @@ import java.util.concurrent.Executors;
  * 任务组下载工具
  */
 public class DownloadGroupUtil extends AbsGroupUtil implements IUtil {
-  private final String TAG = "DownloadGroupUtil";
-  private ExecutorService mInfoPool;
+    private final String TAG = "DownloadGroupUtil";
+    private ExecutorService mInfoPool;
 
-  /**
-   * 文件信息回调组
-   */
-  private SparseArray<OnFileInfoCallback> mFileInfoCallbacks = new SparseArray<>();
+    /**
+     * 文件信息回调组
+     */
+    private SparseArray<OnFileInfoCallback> mFileInfoCallbacks = new SparseArray<>();
 
-  public DownloadGroupUtil(IDownloadGroupListener listener, DownloadGroupTaskEntity taskEntity) {
-    super(listener, taskEntity);
-    mInfoPool = Executors.newCachedThreadPool();
-  }
-
-  @Override public void onCancel() {
-    super.onCancel();
-    if (!mInfoPool.isShutdown()) {
-      mInfoPool.shutdown();
+    public DownloadGroupUtil(IDownloadGroupListener listener, DownloadGroupTaskEntity taskEntity) {
+        super(listener, taskEntity);
+        mInfoPool = Executors.newCachedThreadPool();
     }
-  }
 
-  @Override protected void onStop() {
-    super.onStop();
-    if (!mInfoPool.isShutdown()) {
-      mInfoPool.shutdown();
-    }
-  }
-
-  @Override protected void onStart() {
-    super.onStart();
-    Set<String> keys = mExeMap.keySet();
-    int i = 0;
-    for (String key : keys) {
-      DownloadTaskEntity taskEntity = mExeMap.get(key);
-      if (taskEntity != null) {
-        if (taskEntity.getState() != IEntity.STATE_FAIL
-            && taskEntity.getState() != IEntity.STATE_WAIT) {
-          createChildDownload(taskEntity);
-          i++;
-        } else {
-          mInfoPool.execute(createFileInfoThread(taskEntity));
+    @Override
+    public void onCancel() {
+        super.onCancel();
+        if (!mInfoPool.isShutdown()) {
+            mInfoPool.shutdown();
         }
-      }
     }
-    if (i != 0 && i == mExeMap.size()) startRunningFlow();
-    if (mCurrentLocation == mTotalLen) {
-      mListener.onComplete();
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (!mInfoPool.isShutdown()) {
+            mInfoPool.shutdown();
+        }
     }
-  }
 
-  /**
-   * 创建文件信息获取线程
-   */
-  private HttpFileInfoThread createFileInfoThread(DownloadTaskEntity taskEntity) {
-    OnFileInfoCallback callback = mFileInfoCallbacks.get(taskEntity.hashCode());
-
-    if (callback == null) {
-      callback = new OnFileInfoCallback() {
-        int failNum = 0;
-
-        @Override public void onComplete(String url, int code) {
-          DownloadTaskEntity te = mExeMap.get(url);
-          if (te != null) {
-            if (isNeedLoadFileSize) {
-              mTotalLen += te.getEntity().getFileSize();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Set<String> keys = mExeMap.keySet();
+        int i = 0;
+        for (String key : keys) {
+            DownloadTaskEntity taskEntity = mExeMap.get(key);
+            if (taskEntity != null) {
+                if (taskEntity.getState() != IEntity.STATE_FAIL
+                        && taskEntity.getState() != IEntity.STATE_WAIT) {
+                    createChildDownload(taskEntity);
+                    i++;
+                } else {
+                    mInfoPool.execute(createFileInfoThread(taskEntity));
+                }
             }
-            createChildDownload(te);
-          }
-          mInitNum++;
-          if (mInitNum + mInitFailNum >= mTaskEntity.getEntity().getSubTask().size()
-              || !isNeedLoadFileSize) {
-            startRunningFlow();
-            updateFileSize();
-          }
         }
-
-        @Override public void onFail(String url, String errorMsg) {
-          DownloadTaskEntity te = mExeMap.get(url);
-          if (te != null) {
-            mFailMap.put(url, te);
-            mFileInfoCallbacks.put(te.hashCode(), this);
-          }
-          //404链接不重试下载
-          if (failNum < 10 && !errorMsg.contains("错误码：404") && !errorMsg.contains(
-              "UnknownHostException")) {
-            mInfoPool.execute(createFileInfoThread(te));
-          } else {
-            mInitFailNum++;
-            mActualTaskNum--;
-            if (mActualTaskNum < 0) mActualTaskNum = 0;
-          }
-          failNum++;
-          if (mInitNum + mInitFailNum >= mTaskEntity.getEntity().getSubTask().size()
-              || !isNeedLoadFileSize) {
-            startRunningFlow();
-            updateFileSize();
-          }
+        if (i != 0 && i == mExeMap.size()) startRunningFlow();
+        if (mCurrentLocation == mTotalLen) {
+            mListener.onComplete();
         }
-      };
     }
-    return new HttpFileInfoThread(taskEntity, callback);
-  }
+
+    /**
+     * 创建文件信息获取线程
+     */
+    private HttpFileInfoThread createFileInfoThread(DownloadTaskEntity taskEntity) {
+        OnFileInfoCallback callback = mFileInfoCallbacks.get(taskEntity.hashCode());
+
+        if (callback == null) {
+            callback = new OnFileInfoCallback() {
+                int failNum = 0;
+
+                @Override
+                public void onComplete(String url, int code) {
+                    DownloadTaskEntity te = mExeMap.get(url);
+                    if (te != null) {
+                        if (isNeedLoadFileSize) {
+                            mTotalLen += te.getEntity().getFileSize();
+                        }
+                        createChildDownload(te);
+                    }
+                    mInitNum++;
+                    if (mInitNum + mInitFailNum >= mTaskEntity.getEntity().getSubTask().size()
+                            || !isNeedLoadFileSize) {
+                        startRunningFlow();
+                        updateFileSize();
+                    }
+                }
+
+                @Override
+                public void onFail(String url, String errorMsg) {
+                    DownloadTaskEntity te = mExeMap.get(url);
+                    if (te != null) {
+                        mFailMap.put(url, te);
+                        mFileInfoCallbacks.put(te.hashCode(), this);
+                    }
+                    //404链接不重试下载
+                    if (failNum < 10 && !errorMsg.contains("错误码：404") && !errorMsg.contains(
+                            "UnknownHostException")) {
+                        mInfoPool.execute(createFileInfoThread(te));
+                    } else {
+                        mInitFailNum++;
+                        mActualTaskNum--;
+                        if (mActualTaskNum < 0) mActualTaskNum = 0;
+                    }
+                    failNum++;
+                    if (mInitNum + mInitFailNum >= mTaskEntity.getEntity().getSubTask().size()
+                            || !isNeedLoadFileSize) {
+                        startRunningFlow();
+                        updateFileSize();
+                    }
+                }
+            };
+        }
+        return new HttpFileInfoThread(taskEntity, callback);
+    }
 }

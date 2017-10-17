@@ -24,45 +24,45 @@ import com.arialyy.aria.core.inf.IDownloadListener;
  */
 public interface IDownloadGroupListener extends IDownloadListener {
 
-  /**
-   * 子任务预处理
-   */
-  void onSubPre(DownloadEntity subEntity);
+    /**
+     * 子任务预处理
+     */
+    void onSubPre(DownloadEntity subEntity);
 
-  /**
-   * 子任务支持断点回调
-   *
-   * @param support true,支持；false 不支持
-   */
-  void supportBreakpoint(boolean support, DownloadEntity subEntity);
+    /**
+     * 子任务支持断点回调
+     *
+     * @param support true,支持；false 不支持
+     */
+    void supportBreakpoint(boolean support, DownloadEntity subEntity);
 
-  /**
-   * 子任务开始下载\恢复下载
-   */
-  void onSubStart(DownloadEntity subEntity);
+    /**
+     * 子任务开始下载\恢复下载
+     */
+    void onSubStart(DownloadEntity subEntity);
 
-  /**
-   * 子任务停止下载
-   */
-  void onSubStop(DownloadEntity subEntity);
+    /**
+     * 子任务停止下载
+     */
+    void onSubStop(DownloadEntity subEntity);
 
-  /**
-   * 子任务下载完成
-   */
-  void onSubComplete(DownloadEntity subEntity);
+    /**
+     * 子任务下载完成
+     */
+    void onSubComplete(DownloadEntity subEntity);
 
-  /**
-   * 子任务下载失败
-   */
-  void onSubFail(DownloadEntity subEntity);
+    /**
+     * 子任务下载失败
+     */
+    void onSubFail(DownloadEntity subEntity);
 
-  /**
-   * 子任务取消下载
-   */
-  void onSubCancel(DownloadEntity subEntity);
+    /**
+     * 子任务取消下载
+     */
+    void onSubCancel(DownloadEntity subEntity);
 
-  /**
-   * 子任务执行中
-   */
-  void onSubRunning(DownloadEntity subEntity);
+    /**
+     * 子任务执行中
+     */
+    void onSubRunning(DownloadEntity subEntity);
 }
