@@ -65,34 +65,16 @@ public class DownloadTask extends AbsNormalTask<DownloadTaskEntity> {
         return mTaskEntity.getEntity();
     }
 
-    /**
-     * 获取当前下载任务的下载地址
-     *
-     * @see DownloadTask#getKey()
-     */
-    @Deprecated
-    public String getDownloadUrl() {
-        return mEntity.getUrl();
-    }
 
     @Override
     public String getKey() {
         return mEntity.getUrl();
     }
 
-    /**
-     * 任务下载状态
-     *
-     * @see DownloadTask#isRunning()
-     */
-    @Deprecated
-    public boolean isDownloading() {
-        return mUtil.isRunning();
-    }
 
     @Override
     public boolean isRunning() {
-        return isDownloading();
+        return mUtil.isRunning();
     }
 
     public DownloadEntity getDownloadEntity() {
