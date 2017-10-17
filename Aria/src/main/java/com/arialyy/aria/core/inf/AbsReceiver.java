@@ -21,10 +21,10 @@ package com.arialyy.aria.core.inf;
  */
 
 public abstract class AbsReceiver<ENTITY extends AbsEntity> implements IReceiver<ENTITY> {
-  public String targetName;
-  public Object obj;
-  /**
-   * 当dialog、dialogFragment、popupwindow已经被设置了关闭监听时，需要手动移除receiver
-   */
-  public boolean needRmReceiver = false;
+    public String targetName;
+    public Object obj;
+    /**
+     * 当dialog、dialogFragment、popupwindow已经被设置了关闭监听时，需要手动移除receiver
+     */
+    public boolean needRmReceiver = false;
 }

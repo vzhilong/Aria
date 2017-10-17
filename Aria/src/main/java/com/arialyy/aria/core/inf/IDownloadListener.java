@@ -21,15 +21,15 @@ package com.arialyy.aria.core.inf;
  */
 public interface IDownloadListener extends IEventListener {
 
-  /**
-   * 预处理完成,准备下载---开始下载之间
-   */
-  void onPostPre(long fileSize);
+    /**
+     * 预处理完成,准备下载---开始下载之间
+     */
+    void onPostPre(long fileSize);
 
-  /**
-   * 支持断点回调
-   *
-   * @param support true,支持；false 不支持
-   */
-  void supportBreakpoint(boolean support);
+    /**
+     * 支持断点回调
+     *
+     * @param support true,支持；false 不支持
+     */
+    void supportBreakpoint(boolean support);
 }

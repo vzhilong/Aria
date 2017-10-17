@@ -20,9 +20,9 @@ package com.arialyy.aria.exception;
  * Aria 文件异常
  */
 public class FileException extends NullPointerException {
-  private static final String ARIA_FILE_EXCEPTION = "Aria Exception:";
+    private static final String ARIA_FILE_EXCEPTION = "Aria Exception:";
 
-  public FileException(String detailMessage) {
-    super(ARIA_FILE_EXCEPTION + detailMessage);
-  }
+    public FileException(String detailMessage) {
+        super(ARIA_FILE_EXCEPTION + detailMessage);
+    }
 }

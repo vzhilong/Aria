@@ -27,32 +27,32 @@ import com.arialyy.aria.core.upload.UploadEntity;
  */
 public class ErrorHelp {
 
-  /**
-   * 保存错误信息
-   *
-   * @param taskType 任务类型
-   * @param entity 任务实体
-   * @param msg 错误提示
-   * @param ex 异常
-   */
-  public static void saveError(String taskType, AbsEntity entity, String msg, String ex) {
-    ErrorEntity errorEntity = new ErrorEntity();
-    errorEntity.insertTime = System.currentTimeMillis();
-    errorEntity.err = ex;
-    errorEntity.msg = msg;
-    errorEntity.taskType = taskType;
-    String name = "";
-    String key = entity.getKey();
-    if (entity instanceof DownloadEntity) {
-      name = ((DownloadEntity) entity).getFileName();
-    } else if (entity instanceof DownloadGroupEntity) {
-      name = ((DownloadGroupEntity) entity).getGroupName();
-    } else if (entity instanceof UploadEntity) {
-      name = ((UploadEntity) entity).getFileName();
-    }
+    /**
+     * 保存错误信息
+     *
+     * @param taskType 任务类型
+     * @param entity   任务实体
+     * @param msg      错误提示
+     * @param ex       异常
+     */
+    public static void saveError(String taskType, AbsEntity entity, String msg, String ex) {
+        ErrorEntity errorEntity = new ErrorEntity();
+        errorEntity.insertTime = System.currentTimeMillis();
+        errorEntity.err = ex;
+        errorEntity.msg = msg;
+        errorEntity.taskType = taskType;
+        String name = "";
+        String key = entity.getKey();
+        if (entity instanceof DownloadEntity) {
+            name = ((DownloadEntity) entity).getFileName();
+        } else if (entity instanceof DownloadGroupEntity) {
+            name = ((DownloadGroupEntity) entity).getGroupName();
+        } else if (entity instanceof UploadEntity) {
+            name = ((UploadEntity) entity).getFileName();
+        }
 
-    errorEntity.taskName = name;
-    errorEntity.key = key;
-    errorEntity.insert();
-  }
+        errorEntity.taskName = name;
+        errorEntity.key = key;
+        errorEntity.insert();
+    }
 }

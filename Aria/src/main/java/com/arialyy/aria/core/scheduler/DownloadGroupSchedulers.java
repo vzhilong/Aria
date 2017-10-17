@@ -16,7 +16,6 @@
 package com.arialyy.aria.core.scheduler;
 
 import com.arialyy.aria.core.AriaManager;
-import com.arialyy.aria.core.download.DownloadGroupEntity;
 import com.arialyy.aria.core.download.DownloadGroupTask;
 import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
 import com.arialyy.aria.core.queue.DownloadGroupTaskQueue;
@@ -26,24 +25,25 @@ import com.arialyy.aria.core.queue.DownloadGroupTaskQueue;
  * 任务组调度器
  */
 public class DownloadGroupSchedulers extends
-    AbsSchedulers<DownloadGroupTaskEntity, DownloadGroupTask, DownloadGroupTaskQueue> {
-  private final String TAG = "DownloadGroupSchedulers";
-  private static volatile DownloadGroupSchedulers INSTANCE = null;
+        AbsSchedulers<DownloadGroupTaskEntity, DownloadGroupTask, DownloadGroupTaskQueue> {
+    private static volatile DownloadGroupSchedulers INSTANCE = null;
+    private final String TAG = "DownloadGroupSchedulers";
 
-  private DownloadGroupSchedulers() {
-    mQueue = DownloadGroupTaskQueue.getInstance();
-  }
-
-  public static DownloadGroupSchedulers getInstance() {
-    if (INSTANCE == null) {
-      synchronized (AriaManager.LOCK) {
-        INSTANCE = new DownloadGroupSchedulers();
-      }
+    private DownloadGroupSchedulers() {
+        mQueue = DownloadGroupTaskQueue.getInstance();
     }
-    return INSTANCE;
-  }
 
-  @Override String getProxySuffix() {
-    return "$$DownloadGroupListenerProxy";
-  }
+    public static DownloadGroupSchedulers getInstance() {
+        if (INSTANCE == null) {
+            synchronized (AriaManager.LOCK) {
+                INSTANCE = new DownloadGroupSchedulers();
+            }
+        }
+        return INSTANCE;
+    }
+
+    @Override
+    String getProxySuffix() {
+        return "$$DownloadGroupListenerProxy";
+    }
 }

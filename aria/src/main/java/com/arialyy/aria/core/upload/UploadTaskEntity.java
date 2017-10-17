@@ -17,6 +17,7 @@ package com.arialyy.aria.core.upload;
 
 import com.arialyy.aria.core.inf.AbsNormalTaskEntity;
 import com.arialyy.aria.orm.OneToOne;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,20 +26,22 @@ import java.util.Map;
  * 上传任务实体
  */
 public class UploadTaskEntity extends AbsNormalTaskEntity<UploadEntity> {
-  public String attachment;  //文件上传需要的key
-  public String contentType = "multipart/form-data"; //上传的文件类型
-  public String userAgent = "User-Agent";
-  @OneToOne(table = UploadEntity.class, key = "filePath") public UploadEntity entity;
+    public String attachment;  //文件上传需要的key
+    public String contentType = "multipart/form-data"; //上传的文件类型
+    public String userAgent = "User-Agent";
+    @OneToOne(table = UploadEntity.class, key = "filePath")
+    public UploadEntity entity;
 
-  /**
-   * 文件上传表单
-   */
-  public Map<String, String> formFields = new HashMap<>();
+    /**
+     * 文件上传表单
+     */
+    public Map<String, String> formFields = new HashMap<>();
 
-  public UploadTaskEntity() {
-  }
+    public UploadTaskEntity() {
+    }
 
-  @Override public UploadEntity getEntity() {
-    return entity;
-  }
+    @Override
+    public UploadEntity getEntity() {
+        return entity;
+    }
 }

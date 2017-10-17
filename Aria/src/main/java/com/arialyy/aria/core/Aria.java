@@ -26,14 +26,9 @@ import android.app.Service;
 import android.content.Context;
 import android.os.Build;
 import android.widget.PopupWindow;
-import com.arialyy.annotations.Download;
-import com.arialyy.annotations.Upload;
+
 import com.arialyy.aria.core.download.DownloadReceiver;
-import com.arialyy.aria.core.scheduler.IDownloadSchedulerListener;
-import com.arialyy.aria.core.scheduler.ISchedulerListener;
-import com.arialyy.aria.core.download.DownloadTask;
 import com.arialyy.aria.core.upload.UploadReceiver;
-import com.arialyy.aria.core.upload.UploadTask;
 
 /**
  * Created by lyy on 2016/12/1.
@@ -58,60 +53,61 @@ import com.arialyy.aria.core.upload.UploadTask;
  *   </code>
  * </pre>
  */
-@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) public class Aria {
+@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+public class Aria {
 
-  private Aria() {
-  }
-
-  /**
-   * 初始化下载
-   *
-   * @param obj 支持类型有【Activity、Service、Application、DialogFragment、Fragment、PopupWindow、Dialog】
-   */
-  public static DownloadReceiver download(Object obj) {
-    return get(obj).download(obj);
-  }
-
-  /**
-   * 初始化上传
-   *
-   * @param obj 支持类型有【Activity、Service、Application、DialogFragment、Fragment、PopupWindow、Dialog】
-   */
-  public static UploadReceiver upload(Object obj) {
-    return get(obj).upload(obj);
-  }
-
-  /**
-   * 处理通用事件
-   *
-   * @param obj 支持类型有【Activity、Service、Application、DialogFragment、Fragment、PopupWindow、Dialog】
-   */
-  public static AriaManager get(Object obj) {
-    if (obj instanceof Activity || obj instanceof Service || obj instanceof Application) {
-      return AriaManager.getInstance((Context) obj);
-    } else if (obj instanceof DialogFragment) {
-      DialogFragment dialog = (DialogFragment) obj;
-      return AriaManager.getInstance(
-          Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? dialog.getContext()
-              : dialog.getActivity());
-    } else if (obj instanceof android.support.v4.app.Fragment) {
-      android.support.v4.app.Fragment fragment = (android.support.v4.app.Fragment) obj;
-      return AriaManager.getInstance(
-          Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? fragment.getContext()
-              : fragment.getActivity());
-    } else if (obj instanceof Fragment) {
-      Fragment fragment = (Fragment) obj;
-      return AriaManager.getInstance(
-          Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? fragment.getContext()
-              : fragment.getActivity());
-    } else if (obj instanceof PopupWindow) {
-      PopupWindow popupWindow = (PopupWindow) obj;
-      return AriaManager.getInstance(popupWindow.getContentView().getContext());
-    } else if (obj instanceof Dialog) {
-      Dialog dialog = (Dialog) obj;
-      return AriaManager.getInstance(dialog.getContext());
-    } else {
-      throw new IllegalArgumentException("不支持的类型");
+    private Aria() {
     }
-  }
+
+    /**
+     * 初始化下载
+     *
+     * @param obj 支持类型有【Activity、Service、Application、DialogFragment、Fragment、PopupWindow、Dialog】
+     */
+    public static DownloadReceiver download(Object obj) {
+        return get(obj).download(obj);
+    }
+
+    /**
+     * 初始化上传
+     *
+     * @param obj 支持类型有【Activity、Service、Application、DialogFragment、Fragment、PopupWindow、Dialog】
+     */
+    public static UploadReceiver upload(Object obj) {
+        return get(obj).upload(obj);
+    }
+
+    /**
+     * 处理通用事件
+     *
+     * @param obj 支持类型有【Activity、Service、Application、DialogFragment、Fragment、PopupWindow、Dialog】
+     */
+    public static AriaManager get(Object obj) {
+        if (obj instanceof Activity || obj instanceof Service || obj instanceof Application) {
+            return AriaManager.getInstance((Context) obj);
+        } else if (obj instanceof DialogFragment) {
+            DialogFragment dialog = (DialogFragment) obj;
+            return AriaManager.getInstance(
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? dialog.getContext()
+                            : dialog.getActivity());
+        } else if (obj instanceof android.support.v4.app.Fragment) {
+            android.support.v4.app.Fragment fragment = (android.support.v4.app.Fragment) obj;
+            return AriaManager.getInstance(
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? fragment.getContext()
+                            : fragment.getActivity());
+        } else if (obj instanceof Fragment) {
+            Fragment fragment = (Fragment) obj;
+            return AriaManager.getInstance(
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? fragment.getContext()
+                            : fragment.getActivity());
+        } else if (obj instanceof PopupWindow) {
+            PopupWindow popupWindow = (PopupWindow) obj;
+            return AriaManager.getInstance(popupWindow.getContentView().getContext());
+        } else if (obj instanceof Dialog) {
+            Dialog dialog = (Dialog) obj;
+            return AriaManager.getInstance(dialog.getContext());
+        } else {
+            throw new IllegalArgumentException("不支持的类型");
+        }
+    }
 }

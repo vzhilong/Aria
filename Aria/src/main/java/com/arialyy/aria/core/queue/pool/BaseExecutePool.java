@@ -18,9 +18,11 @@ package com.arialyy.aria.core.queue.pool;
 
 import android.text.TextUtils;
 import android.util.Log;
+
 import com.arialyy.aria.core.AriaManager;
 import com.arialyy.aria.core.inf.AbsTask;
 import com.arialyy.aria.util.CommonUtil;
+
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,175 +33,181 @@ import java.util.concurrent.TimeUnit;
  * 任务执行池，所有当前下载任务都该任务池中，默认下载大小为2
  */
 public class BaseExecutePool<TASK extends AbsTask> implements IPool<TASK> {
-  private final String TAG = "BaseExecutePool";
-  final long TIME_OUT = 1000;
-  ArrayBlockingQueue<TASK> mExecuteQueue;
-  Map<String, TASK> mExecuteMap;
-  int mSize;
+    final long TIME_OUT = 1000;
+    private final String TAG = "BaseExecutePool";
+    ArrayBlockingQueue<TASK> mExecuteQueue;
+    Map<String, TASK> mExecuteMap;
+    int mSize;
 
-  BaseExecutePool() {
-    mSize = getMaxSize();
-    mExecuteQueue = new ArrayBlockingQueue<>(mSize);
-    mExecuteMap = new ConcurrentHashMap<>();
-  }
+    BaseExecutePool() {
+        mSize = getMaxSize();
+        mExecuteQueue = new ArrayBlockingQueue<>(mSize);
+        mExecuteMap = new ConcurrentHashMap<>();
+    }
 
-  /**
-   * 获取最大任务数配置
-   *
-   * @return {@link AriaManager#getDownloadConfig()} {@link AriaManager#getUploadConfig()}，如果不设置，默认返回2
-   */
-  protected int getMaxSize() {
-    return 2;
-  }
+    /**
+     * 获取最大任务数配置
+     *
+     * @return {@link AriaManager#getDownloadConfig()} {@link AriaManager#getUploadConfig()}，如果不设置，默认返回2
+     */
+    protected int getMaxSize() {
+        return 2;
+    }
 
-  /**
-   * 获取所有正在执行的任务
-   */
-  public Map<String, TASK> getAllTask() {
-    return mExecuteMap;
-  }
+    /**
+     * 获取所有正在执行的任务
+     */
+    public Map<String, TASK> getAllTask() {
+        return mExecuteMap;
+    }
 
-  @Override public boolean putTask(TASK task) {
-    synchronized (AriaManager.LOCK) {
-      if (task == null) {
-        Log.e(TAG, "任务不能为空！！");
-        return false;
-      }
-      String url = task.getKey();
-      if (mExecuteQueue.contains(task)) {
-        Log.e(TAG, "队列中已经包含了该任务，任务key【" + url + "】");
-        return false;
-      } else {
-        if (mExecuteQueue.size() >= mSize) {
-          if (pollFirstTask()) {
-            return putNewTask(task);
-          }
-        } else {
-          return putNewTask(task);
+    @Override
+    public boolean putTask(TASK task) {
+        synchronized (AriaManager.LOCK) {
+            if (task == null) {
+                Log.e(TAG, "任务不能为空！！");
+                return false;
+            }
+            String url = task.getKey();
+            if (mExecuteQueue.contains(task)) {
+                Log.e(TAG, "队列中已经包含了该任务，任务key【" + url + "】");
+                return false;
+            } else {
+                if (mExecuteQueue.size() >= mSize) {
+                    if (pollFirstTask()) {
+                        return putNewTask(task);
+                    }
+                } else {
+                    return putNewTask(task);
+                }
+            }
         }
-      }
-    }
-    return false;
-  }
-
-  /**
-   * 设置执行队列最大任务数
-   *
-   * @param maxNum 下载数
-   */
-  public void setMaxNum(int maxNum) {
-    synchronized (AriaManager.LOCK) {
-      try {
-        ArrayBlockingQueue<TASK> temp = new ArrayBlockingQueue<>(maxNum);
-        TASK task;
-        while ((task = mExecuteQueue.poll(TIME_OUT, TimeUnit.MICROSECONDS)) != null) {
-          temp.offer(task);
-        }
-        mExecuteQueue = temp;
-        mSize = maxNum;
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }
-  }
-
-  /**
-   * 添加新任务
-   *
-   * @param newTask 新任务
-   */
-  boolean putNewTask(TASK newTask) {
-    synchronized (AriaManager.LOCK) {
-      String url = newTask.getKey();
-      boolean s = mExecuteQueue.offer(newTask);
-      Log.w(TAG, "任务添加" + (s ? "成功" : "失败，【" + url + "】"));
-      if (s) {
-        mExecuteMap.put(CommonUtil.keyToHashKey(url), newTask);
-      }
-      return s;
-    }
-  }
-
-  /**
-   * 队列满时，将移除下载队列中的第一个任务
-   */
-  boolean pollFirstTask() {
-    synchronized (AriaManager.LOCK) {
-      try {
-        TASK oldTask = mExecuteQueue.poll(TIME_OUT, TimeUnit.MICROSECONDS);
-        if (oldTask == null) {
-          Log.e(TAG, "移除任务失败");
-          return false;
-        }
-        oldTask.stop();
-        String key = CommonUtil.keyToHashKey(oldTask.getKey());
-        mExecuteMap.remove(key);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
         return false;
-      }
-      return true;
     }
-  }
 
-  @Override public TASK pollTask() {
-    synchronized (AriaManager.LOCK) {
-      try {
-        TASK task;
-        task = mExecuteQueue.poll(TIME_OUT, TimeUnit.MICROSECONDS);
-        if (task != null) {
-          String url = task.getKey();
-          mExecuteMap.remove(CommonUtil.keyToHashKey(url));
+    /**
+     * 设置执行队列最大任务数
+     *
+     * @param maxNum 下载数
+     */
+    public void setMaxNum(int maxNum) {
+        synchronized (AriaManager.LOCK) {
+            try {
+                ArrayBlockingQueue<TASK> temp = new ArrayBlockingQueue<>(maxNum);
+                TASK task;
+                while ((task = mExecuteQueue.poll(TIME_OUT, TimeUnit.MICROSECONDS)) != null) {
+                    temp.offer(task);
+                }
+                mExecuteQueue = temp;
+                mSize = maxNum;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        return task;
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-      return null;
     }
-  }
 
-  @Override public TASK getTask(String key) {
-    synchronized (AriaManager.LOCK) {
-      if (TextUtils.isEmpty(key)) {
-        Log.e(TAG, "请传入有效的任务key");
-        return null;
-      }
-      return mExecuteMap.get(CommonUtil.keyToHashKey(key));
+    /**
+     * 添加新任务
+     *
+     * @param newTask 新任务
+     */
+    boolean putNewTask(TASK newTask) {
+        synchronized (AriaManager.LOCK) {
+            String url = newTask.getKey();
+            boolean s = mExecuteQueue.offer(newTask);
+            Log.w(TAG, "任务添加" + (s ? "成功" : "失败，【" + url + "】"));
+            if (s) {
+                mExecuteMap.put(CommonUtil.keyToHashKey(url), newTask);
+            }
+            return s;
+        }
     }
-  }
 
-  @Override public boolean removeTask(TASK task) {
-    synchronized (AriaManager.LOCK) {
-      if (task == null) {
-        Log.e(TAG, "任务不能为空");
-        return false;
-      } else {
-        return removeTask(task.getKey());
-      }
+    /**
+     * 队列满时，将移除下载队列中的第一个任务
+     */
+    boolean pollFirstTask() {
+        synchronized (AriaManager.LOCK) {
+            try {
+                TASK oldTask = mExecuteQueue.poll(TIME_OUT, TimeUnit.MICROSECONDS);
+                if (oldTask == null) {
+                    Log.e(TAG, "移除任务失败");
+                    return false;
+                }
+                oldTask.stop();
+                String key = CommonUtil.keyToHashKey(oldTask.getKey());
+                mExecuteMap.remove(key);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
     }
-  }
 
-  @Override public boolean removeTask(String key) {
-    synchronized (AriaManager.LOCK) {
-      if (TextUtils.isEmpty(key)) {
-        Log.e(TAG, "请传入有效的任务key");
-        return false;
-      }
-      String convertKey = CommonUtil.keyToHashKey(key);
-      TASK task = mExecuteMap.get(convertKey);
-      final int oldQueueSize = mExecuteQueue.size();
-      boolean isSuccess = mExecuteQueue.remove(task);
-      final int newQueueSize = mExecuteQueue.size();
-      if (isSuccess && newQueueSize != oldQueueSize) {
-        mExecuteMap.remove(convertKey);
-        return true;
-      }
-      return false;
+    @Override
+    public TASK pollTask() {
+        synchronized (AriaManager.LOCK) {
+            try {
+                TASK task;
+                task = mExecuteQueue.poll(TIME_OUT, TimeUnit.MICROSECONDS);
+                if (task != null) {
+                    String url = task.getKey();
+                    mExecuteMap.remove(CommonUtil.keyToHashKey(url));
+                }
+                return task;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
-  }
 
-  @Override public int size() {
-    return mExecuteQueue.size();
-  }
+    @Override
+    public TASK getTask(String key) {
+        synchronized (AriaManager.LOCK) {
+            if (TextUtils.isEmpty(key)) {
+                Log.e(TAG, "请传入有效的任务key");
+                return null;
+            }
+            return mExecuteMap.get(CommonUtil.keyToHashKey(key));
+        }
+    }
+
+    @Override
+    public boolean removeTask(TASK task) {
+        synchronized (AriaManager.LOCK) {
+            if (task == null) {
+                Log.e(TAG, "任务不能为空");
+                return false;
+            } else {
+                return removeTask(task.getKey());
+            }
+        }
+    }
+
+    @Override
+    public boolean removeTask(String key) {
+        synchronized (AriaManager.LOCK) {
+            if (TextUtils.isEmpty(key)) {
+                Log.e(TAG, "请传入有效的任务key");
+                return false;
+            }
+            String convertKey = CommonUtil.keyToHashKey(key);
+            TASK task = mExecuteMap.get(convertKey);
+            final int oldQueueSize = mExecuteQueue.size();
+            boolean isSuccess = mExecuteQueue.remove(task);
+            final int newQueueSize = mExecuteQueue.size();
+            if (isSuccess && newQueueSize != oldQueueSize) {
+                mExecuteMap.remove(convertKey);
+                return true;
+            }
+            return false;
+        }
+    }
+
+    @Override
+    public int size() {
+        return mExecuteQueue.size();
+    }
 }

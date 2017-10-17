@@ -16,8 +16,10 @@
 package com.arialyy.aria.core;
 
 import android.util.Log;
+
 import com.arialyy.aria.core.inf.AbsTask;
 import com.arialyy.aria.util.CommonUtil;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,59 +29,59 @@ import java.util.concurrent.ConcurrentHashMap;
  * 任务管理器
  */
 public class TaskManager {
-  private static final String TAG = "TaskManager";
-  private static volatile TaskManager INSTANCE = null;
-  private Map<String, AbsTask> map = new ConcurrentHashMap<>();
+    private static final String TAG = "TaskManager";
+    private static volatile TaskManager INSTANCE = null;
+    private Map<String, AbsTask> map = new ConcurrentHashMap<>();
 
-  public static TaskManager getInstance() {
-    if (INSTANCE == null) {
-      synchronized (AriaManager.LOCK) {
-        INSTANCE = new TaskManager();
-      }
+    private TaskManager() {
+
     }
-    return INSTANCE;
-  }
 
-  private TaskManager() {
-
-  }
-
-  /**
-   * 管理器添加任务
-   *
-   * @param key 任务的key，下载为保存路径，任务组为任务组名，上传为文件上传路径
-   * @param task 任务
-   * @return {@code true}添加成功
-   */
-  public boolean addTask(String key, AbsTask task) {
-    String hash = CommonUtil.keyToHashKey(key);
-    if (map.keySet().contains(hash)) {
-      Log.e(TAG, "任务【" + key + "】已存在");
-      return false;
+    public static TaskManager getInstance() {
+        if (INSTANCE == null) {
+            synchronized (AriaManager.LOCK) {
+                INSTANCE = new TaskManager();
+            }
+        }
+        return INSTANCE;
     }
-    map.put(CommonUtil.keyToHashKey(key), task);
-    return true;
-  }
 
-  /**
-   * 移除任务
-   *
-   * @param key 任务的key，下载为保存路径，任务组为任务组名，上传为文件上传路径
-   */
-  public void removeTask(String key) {
-    String hash = CommonUtil.keyToHashKey(key);
-    for (Iterator<Map.Entry<String, AbsTask>> iter = map.entrySet().iterator(); iter.hasNext(); ) {
-      Map.Entry<String, AbsTask> entry = iter.next();
-      if (entry.getKey().equals(hash)) iter.remove();
+    /**
+     * 管理器添加任务
+     *
+     * @param key  任务的key，下载为保存路径，任务组为任务组名，上传为文件上传路径
+     * @param task 任务
+     * @return {@code true}添加成功
+     */
+    public boolean addTask(String key, AbsTask task) {
+        String hash = CommonUtil.keyToHashKey(key);
+        if (map.keySet().contains(hash)) {
+            Log.e(TAG, "任务【" + key + "】已存在");
+            return false;
+        }
+        map.put(CommonUtil.keyToHashKey(key), task);
+        return true;
     }
-  }
 
-  /**
-   * 通过key获取任务
-   *
-   * @return 入梅找不到任务，返回null，否则返回key对应的任务
-   */
-  public AbsTask getTask(String key) {
-    return map.get(CommonUtil.keyToHashKey(key));
-  }
+    /**
+     * 移除任务
+     *
+     * @param key 任务的key，下载为保存路径，任务组为任务组名，上传为文件上传路径
+     */
+    public void removeTask(String key) {
+        String hash = CommonUtil.keyToHashKey(key);
+        for (Iterator<Map.Entry<String, AbsTask>> iter = map.entrySet().iterator(); iter.hasNext(); ) {
+            Map.Entry<String, AbsTask> entry = iter.next();
+            if (entry.getKey().equals(hash)) iter.remove();
+        }
+    }
+
+    /**
+     * 通过key获取任务
+     *
+     * @return 入梅找不到任务，返回null，否则返回key对应的任务
+     */
+    public AbsTask getTask(String key) {
+        return map.get(CommonUtil.keyToHashKey(key));
+    }
 }

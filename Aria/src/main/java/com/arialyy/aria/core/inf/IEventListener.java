@@ -21,45 +21,46 @@ package com.arialyy.aria.core.inf;
  */
 public interface IEventListener {
 
-  /**
-   * 预处理，有时有些地址链接比较慢，这时可以先在这个地方出来一些界面上的UI，如按钮的状态
-   */
-  void onPre();
+    /**
+     * 预处理，有时有些地址链接比较慢，这时可以先在这个地方出来一些界面上的UI，如按钮的状态
+     */
+    void onPre();
 
-  /**
-   * 开始
-   */
-  void onStart(long startLocation);
+    /**
+     * 开始
+     */
+    void onStart(long startLocation);
 
-  /**
-   * 恢复位置
-   */
-  void onResume(long resumeLocation);
+    /**
+     * 恢复位置
+     */
+    void onResume(long resumeLocation);
 
-  /**
-   * 下载监听
-   */
-  void onProgress(long currentLocation);
+    /**
+     * 下载监听
+     */
+    void onProgress(long currentLocation);
 
-  /**
-   * 停止
-   */
-  void onStop(long stopLocation);
+    /**
+     * 停止
+     */
+    void onStop(long stopLocation);
 
-  /**
-   * 下载完成
-   */
-  void onComplete();
+    /**
+     * 下载完成
+     */
+    void onComplete();
 
-  /**
-   * 取消下载
-   */
-  void onCancel();
+    /**
+     * 取消下载
+     */
+    void onCancel();
 
-  /**
-   * 下载失败
-   * @param needRetry 是否需要重试{@code true} 需要
-   */
-  void onFail(boolean needRetry);
+    /**
+     * 下载失败
+     *
+     * @param needRetry 是否需要重试{@code true} 需要
+     */
+    void onFail(boolean needRetry);
 
 }

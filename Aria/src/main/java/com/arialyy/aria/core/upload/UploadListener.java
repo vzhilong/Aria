@@ -21,35 +21,43 @@ import com.arialyy.aria.core.inf.IUploadListener;
  * Created by lyy on 2017/2/23.
  */
 class UploadListener implements IUploadListener {
-  @Override public void onPre() {
+    @Override
+    public void onPre() {
 
-  }
+    }
 
-  @Override public void onStart(long startLocation) {
+    @Override
+    public void onStart(long startLocation) {
 
-  }
+    }
 
-  @Override public void onResume(long resumeLocation) {
+    @Override
+    public void onResume(long resumeLocation) {
 
-  }
+    }
 
-  @Override public void onStop(long stopLocation) {
+    @Override
+    public void onStop(long stopLocation) {
 
-  }
+    }
 
-  @Override public void onProgress(long currentLocation) {
+    @Override
+    public void onProgress(long currentLocation) {
 
-  }
+    }
 
-  @Override public void onCancel() {
+    @Override
+    public void onCancel() {
 
-  }
+    }
 
-  @Override public void onComplete() {
+    @Override
+    public void onComplete() {
 
-  }
+    }
 
-  @Override public void onFail(boolean needRetry) {
+    @Override
+    public void onFail(boolean needRetry) {
 
-  }
+    }
 }

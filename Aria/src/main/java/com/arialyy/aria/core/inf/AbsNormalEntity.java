@@ -17,94 +17,94 @@ package com.arialyy.aria.core.inf;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.arialyy.aria.orm.DbEntity;
-import com.arialyy.aria.orm.Ignore;
 
 /**
  * Created by AriaL on 2017/6/3.
  */
 public abstract class AbsNormalEntity extends AbsEntity implements Parcelable {
 
-  /**
-   * 服务器地址
-   */
-  private String url = "";
+    /**
+     * 服务器地址
+     */
+    private String url = "";
 
-  /**
-   * 文件名
-   */
-  private String fileName = "";
+    /**
+     * 文件名
+     */
+    private String fileName = "";
 
-  /**
-   * 是否是任务组里面的下载实体
-   */
-  private boolean isGroupChild = false;
+    /**
+     * 是否是任务组里面的下载实体
+     */
+    private boolean isGroupChild = false;
 
-  private boolean isRedirect = false; //是否重定向
-  private String redirectUrl = ""; //重定向链接
+    private boolean isRedirect = false; //是否重定向
+    private String redirectUrl = ""; //重定向链接
 
-  public String getUrl() {
-    return url;
-  }
+    public AbsNormalEntity() {
+    }
 
-  public void setUrl(String url) {
-    this.url = url;
-  }
+    protected AbsNormalEntity(Parcel in) {
+        super(in);
+        this.url = in.readString();
+        this.fileName = in.readString();
+        this.isGroupChild = in.readByte() != 0;
+        this.isRedirect = in.readByte() != 0;
+        this.redirectUrl = in.readString();
+    }
 
-  public boolean isGroupChild() {
-    return isGroupChild;
-  }
+    public String getUrl() {
+        return url;
+    }
 
-  public void setGroupChild(boolean groupChild) {
-    isGroupChild = groupChild;
-  }
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-  public String getFileName() {
-    return fileName;
-  }
+    public boolean isGroupChild() {
+        return isGroupChild;
+    }
 
-  public void setFileName(String fileName) {
-    this.fileName = fileName;
-  }
+    public void setGroupChild(boolean groupChild) {
+        isGroupChild = groupChild;
+    }
 
-  public boolean isRedirect() {
-    return isRedirect;
-  }
+    public String getFileName() {
+        return fileName;
+    }
 
-  public void setRedirect(boolean redirect) {
-    isRedirect = redirect;
-  }
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-  public String getRedirectUrl() {
-    return redirectUrl;
-  }
+    public boolean isRedirect() {
+        return isRedirect;
+    }
 
-  public void setRedirectUrl(String redirectUrl) {
-    this.redirectUrl = redirectUrl;
-  }
+    public void setRedirect(boolean redirect) {
+        isRedirect = redirect;
+    }
 
-  public AbsNormalEntity() {
-  }
+    public String getRedirectUrl() {
+        return redirectUrl;
+    }
 
-  @Override public int describeContents() {
-    return 0;
-  }
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
+    }
 
-  @Override public void writeToParcel(Parcel dest, int flags) {
-    super.writeToParcel(dest, flags);
-    dest.writeString(this.url);
-    dest.writeString(this.fileName);
-    dest.writeByte(this.isGroupChild ? (byte) 1 : (byte) 0);
-    dest.writeByte(this.isRedirect ? (byte) 1 : (byte) 0);
-    dest.writeString(this.redirectUrl);
-  }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-  protected AbsNormalEntity(Parcel in) {
-    super(in);
-    this.url = in.readString();
-    this.fileName = in.readString();
-    this.isGroupChild = in.readByte() != 0;
-    this.isRedirect = in.readByte() != 0;
-    this.redirectUrl = in.readString();
-  }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.url);
+        dest.writeString(this.fileName);
+        dest.writeByte(this.isGroupChild ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isRedirect ? (byte) 1 : (byte) 0);
+        dest.writeString(this.redirectUrl);
+    }
 }

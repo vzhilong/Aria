@@ -20,75 +20,75 @@ package com.arialyy.aria.core.inf;
  */
 public interface ITask<TASK_ENTITY extends AbsTaskEntity> {
 
-  /**
-   * 获取下载状态
-   */
-  int getState();
+    /**
+     * 获取下载状态
+     */
+    int getState();
 
-  /**
-   * 获取扩展字段
-   */
-  String getExtendField();
+    /**
+     * 获取扩展字段
+     */
+    String getExtendField();
 
-  /**
-   * 唯一标识符，DownloadTask 为下载地址，UploadTask 为文件路径
-   */
-  String getKey();
+    /**
+     * 唯一标识符，DownloadTask 为下载地址，UploadTask 为文件路径
+     */
+    String getKey();
 
-  /**
-   * 任务是否正在执行
-   *
-   * @return true，正在执行；
-   */
-  boolean isRunning();
+    /**
+     * 任务是否正在执行
+     *
+     * @return true，正在执行；
+     */
+    boolean isRunning();
 
-  /**
-   * 获取信息实体
-   */
-  TASK_ENTITY getTaskEntity();
+    /**
+     * 获取信息实体
+     */
+    TASK_ENTITY getTaskEntity();
 
-  void start();
+    void start();
 
-  void stop();
+    void stop();
 
-  void cancel();
+    void cancel();
 
-  /**
-   * 原始byte速度
-   */
-  long getSpeed();
+    /**
+     * 原始byte速度
+     */
+    long getSpeed();
 
-  /**
-   * 转换单位后的速度
-   */
-  String getConvertSpeed();
+    /**
+     * 转换单位后的速度
+     */
+    String getConvertSpeed();
 
-  /**
-   * 获取百分比进度
-   */
-  int getPercent();
+    /**
+     * 获取百分比进度
+     */
+    int getPercent();
 
-  /**
-   * 原始文件byte长度
-   */
-  long getFileSize();
+    /**
+     * 原始文件byte长度
+     */
+    long getFileSize();
 
-  /**
-   * 转换单位后的文件长度
-   */
-  String getConvertFileSize();
+    /**
+     * 转换单位后的文件长度
+     */
+    String getConvertFileSize();
 
-  /**
-   * 获取当前进度
-   */
-  long getCurrentProgress();
+    /**
+     * 获取当前进度
+     */
+    long getCurrentProgress();
 
-  /**
-   * 获取单位转换后的进度
-   *
-   * @return 返回 3mb
-   */
-  String getConvertCurrentProgress();
+    /**
+     * 获取单位转换后的进度
+     *
+     * @return 返回 3mb
+     */
+    String getConvertCurrentProgress();
 
-  void setTargetName(String targetName);
+    void setTargetName(String targetName);
 }

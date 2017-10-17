@@ -16,8 +16,6 @@
 package com.arialyy.aria.core.download;
 
 import com.arialyy.aria.core.inf.AbsNormalTaskEntity;
-import com.arialyy.aria.core.inf.AbsTaskEntity;
-import com.arialyy.aria.orm.Ignore;
 import com.arialyy.aria.orm.OneToOne;
 
 /**
@@ -26,27 +24,29 @@ import com.arialyy.aria.orm.OneToOne;
  */
 public class DownloadTaskEntity extends AbsNormalTaskEntity<DownloadEntity> {
 
-  @OneToOne(table = DownloadEntity.class, key = "downloadPath") public DownloadEntity entity;
+    @OneToOne(table = DownloadEntity.class, key = "downloadPath")
+    public DownloadEntity entity;
 
-  /**
-   * 任务的url
-   */
-  public String url = "";
+    /**
+     * 任务的url
+     */
+    public String url = "";
 
-  /**
-   * 所属的任务组组名，如果不属于任务组，则为null
-   */
-  public String groupName = "";
+    /**
+     * 所属的任务组组名，如果不属于任务组，则为null
+     */
+    public String groupName = "";
 
-  /**
-   * 该任务是否属于任务组
-   */
-  public boolean isGroupTask = false;
+    /**
+     * 该任务是否属于任务组
+     */
+    public boolean isGroupTask = false;
 
-  public DownloadTaskEntity() {
-  }
+    public DownloadTaskEntity() {
+    }
 
-  @Override public DownloadEntity getEntity() {
-    return entity;
-  }
+    @Override
+    public DownloadEntity getEntity() {
+        return entity;
+    }
 }

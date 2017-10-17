@@ -16,6 +16,7 @@
 package com.arialyy.aria.orm;
 
 import android.text.TextUtils;
+
 import com.arialyy.aria.core.ErrorEntity;
 import com.arialyy.aria.core.download.DownloadEntity;
 import com.arialyy.aria.core.download.DownloadGroupEntity;
@@ -23,6 +24,7 @@ import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
 import com.arialyy.aria.core.download.DownloadTaskEntity;
 import com.arialyy.aria.core.upload.UploadEntity;
 import com.arialyy.aria.core.upload.UploadTaskEntity;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,26 +33,26 @@ import java.util.Map;
  * 数据库配置信息
  */
 class DBConfig {
-  static Map<String, Class> mapping = new HashMap<>();
-  static String DB_NAME;
-  static int VERSION = 16;
+    static Map<String, Class> mapping = new HashMap<>();
+    static String DB_NAME;
+    static int VERSION = 16;
 
-  static {
-    if (TextUtils.isEmpty(DB_NAME)) {
-      DB_NAME = "AriaLyyDb";
+    static {
+        if (TextUtils.isEmpty(DB_NAME)) {
+            DB_NAME = "AriaLyyDb";
+        }
+        if (VERSION == -1) {
+            VERSION = 1;
+        }
     }
-    if (VERSION == -1) {
-      VERSION = 1;
-    }
-  }
 
-  static {
-    mapping.put("DownloadEntity", DownloadEntity.class);
-    mapping.put("DownloadGroupEntity", DownloadGroupEntity.class);
-    mapping.put("DownloadTaskEntity", DownloadTaskEntity.class);
-    mapping.put("DownloadGroupTaskEntity", DownloadGroupTaskEntity.class);
-    mapping.put("UploadEntity", UploadEntity.class);
-    mapping.put("UploadTaskEntity", UploadTaskEntity.class);
-    mapping.put("ErrorEntity", ErrorEntity.class);
-  }
+    static {
+        mapping.put("DownloadEntity", DownloadEntity.class);
+        mapping.put("DownloadGroupEntity", DownloadGroupEntity.class);
+        mapping.put("DownloadTaskEntity", DownloadTaskEntity.class);
+        mapping.put("DownloadGroupTaskEntity", DownloadGroupTaskEntity.class);
+        mapping.put("UploadEntity", UploadEntity.class);
+        mapping.put("UploadTaskEntity", UploadTaskEntity.class);
+        mapping.put("ErrorEntity", ErrorEntity.class);
+    }
 }

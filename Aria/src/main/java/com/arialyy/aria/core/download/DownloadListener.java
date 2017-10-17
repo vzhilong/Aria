@@ -16,6 +16,7 @@
 package com.arialyy.aria.core.download;
 
 import android.os.Handler;
+
 import com.arialyy.aria.core.inf.IDownloadListener;
 
 /**
@@ -23,13 +24,14 @@ import com.arialyy.aria.core.inf.IDownloadListener;
  * 普通任务下载的事件监听器
  */
 class DownloadListener extends BaseDListener<DownloadEntity, DownloadTaskEntity, DownloadTask>
-    implements IDownloadListener {
-  DownloadListener(DownloadTask task, Handler outHandler) {
-    super(task, outHandler);
-  }
+        implements IDownloadListener {
+    DownloadListener(DownloadTask task, Handler outHandler) {
+        super(task, outHandler);
+    }
 
-  @Override public void supportBreakpoint(boolean support) {
+    @Override
+    public void supportBreakpoint(boolean support) {
 
-  }
+    }
 
 }

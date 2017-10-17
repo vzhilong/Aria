@@ -25,6 +25,8 @@ import java.lang.annotation.Target;
  * Created by lyy on 2015/11/2.
  * 表ID字段指定
  */
-@Target(ElementType.FIELD) @Retention(RetentionPolicy.RUNTIME) public @interface Primary {
-  int value() default -1;
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Primary {
+    int value() default -1;
 }

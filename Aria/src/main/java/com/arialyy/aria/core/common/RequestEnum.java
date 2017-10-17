@@ -20,12 +20,12 @@ package com.arialyy.aria.core.common;
  * url请求方式，目前支持GET、POST
  */
 public enum RequestEnum {
-  GET("GET"), POST("POST");
+    GET("GET"), POST("POST");
 
-  public String name;
+    public String name;
 
-  RequestEnum(String name) {
-    this.name = name;
-  }
+    RequestEnum(String name) {
+        this.name = name;
+    }
 
 }

@@ -16,71 +16,73 @@
 package com.arialyy.aria.core.inf;
 
 import android.support.annotation.NonNull;
+
 import com.arialyy.aria.core.common.RequestEnum;
+
 import java.util.Map;
 
 /**
  * Created by AriaL on 2017/6/29.
  */
 public interface ITarget<TARGET extends ITarget> {
-  /**
-   * 任务文件大小
-   */
-  long getSize();
+    /**
+     * 任务文件大小
+     */
+    long getSize();
 
-  /**
-   * 转换后的大小
-   */
-  String getConvertSize();
+    /**
+     * 转换后的大小
+     */
+    String getConvertSize();
 
-  /**
-   * 获取任务进度百分比
-   */
-  int getPercent();
+    /**
+     * 获取任务进度百分比
+     */
+    int getPercent();
 
-  /**
-   * 获取任务进度，如果任务存在，则返回当前进度
-   */
-  long getCurrentProgress();
+    /**
+     * 获取任务进度，如果任务存在，则返回当前进度
+     */
+    long getCurrentProgress();
 
-  /**
-   * 给url请求添加头部
-   *
-   * @param key 头部key
-   * @param header 头部value
-   */
-  TARGET addHeader(@NonNull String key, @NonNull String header) ;
+    /**
+     * 给url请求添加头部
+     *
+     * @param key    头部key
+     * @param header 头部value
+     */
+    TARGET addHeader(@NonNull String key, @NonNull String header);
 
-  /**
-   * 给url请求添加头部
-   */
-  TARGET addHeaders(Map<String, String> headers);
+    /**
+     * 给url请求添加头部
+     */
+    TARGET addHeaders(Map<String, String> headers);
 
-  /**
-   * 设置请求类型
-   *
-   * @param requestEnum {@link RequestEnum}
-   */
-  TARGET setRequestMode(RequestEnum requestEnum);
+    /**
+     * 设置请求类型
+     *
+     * @param requestEnum {@link RequestEnum}
+     */
+    TARGET setRequestMode(RequestEnum requestEnum);
 
-  /**
-   * 开始下载
-   */
-  void start();
+    /**
+     * 开始下载
+     */
+    void start();
 
-  /**
-   * 停止下载
-   */
-  void stop();
+    /**
+     * 停止下载
+     */
+    void stop();
 
-  /**
-   * 恢复下载
-   */
-  void resume();
+    /**
+     * 恢复下载
+     */
+    void resume();
 
-  /**
-   * 取消下载
-   */
-  void cancel();
+    /**
+     * 取消下载
+     */
+    void cancel();
 
 }

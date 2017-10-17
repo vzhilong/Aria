@@ -18,8 +18,8 @@ package com.arialyy.aria.core.queue;
 
 import android.text.TextUtils;
 import android.util.Log;
+
 import com.arialyy.aria.core.AriaManager;
-import com.arialyy.aria.core.download.DownloadGroupEntity;
 import com.arialyy.aria.core.download.DownloadGroupTask;
 import com.arialyy.aria.core.download.DownloadGroupTaskEntity;
 import com.arialyy.aria.core.queue.pool.BaseCachePool;
@@ -32,45 +32,49 @@ import com.arialyy.aria.core.scheduler.DownloadGroupSchedulers;
  * 任务组下载队列
  */
 public class DownloadGroupTaskQueue
-    extends AbsTaskQueue<DownloadGroupTask, DownloadGroupTaskEntity> {
-  private static volatile DownloadGroupTaskQueue INSTANCE = null;
+        extends AbsTaskQueue<DownloadGroupTask, DownloadGroupTaskEntity> {
+    private static volatile DownloadGroupTaskQueue INSTANCE = null;
 
-  private final String TAG = "DownloadGroupTaskQueue";
+    private final String TAG = "DownloadGroupTaskQueue";
 
-  public static DownloadGroupTaskQueue getInstance() {
-    if (INSTANCE == null) {
-      synchronized (AriaManager.LOCK) {
-        INSTANCE = new DownloadGroupTaskQueue();
-      }
+    private DownloadGroupTaskQueue() {
     }
-    return INSTANCE;
-  }
 
-  private DownloadGroupTaskQueue() {
-  }
-
-  @Override BaseCachePool<DownloadGroupTask> setCachePool() {
-    return DownloadSharePool.getInstance().cachePool;
-  }
-
-  @Override BaseExecutePool<DownloadGroupTask> setExecutePool() {
-    return DownloadSharePool.getInstance().executePool;
-  }
-
-  @Override public DownloadGroupTask createTask(String targetName, DownloadGroupTaskEntity entity) {
-    DownloadGroupTask task = null;
-    if (!TextUtils.isEmpty(targetName)) {
-      task = (DownloadGroupTask) TaskFactory.getInstance()
-          .createTask(targetName, entity, DownloadGroupSchedulers.getInstance());
-      entity.key = entity.getEntity().getGroupName();
-      mCachePool.putTask(task);
-    } else {
-      Log.e(TAG, "target name 为 null！！");
+    public static DownloadGroupTaskQueue getInstance() {
+        if (INSTANCE == null) {
+            synchronized (AriaManager.LOCK) {
+                INSTANCE = new DownloadGroupTaskQueue();
+            }
+        }
+        return INSTANCE;
     }
-    return task;
-  }
 
-  @Override public int getConfigMaxNum() {
-    return AriaManager.getInstance(AriaManager.APP).getDownloadConfig().oldMaxTaskNum;
-  }
+    @Override
+    BaseCachePool<DownloadGroupTask> setCachePool() {
+        return DownloadSharePool.getInstance().cachePool;
+    }
+
+    @Override
+    BaseExecutePool<DownloadGroupTask> setExecutePool() {
+        return DownloadSharePool.getInstance().executePool;
+    }
+
+    @Override
+    public DownloadGroupTask createTask(String targetName, DownloadGroupTaskEntity entity) {
+        DownloadGroupTask task = null;
+        if (!TextUtils.isEmpty(targetName)) {
+            task = (DownloadGroupTask) TaskFactory.getInstance()
+                    .createTask(targetName, entity, DownloadGroupSchedulers.getInstance());
+            entity.key = entity.getEntity().getGroupName();
+            mCachePool.putTask(task);
+        } else {
+            Log.e(TAG, "target name 为 null！！");
+        }
+        return task;
+    }
+
+    @Override
+    public int getConfigMaxNum() {
+        return AriaManager.getInstance(AriaManager.APP).getDownloadConfig().oldMaxTaskNum;
+    }
 }

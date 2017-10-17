@@ -21,14 +21,14 @@ package com.arialyy.aria.core.inf;
  */
 public class GroupSendParams<GROUP_TASK extends AbsGroupTask, ENTITY extends AbsNormalEntity> {
 
-  public GROUP_TASK groupTask;
-  public ENTITY entity;
+    public GROUP_TASK groupTask;
+    public ENTITY entity;
 
-  public GroupSendParams() {
-  }
+    public GroupSendParams() {
+    }
 
-  public GroupSendParams(GROUP_TASK groupTask, ENTITY entity) {
-    this.groupTask = groupTask;
-    this.entity = entity;
-  }
+    public GroupSendParams(GROUP_TASK groupTask, ENTITY entity) {
+        this.groupTask = groupTask;
+        this.entity = entity;
+    }
 }

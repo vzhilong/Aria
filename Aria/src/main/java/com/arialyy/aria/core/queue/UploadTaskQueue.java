@@ -18,12 +18,12 @@ package com.arialyy.aria.core.queue;
 
 import android.text.TextUtils;
 import android.util.Log;
+
 import com.arialyy.aria.core.AriaManager;
 import com.arialyy.aria.core.queue.pool.BaseCachePool;
 import com.arialyy.aria.core.queue.pool.BaseExecutePool;
 import com.arialyy.aria.core.queue.pool.UploadSharePool;
 import com.arialyy.aria.core.scheduler.UploadSchedulers;
-import com.arialyy.aria.core.upload.UploadEntity;
 import com.arialyy.aria.core.upload.UploadTask;
 import com.arialyy.aria.core.upload.UploadTaskEntity;
 
@@ -32,43 +32,47 @@ import com.arialyy.aria.core.upload.UploadTaskEntity;
  * 上传任务队列
  */
 public class UploadTaskQueue extends AbsTaskQueue<UploadTask, UploadTaskEntity> {
-  private static final String TAG = "UploadTaskQueue";
-  private static volatile UploadTaskQueue INSTANCE = null;
+    private static final String TAG = "UploadTaskQueue";
+    private static volatile UploadTaskQueue INSTANCE = null;
 
-  public static UploadTaskQueue getInstance() {
-    if (INSTANCE == null) {
-      synchronized (AriaManager.LOCK) {
-        INSTANCE = new UploadTaskQueue();
-      }
+    private UploadTaskQueue() {
     }
-    return INSTANCE;
-  }
 
-  private UploadTaskQueue() {
-  }
-
-  @Override BaseCachePool<UploadTask> setCachePool() {
-    return UploadSharePool.getInstance().cachePool;
-  }
-
-  @Override BaseExecutePool<UploadTask> setExecutePool() {
-    return UploadSharePool.getInstance().executePool;
-  }
-
-  @Override public int getConfigMaxNum() {
-    return AriaManager.getInstance(AriaManager.APP).getUploadConfig().oldMaxTaskNum;
-  }
-
-  @Override public UploadTask createTask(String targetName, UploadTaskEntity entity) {
-    UploadTask task = null;
-    if (!TextUtils.isEmpty(targetName)) {
-      task = (UploadTask) TaskFactory.getInstance()
-          .createTask(targetName, entity, UploadSchedulers.getInstance());
-      entity.key = entity.getEntity().getFilePath();
-      mCachePool.putTask(task);
-    } else {
-      Log.e(TAG, "target name 为 null是！！");
+    public static UploadTaskQueue getInstance() {
+        if (INSTANCE == null) {
+            synchronized (AriaManager.LOCK) {
+                INSTANCE = new UploadTaskQueue();
+            }
+        }
+        return INSTANCE;
     }
-    return task;
-  }
+
+    @Override
+    BaseCachePool<UploadTask> setCachePool() {
+        return UploadSharePool.getInstance().cachePool;
+    }
+
+    @Override
+    BaseExecutePool<UploadTask> setExecutePool() {
+        return UploadSharePool.getInstance().executePool;
+    }
+
+    @Override
+    public int getConfigMaxNum() {
+        return AriaManager.getInstance(AriaManager.APP).getUploadConfig().oldMaxTaskNum;
+    }
+
+    @Override
+    public UploadTask createTask(String targetName, UploadTaskEntity entity) {
+        UploadTask task = null;
+        if (!TextUtils.isEmpty(targetName)) {
+            task = (UploadTask) TaskFactory.getInstance()
+                    .createTask(targetName, entity, UploadSchedulers.getInstance());
+            entity.key = entity.getEntity().getFilePath();
+            mCachePool.putTask(task);
+        } else {
+            Log.e(TAG, "target name 为 null是！！");
+        }
+        return task;
+    }
 }

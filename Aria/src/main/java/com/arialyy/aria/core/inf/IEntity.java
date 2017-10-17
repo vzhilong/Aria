@@ -21,40 +21,49 @@ import com.arialyy.aria.orm.Ignore;
  * Created by lyy on 2017/2/23.
  */
 public interface IEntity {
-  /**
-   * 其它状态
-   */
-  @Ignore int STATE_OTHER = -1;
-  /**
-   * 失败状态
-   */
-  @Ignore int STATE_FAIL = 0;
-  /**
-   * 完成状态
-   */
-  @Ignore int STATE_COMPLETE = 1;
-  /**
-   * 停止状态
-   */
-  @Ignore int STATE_STOP = 2;
-  /**
-   * 等待状态
-   */
-  @Ignore int STATE_WAIT = 3;
-  /**
-   * 下载中
-   */
-  @Ignore int STATE_RUNNING = 4;
-  /**
-   * 预处理
-   */
-  @Ignore int STATE_PRE = 5;
-  /**
-   * 预处理完成
-   */
-  @Ignore int STATE_POST_PRE = 6;
-  /**
-   * 取消下载
-   */
-  @Ignore int STATE_CANCEL = 7;
+    /**
+     * 其它状态
+     */
+    @Ignore
+    int STATE_OTHER = -1;
+    /**
+     * 失败状态
+     */
+    @Ignore
+    int STATE_FAIL = 0;
+    /**
+     * 完成状态
+     */
+    @Ignore
+    int STATE_COMPLETE = 1;
+    /**
+     * 停止状态
+     */
+    @Ignore
+    int STATE_STOP = 2;
+    /**
+     * 等待状态
+     */
+    @Ignore
+    int STATE_WAIT = 3;
+    /**
+     * 下载中
+     */
+    @Ignore
+    int STATE_RUNNING = 4;
+    /**
+     * 预处理
+     */
+    @Ignore
+    int STATE_PRE = 5;
+    /**
+     * 预处理完成
+     */
+    @Ignore
+    int STATE_POST_PRE = 6;
+    /**
+     * 取消下载
+     */
+    @Ignore
+    int STATE_CANCEL = 7;
 }

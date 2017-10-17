@@ -23,55 +23,56 @@ import com.arialyy.aria.orm.DbEntity;
  */
 public class ErrorEntity extends DbEntity {
 
-  /**
-   * 插入时间
-   */
-  public long insertTime;
+    /**
+     * 插入时间
+     */
+    public long insertTime;
 
-  /**
-   * 错误信息
-   */
-  public String err;
+    /**
+     * 错误信息
+     */
+    public String err;
 
-  /**
-   * 任务名
-   */
-  public String taskName;
+    /**
+     * 任务名
+     */
+    public String taskName;
 
-  /**
-   *任务类型
-   */
-  public String taskType;
+    /**
+     * 任务类型
+     */
+    public String taskType;
 
-  /**
-   * 提示
-   */
-  public String msg;
+    /**
+     * 提示
+     */
+    public String msg;
 
-  /**
-   * 任务key
-   */
-  public String key;
+    /**
+     * 任务key
+     */
+    public String key;
 
-  @Override public String toString() {
-    return "ErrorEntity{"
-        + "insertTime="
-        + insertTime
-        + ", err='"
-        + err
-        + '\''
-        + ", taskName='"
-        + taskName
-        + '\''
-        + ", taskType='"
-        + taskType
-        + '\''
-        + ", msg='"
-        + msg
-        + '\''
-        + ", key='"
-        + key
-        + '\''
-        + '}';
-  }
+    @Override
+    public String toString() {
+        return "ErrorEntity{"
+                + "insertTime="
+                + insertTime
+                + ", err='"
+                + err
+                + '\''
+                + ", taskName='"
+                + taskName
+                + '\''
+                + ", taskType='"
+                + taskType
+                + '\''
+                + ", msg='"
+                + msg
+                + '\''
+                + ", key='"
+                + key
+                + '\''
+                + '}';
+    }
 }

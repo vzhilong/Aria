@@ -19,6 +19,7 @@ import com.arialyy.aria.core.common.RequestEnum;
 import com.arialyy.aria.orm.DbEntity;
 import com.arialyy.aria.orm.Ignore;
 import com.arialyy.aria.orm.Primary;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,120 +28,126 @@ import java.util.Map;
  * 所有任务实体的父类
  */
 public abstract class AbsTaskEntity<ENTITY extends AbsEntity> extends DbEntity {
-  /**
-   * HTTP下载
-   */
-  public static final int HTTP = 0x11;
-  /**
-   * FTP当文件下载
-   */
+    /**
+     * HTTP下载
+     */
+    public static final int HTTP = 0x11;
+    /**
+     * FTP当文件下载
+     */
 //  public static final int FTP = 0x12;
-  /**
-   * FTP文件夹下载，为避免登录过多，子任务由单线程进行处理
-   */
+    /**
+     * FTP文件夹下载，为避免登录过多，子任务由单线程进行处理
+     */
 //  public static final int FTP_DIR = 0x13;
 
-  /**
-   * Task实体对应的key
-   */
-  @Primary public String key = "";
+    /**
+     * Task实体对应的key
+     */
+    @Primary
+    public String key = "";
 
-  /**
-   * 账号和密码
-   */
-  @Ignore public String userName, userPw, account, serverIp;
-  @Ignore public int port;
+    /**
+     * 账号和密码
+     */
+    @Ignore
+    public String userName, userPw, account, serverIp;
+    @Ignore
+    public int port;
 
-  /**
-   * 刷新信息 {@code true} 重新刷新下载信息
-   */
-  @Ignore public boolean refreshInfo = false;
+    /**
+     * 刷新信息 {@code true} 重新刷新下载信息
+     */
+    @Ignore
+    public boolean refreshInfo = false;
 
-  /**
-   * 是否是新任务，{@code true} 新任务
-   */
-  @Ignore public boolean isNewTask = false;
+    /**
+     * 是否是新任务，{@code true} 新任务
+     */
+    @Ignore
+    public boolean isNewTask = false;
 
-  /**
-   * 任务状态，和Entity的state同步
-   */
-  public int state = IEntity.STATE_WAIT;
+    /**
+     * 任务状态，和Entity的state同步
+     */
+    public int state = IEntity.STATE_WAIT;
 
-  /**
-   * 请求类型
-   * {@link AbsTaskEntity#HTTP}、{@link AbsTaskEntity#FTP}
-   */
-  public int requestType = HTTP;
+    /**
+     * 请求类型
+     * {@link AbsTaskEntity#HTTP}、{@link AbsTaskEntity#FTP}
+     */
+    public int requestType = HTTP;
 
-  /**
-   * http 请求头
-   */
-  public Map<String, String> headers = new HashMap<>();
+    /**
+     * http 请求头
+     */
+    public Map<String, String> headers = new HashMap<>();
 
-  /**
-   * 字符编码，默认为"utf-8"
-   */
-  public String charSet = "utf-8";
+    /**
+     * 字符编码，默认为"utf-8"
+     */
+    public String charSet = "utf-8";
 
-  /**
-   * 网络请求类型
-   */
-  public RequestEnum requestEnum = RequestEnum.GET;
+    /**
+     * 网络请求类型
+     */
+    public RequestEnum requestEnum = RequestEnum.GET;
 
-  /**
-   * 从header中含有的文件md5码信息所需要的key
-   */
-  public String md5Key = "Content-MD5";
+    /**
+     * 从header中含有的文件md5码信息所需要的key
+     */
+    public String md5Key = "Content-MD5";
 
-  /**
-   * 从header中获取文件描述信息所需要的key
-   */
-  public String dispositionKey = "Content-Disposition";
+    /**
+     * 从header中获取文件描述信息所需要的key
+     */
+    public String dispositionKey = "Content-Disposition";
 
-  /**
-   * 重定向后，从header中获取新url所需要的key
-   */
-  public String redirectUrlKey = "location";
+    /**
+     * 重定向后，从header中获取新url所需要的key
+     */
+    public String redirectUrlKey = "location";
 
-  /**
-   * 从Disposition获取的文件名说需要的key
-   */
-  public String dispositionFileKey = "attachment;filename";
+    /**
+     * 从Disposition获取的文件名说需要的key
+     */
+    public String dispositionFileKey = "attachment;filename";
 
-  /**
-   * 从header中含有的文件长度信息所需要的key
-   */
-  public String contentLength = "Content-Length";
+    /**
+     * 从header中含有的文件长度信息所需要的key
+     */
+    public String contentLength = "Content-Length";
 
-  /**
-   * 重定向链接
-   */
-  public String redirectUrl = "";
+    /**
+     * 重定向链接
+     */
+    public String redirectUrl = "";
 
-  /**
-   * {@code true}  删除任务数据库记录，并且删除已经下载完成的文件
-   * {@code false} 如果任务已经完成，只删除任务数据库记录
-   */
-  @Ignore public boolean removeFile = false;
+    /**
+     * {@code true}  删除任务数据库记录，并且删除已经下载完成的文件
+     * {@code false} 如果任务已经完成，只删除任务数据库记录
+     */
+    @Ignore
+    public boolean removeFile = false;
 
-  /**
-   * 是否支持断点, {@code true} 为支持断点
-   */
-  public boolean isSupportBP = true;
+    /**
+     * 是否支持断点, {@code true} 为支持断点
+     */
+    public boolean isSupportBP = true;
 
-  /**
-   * 状态码
-   */
-  public int code;
+    /**
+     * 状态码
+     */
+    public int code;
 
-  public abstract ENTITY getEntity();
+    public abstract ENTITY getEntity();
 
-  /**
-   * 获取任务下载状态
-   *
-   * @return {@link IEntity}
-   */
-  public int getState() {
-    return getEntity().getState();
-  }
+    /**
+     * 获取任务下载状态
+     *
+     * @return {@link IEntity}
+     */
+    public int getState() {
+        return getEntity().getState();
+    }
 }

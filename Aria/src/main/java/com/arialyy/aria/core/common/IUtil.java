@@ -22,45 +22,45 @@ package com.arialyy.aria.core.common;
  */
 public interface IUtil {
 
-  /**
-   * 获取文件大小
-   */
-  long getFileSize();
+    /**
+     * 获取文件大小
+     */
+    long getFileSize();
 
-  /**
-   * 获取当前下载位置
-   */
-  long getCurrentLocation();
+    /**
+     * 获取当前下载位置
+     */
+    long getCurrentLocation();
 
-  /**
-   * 是否正在下载
-   *
-   * @return true, 正在下载
-   */
-  boolean isRunning();
+    /**
+     * 是否正在下载
+     *
+     * @return true, 正在下载
+     */
+    boolean isRunning();
 
-  /**
-   * 取消下载
-   */
-  void cancel();
+    /**
+     * 取消下载
+     */
+    void cancel();
 
-  /**
-   * 停止下载
-   */
-  void stop();
+    /**
+     * 停止下载
+     */
+    void stop();
 
-  /**
-   * 开始下载
-   */
-  void start();
+    /**
+     * 开始下载
+     */
+    void start();
 
-  /**
-   * 从上次断点恢复下载
-   */
-  void resume();
+    /**
+     * 从上次断点恢复下载
+     */
+    void resume();
 
-  /**
-   * 设置最大下载速度
-   */
-  void setMaxSpeed(double maxSpeed);
+    /**
+     * 设置最大下载速度
+     */
+    void setMaxSpeed(double maxSpeed);
 }

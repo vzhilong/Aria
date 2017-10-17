@@ -18,7 +18,7 @@ package com.arialyy.aria.core.upload;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import com.arialyy.aria.core.download.DownloadEntity;
+
 import com.arialyy.aria.core.inf.AbsNormalTask;
 import com.arialyy.aria.core.scheduler.ISchedulers;
 import com.arialyy.aria.core.upload.uploader.SimpleUploadUtil;
@@ -28,83 +28,88 @@ import com.arialyy.aria.core.upload.uploader.SimpleUploadUtil;
  * 上传任务
  */
 public class UploadTask extends AbsNormalTask<UploadTaskEntity> {
-  private static final String TAG = "UploadTask";
+    private static final String TAG = "UploadTask";
 
-  private SimpleUploadUtil mUtil;
-  private BaseUListener<UploadEntity, UploadTaskEntity, UploadTask> mListener;
+    private SimpleUploadUtil mUtil;
+    private BaseUListener<UploadEntity, UploadTaskEntity, UploadTask> mListener;
 
-  private UploadTask(UploadTaskEntity taskEntity, Handler outHandler) {
-    mTaskEntity = taskEntity;
-    mOutHandler = outHandler;
-    mListener = new BaseUListener<>(this, mOutHandler);
-    mUtil = new SimpleUploadUtil(taskEntity, mListener);
-  }
-
-  @Override public String getKey() {
-    return mTaskEntity.getEntity().getFilePath();
-  }
-
-  @Override public boolean isRunning() {
-    return mUtil.isRunning();
-  }
-
-  public UploadEntity getEntity() {
-    return mTaskEntity.getEntity();
-  }
-
-  @Override public void start() {
-    if (mUtil.isRunning()) {
-      Log.d(TAG, "任务正在下载");
-    } else {
-      mUtil.start();
-    }
-  }
-
-  @Override public void stop() {
-    if (mUtil.isRunning()) {
-      mUtil.stop();
-    } else {
-      mListener.onStop(getCurrentProgress());
-    }
-  }
-
-  @Override public void cancel() {
-    if (!mUtil.isRunning()) {
-      mListener.onCancel();
-    }
-    mUtil.cancel();
-  }
-
-  public static class Builder {
-    private Handler mOutHandler;
-    private UploadTaskEntity mTaskEntity;
-    private String mTargetName;
-
-    public void setOutHandler(ISchedulers outHandler) {
-      try {
-        mOutHandler = new Handler(outHandler);
-      } catch (Exception e) {
-        e.printStackTrace();
-        mOutHandler = new Handler(Looper.getMainLooper(), outHandler);
-      }
+    private UploadTask(UploadTaskEntity taskEntity, Handler outHandler) {
+        mTaskEntity = taskEntity;
+        mOutHandler = outHandler;
+        mListener = new BaseUListener<>(this, mOutHandler);
+        mUtil = new SimpleUploadUtil(taskEntity, mListener);
     }
 
-    public void setUploadTaskEntity(UploadTaskEntity taskEntity) {
-      mTaskEntity = taskEntity;
+    @Override
+    public String getKey() {
+        return mTaskEntity.getEntity().getFilePath();
     }
 
-    public void setTargetName(String targetName) {
-      mTargetName = targetName;
+    @Override
+    public boolean isRunning() {
+        return mUtil.isRunning();
     }
 
-    public Builder() {
-
+    public UploadEntity getEntity() {
+        return mTaskEntity.getEntity();
     }
 
-    public UploadTask build() {
-      UploadTask task = new UploadTask(mTaskEntity, mOutHandler);
-      task.setTargetName(mTargetName);
-      return task;
+    @Override
+    public void start() {
+        if (mUtil.isRunning()) {
+            Log.d(TAG, "任务正在下载");
+        } else {
+            mUtil.start();
+        }
     }
-  }
+
+    @Override
+    public void stop() {
+        if (mUtil.isRunning()) {
+            mUtil.stop();
+        } else {
+            mListener.onStop(getCurrentProgress());
+        }
+    }
+
+    @Override
+    public void cancel() {
+        if (!mUtil.isRunning()) {
+            mListener.onCancel();
+        }
+        mUtil.cancel();
+    }
+
+    public static class Builder {
+        private Handler mOutHandler;
+        private UploadTaskEntity mTaskEntity;
+        private String mTargetName;
+
+        public Builder() {
+
+        }
+
+        public void setOutHandler(ISchedulers outHandler) {
+            try {
+                mOutHandler = new Handler(outHandler);
+            } catch (Exception e) {
+                e.printStackTrace();
+                mOutHandler = new Handler(Looper.getMainLooper(), outHandler);
+            }
+        }
+
+        public void setUploadTaskEntity(UploadTaskEntity taskEntity) {
+            mTaskEntity = taskEntity;
+        }
+
+        public void setTargetName(String targetName) {
+            mTargetName = targetName;
+        }
+
+        public UploadTask build() {
+            UploadTask task = new UploadTask(mTaskEntity, mOutHandler);
+            task.setTargetName(mTargetName);
+            return task;
+        }
+    }
 }

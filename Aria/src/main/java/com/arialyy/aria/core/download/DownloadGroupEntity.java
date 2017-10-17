@@ -16,9 +16,10 @@
 package com.arialyy.aria.core.download;
 
 import android.os.Parcel;
+
 import com.arialyy.aria.core.inf.AbsGroupEntity;
-import com.arialyy.aria.orm.NormalList;
 import com.arialyy.aria.orm.OneToMany;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,62 +29,65 @@ import java.util.List;
  */
 public class DownloadGroupEntity extends AbsGroupEntity {
 
-  @OneToMany(table = DownloadEntity.class, key = "groupName") private List<DownloadEntity> subtask =
-      new ArrayList<>();
+    public static final Creator<DownloadGroupEntity> CREATOR = new Creator<DownloadGroupEntity>() {
+        @Override
+        public DownloadGroupEntity createFromParcel(Parcel source) {
+            return new DownloadGroupEntity(source);
+        }
 
-  /**
-   * 任务组下载文件的文件夹地址
-   *
-   * @see DownloadGroupTarget#setDownloadDirPath(String)
-   */
-  private String dirPath = "";
+        @Override
+        public DownloadGroupEntity[] newArray(int size) {
+            return new DownloadGroupEntity[size];
+        }
+    };
+    @OneToMany(table = DownloadEntity.class, key = "groupName")
+    private List<DownloadEntity> subtask =
+            new ArrayList<>();
+    /**
+     * 任务组下载文件的文件夹地址
+     *
+     * @see DownloadGroupTarget#setDownloadDirPath(String)
+     */
+    private String dirPath = "";
 
-  public List<DownloadEntity> getSubTask() {
-    return subtask;
-  }
-
-  public void setSubTasks(List<DownloadEntity> subTasks) {
-    this.subtask = subTasks;
-  }
-
-  public String getDirPath() {
-    return dirPath;
-  }
-
-  public void setDirPath(String dirPath) {
-    this.dirPath = dirPath;
-  }
-
-  void setGroupName(String key) {
-    this.groupName = key;
-  }
-
-  public DownloadGroupEntity() {
-  }
-
-  @Override public int describeContents() {
-    return 0;
-  }
-
-  @Override public void writeToParcel(Parcel dest, int flags) {
-    super.writeToParcel(dest, flags);
-    dest.writeTypedList(this.subtask);
-    dest.writeString(this.dirPath);
-  }
-
-  protected DownloadGroupEntity(Parcel in) {
-    super(in);
-    this.subtask = in.createTypedArrayList(DownloadEntity.CREATOR);
-    this.dirPath = in.readString();
-  }
-
-  public static final Creator<DownloadGroupEntity> CREATOR = new Creator<DownloadGroupEntity>() {
-    @Override public DownloadGroupEntity createFromParcel(Parcel source) {
-      return new DownloadGroupEntity(source);
+    public DownloadGroupEntity() {
     }
 
-    @Override public DownloadGroupEntity[] newArray(int size) {
-      return new DownloadGroupEntity[size];
+    protected DownloadGroupEntity(Parcel in) {
+        super(in);
+        this.subtask = in.createTypedArrayList(DownloadEntity.CREATOR);
+        this.dirPath = in.readString();
     }
-  };
+
+    public List<DownloadEntity> getSubTask() {
+        return subtask;
+    }
+
+    public void setSubTasks(List<DownloadEntity> subTasks) {
+        this.subtask = subTasks;
+    }
+
+    public String getDirPath() {
+        return dirPath;
+    }
+
+    public void setDirPath(String dirPath) {
+        this.dirPath = dirPath;
+    }
+
+    void setGroupName(String key) {
+        this.groupName = key;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeTypedList(this.subtask);
+        dest.writeString(this.dirPath);
+    }
 }

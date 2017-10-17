@@ -25,24 +25,25 @@ import com.arialyy.aria.core.upload.UploadTaskEntity;
  * 上传任务调度器
  */
 public class UploadSchedulers extends AbsSchedulers<UploadTaskEntity, UploadTask, UploadTaskQueue> {
-  private static final String TAG = "UploadSchedulers";
-  private static volatile UploadSchedulers INSTANCE = null;
+    private static final String TAG = "UploadSchedulers";
+    private static volatile UploadSchedulers INSTANCE = null;
 
-  private UploadSchedulers() {
-    mQueue = UploadTaskQueue.getInstance();
-  }
-
-  public static UploadSchedulers getInstance() {
-    if (INSTANCE == null) {
-      synchronized (AriaManager.LOCK) {
-        INSTANCE = new UploadSchedulers();
-      }
+    private UploadSchedulers() {
+        mQueue = UploadTaskQueue.getInstance();
     }
 
-    return INSTANCE;
-  }
+    public static UploadSchedulers getInstance() {
+        if (INSTANCE == null) {
+            synchronized (AriaManager.LOCK) {
+                INSTANCE = new UploadSchedulers();
+            }
+        }
 
-  @Override String getProxySuffix() {
-    return "$$UploadListenerProxy";
-  }
+        return INSTANCE;
+    }
+
+    @Override
+    String getProxySuffix() {
+        return "$$UploadListenerProxy";
+    }
 }

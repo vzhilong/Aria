@@ -23,9 +23,11 @@ import com.arialyy.aria.orm.OneToOne;
  */
 public class DownloadGroupTaskEntity extends AbsGroupTaskEntity<DownloadGroupEntity> {
 
-  @OneToOne(table = DownloadGroupEntity.class, key = "groupName") public DownloadGroupEntity entity;
+    @OneToOne(table = DownloadGroupEntity.class, key = "groupName")
+    public DownloadGroupEntity entity;
 
-  @Override public DownloadGroupEntity getEntity() {
-    return entity;
-  }
+    @Override
+    public DownloadGroupEntity getEntity() {
+        return entity;
+    }
 }

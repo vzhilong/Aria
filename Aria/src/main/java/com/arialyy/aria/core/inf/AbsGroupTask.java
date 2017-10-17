@@ -22,44 +22,45 @@ import com.arialyy.aria.core.download.downloader.AbsGroupUtil;
  * 任务组任务抽象类
  */
 public abstract class AbsGroupTask<TASK_ENTITY extends AbsGroupTaskEntity>
-    extends AbsTask<TASK_ENTITY> {
+        extends AbsTask<TASK_ENTITY> {
 
-  protected AbsGroupUtil mUtil;
+    protected AbsGroupUtil mUtil;
 
-  @Override public String getKey() {
-    return mTaskEntity.getEntity().getGroupName();
-  }
-
-  /**
-   * 启动任务组中的子任务
-   *
-   * @param url 子任务下载地址
-   */
-  public void startSubTask(String url) {
-    if (mUtil != null) {
-      mUtil.startSubTask(url);
+    @Override
+    public String getKey() {
+        return mTaskEntity.getEntity().getGroupName();
     }
-  }
 
-  /**
-   * 停止任务组中的子任务
-   *
-   * @param url 子任务下载地址
-   */
-  public void stopSubTask(String url) {
-    if (mUtil != null) {
-      mUtil.stopSubTask(url);
+    /**
+     * 启动任务组中的子任务
+     *
+     * @param url 子任务下载地址
+     */
+    public void startSubTask(String url) {
+        if (mUtil != null) {
+            mUtil.startSubTask(url);
+        }
     }
-  }
 
-  /**
-   * 删除子任务组中的子任务
-   *
-   * @param url 子任务下载地址
-   */
-  public void cancelSubTask(String url) {
-    if (mUtil != null) {
-      mUtil.cancelSunTask(url);
+    /**
+     * 停止任务组中的子任务
+     *
+     * @param url 子任务下载地址
+     */
+    public void stopSubTask(String url) {
+        if (mUtil != null) {
+            mUtil.stopSubTask(url);
+        }
     }
-  }
+
+    /**
+     * 删除子任务组中的子任务
+     *
+     * @param url 子任务下载地址
+     */
+    public void cancelSubTask(String url) {
+        if (mUtil != null) {
+            mUtil.cancelSunTask(url);
+        }
+    }
 }

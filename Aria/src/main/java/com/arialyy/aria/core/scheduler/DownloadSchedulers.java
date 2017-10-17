@@ -17,35 +17,35 @@
 package com.arialyy.aria.core.scheduler;
 
 import com.arialyy.aria.core.AriaManager;
+import com.arialyy.aria.core.download.DownloadTask;
 import com.arialyy.aria.core.download.DownloadTaskEntity;
 import com.arialyy.aria.core.queue.DownloadTaskQueue;
-import com.arialyy.aria.core.download.DownloadEntity;
-import com.arialyy.aria.core.download.DownloadTask;
 
 /**
  * Created by lyy on 2016/8/16.
  * 任务下载器，提供抽象的方法供具体的实现类操作
  */
 public class DownloadSchedulers
-    extends AbsSchedulers<DownloadTaskEntity, DownloadTask, DownloadTaskQueue> {
+        extends AbsSchedulers<DownloadTaskEntity, DownloadTask, DownloadTaskQueue> {
 
-  private final String TAG = "DownloadSchedulers";
-  private static volatile DownloadSchedulers INSTANCE = null;
+    private static volatile DownloadSchedulers INSTANCE = null;
+    private final String TAG = "DownloadSchedulers";
 
-  private DownloadSchedulers() {
-    mQueue = DownloadTaskQueue.getInstance();
-  }
-
-  public static DownloadSchedulers getInstance() {
-    if (INSTANCE == null) {
-      synchronized (AriaManager.LOCK) {
-        INSTANCE = new DownloadSchedulers();
-      }
+    private DownloadSchedulers() {
+        mQueue = DownloadTaskQueue.getInstance();
     }
-    return INSTANCE;
-  }
 
-  @Override String getProxySuffix() {
-    return "$$DownloadListenerProxy";
-  }
+    public static DownloadSchedulers getInstance() {
+        if (INSTANCE == null) {
+            synchronized (AriaManager.LOCK) {
+                INSTANCE = new DownloadSchedulers();
+            }
+        }
+        return INSTANCE;
+    }
+
+    @Override
+    String getProxySuffix() {
+        return "$$DownloadListenerProxy";
+    }
 }

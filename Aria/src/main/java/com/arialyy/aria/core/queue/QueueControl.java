@@ -18,6 +18,7 @@ package com.arialyy.aria.core.queue;
 import android.os.Handler;
 import android.os.Message;
 import android.util.SparseArray;
+
 import com.arialyy.aria.core.inf.AbsEntity;
 import com.arialyy.aria.core.inf.AbsTask;
 import com.arialyy.aria.core.inf.AbsTaskEntity;
@@ -27,94 +28,95 @@ import com.arialyy.aria.core.inf.AbsTaskEntity;
  * 队列控制器，用于处理各种命令
  */
 public class QueueControl implements Handler.Callback {
-  /**
-   * 获取任务命令
-   */
-  public static final int CMD_GET_TASK = 0xa1;
-  /**
-   * 创建任务命令
-   */
-  public static final int CMD_CREATE_TASK = 0xa2;
-  /**
-   * 启动任务命令
-   */
-  public static final int CMD_START_TASK = 0xa3;
-  /**
-   * 停止任务命令
-   */
-  public static final int CMD_STOP_TASK = 0xa4;
-  /**
-   * 删除任务命令
-   */
-  public static final int CMD_CANCEL_TASK = 0xa5;
-  /**
-   * 停止所有任务命令
-   */
-  public static final int CMD_STOP_ALL_TASK = 0xa6;
-  /**
-   * 删除所有任务命令
-   */
-  public static final int CMD_CANCEL_ALL_TASK = 0xa7;
+    /**
+     * 获取任务命令
+     */
+    public static final int CMD_GET_TASK = 0xa1;
+    /**
+     * 创建任务命令
+     */
+    public static final int CMD_CREATE_TASK = 0xa2;
+    /**
+     * 启动任务命令
+     */
+    public static final int CMD_START_TASK = 0xa3;
+    /**
+     * 停止任务命令
+     */
+    public static final int CMD_STOP_TASK = 0xa4;
+    /**
+     * 删除任务命令
+     */
+    public static final int CMD_CANCEL_TASK = 0xa5;
+    /**
+     * 停止所有任务命令
+     */
+    public static final int CMD_STOP_ALL_TASK = 0xa6;
+    /**
+     * 删除所有任务命令
+     */
+    public static final int CMD_CANCEL_ALL_TASK = 0xa7;
 
-  /**
-   * 队列类型为单文件下载队列
-   */
-  public static final int TYPE_SIMPLE_DOWNLOAD_QUEUE = 0xc1;
-  /**
-   * 队列类型为任务组下载队列
-   */
-  public static final int TYPE_SIMPLE_DOWNLOAD_GROUP_QUEUE = 0xc2;
-  /**
-   * 队列类型为单文件上传队列
-   */
-  public static final int TYPE_SIMPLE_UPLOAD_QUEUE = 0xc3;
+    /**
+     * 队列类型为单文件下载队列
+     */
+    public static final int TYPE_SIMPLE_DOWNLOAD_QUEUE = 0xc1;
+    /**
+     * 队列类型为任务组下载队列
+     */
+    public static final int TYPE_SIMPLE_DOWNLOAD_GROUP_QUEUE = 0xc2;
+    /**
+     * 队列类型为单文件上传队列
+     */
+    public static final int TYPE_SIMPLE_UPLOAD_QUEUE = 0xc3;
 
-  private Handler outHandler;
-  private AbsTaskQueue queue;
+    private Handler outHandler;
+    private AbsTaskQueue queue;
 
-  public QueueControl(Handler.Callback callback, int type) {
-    outHandler = new Handler(callback);
-    switch (type) {
-      case TYPE_SIMPLE_DOWNLOAD_QUEUE:
-        queue = DownloadTaskQueue.getInstance();
-        break;
-      case TYPE_SIMPLE_DOWNLOAD_GROUP_QUEUE:
-        queue = DownloadGroupTaskQueue.getInstance();
-        break;
-      case TYPE_SIMPLE_UPLOAD_QUEUE:
-        queue = UploadTaskQueue.getInstance();
-        break;
+    public QueueControl(Handler.Callback callback, int type) {
+        outHandler = new Handler(callback);
+        switch (type) {
+            case TYPE_SIMPLE_DOWNLOAD_QUEUE:
+                queue = DownloadTaskQueue.getInstance();
+                break;
+            case TYPE_SIMPLE_DOWNLOAD_GROUP_QUEUE:
+                queue = DownloadGroupTaskQueue.getInstance();
+                break;
+            case TYPE_SIMPLE_UPLOAD_QUEUE:
+                queue = UploadTaskQueue.getInstance();
+                break;
+        }
     }
-  }
 
-  @Override public boolean handleMessage(Message msg) {
-    switch (msg.what) {
-      case CMD_GET_TASK:
-        outHandler.obtainMessage(CMD_GET_TASK, queue.getTask(((AbsEntity) msg.obj).getKey()))
-            .sendToTarget();
-        break;
-      case CMD_CREATE_TASK:
-        SparseArray params = (SparseArray) msg.obj;
-        outHandler.obtainMessage(CMD_CREATE_TASK,
-            queue.createTask(String.valueOf(params.get(1)), (AbsTaskEntity) params.get(2)))
-            .sendToTarget();
-        break;
-      case CMD_START_TASK:
-        queue.startTask((AbsTask) msg.obj);
-        break;
-      case CMD_STOP_TASK:
-        queue.stopTask((AbsTask) msg.obj);
-        break;
-      case CMD_CANCEL_TASK:
-        queue.cancelTask((AbsTask) msg.obj);
-        break;
-      case CMD_STOP_ALL_TASK:
-        queue.stopAllTask();
-        break;
-      case CMD_CANCEL_ALL_TASK:
-        queue.removeAllTask();
-        break;
+    @Override
+    public boolean handleMessage(Message msg) {
+        switch (msg.what) {
+            case CMD_GET_TASK:
+                outHandler.obtainMessage(CMD_GET_TASK, queue.getTask(((AbsEntity) msg.obj).getKey()))
+                        .sendToTarget();
+                break;
+            case CMD_CREATE_TASK:
+                SparseArray params = (SparseArray) msg.obj;
+                outHandler.obtainMessage(CMD_CREATE_TASK,
+                        queue.createTask(String.valueOf(params.get(1)), (AbsTaskEntity) params.get(2)))
+                        .sendToTarget();
+                break;
+            case CMD_START_TASK:
+                queue.startTask((AbsTask) msg.obj);
+                break;
+            case CMD_STOP_TASK:
+                queue.stopTask((AbsTask) msg.obj);
+                break;
+            case CMD_CANCEL_TASK:
+                queue.cancelTask((AbsTask) msg.obj);
+                break;
+            case CMD_STOP_ALL_TASK:
+                queue.stopAllTask();
+                break;
+            case CMD_CANCEL_ALL_TASK:
+                queue.removeAllTask();
+                break;
+        }
+        return true;
     }
-    return true;
-  }
 }

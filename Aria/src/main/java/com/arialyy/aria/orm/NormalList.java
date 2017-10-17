@@ -24,9 +24,11 @@ import java.lang.annotation.Target;
  * Created by AriaL on 2017/7/4.
  * 基本类型的List，只能用于常见的数据类型，如果是一对多的复杂数据结构，需要使用{@link OneToMany}
  */
-@Target(ElementType.FIELD) @Retention(RetentionPolicy.RUNTIME) public @interface NormalList {
-  /**
-   * 数据类型
-   */
-  Class clazz();
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface NormalList {
+    /**
+     * 数据类型
+     */
+    Class clazz();
 }

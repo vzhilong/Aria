@@ -21,36 +21,36 @@ import java.util.List;
  * Created by lyy on 2017/2/6.
  */
 public interface IReceiver<ENTITY extends IEntity> {
-  /**
-   * Receiver 销毁
-   */
-  void destroy();
+    /**
+     * Receiver 销毁
+     */
+    void destroy();
 
 
-  /**
-   * 移除观察者
-   */
-  void unRegister();
+    /**
+     * 移除观察者
+     */
+    void unRegister();
 
-  /**
-   * 停止所有任务
-   */
-  void stopAllTask();
+    /**
+     * 停止所有任务
+     */
+    void stopAllTask();
 
-  /**
-   * 删除所有任务
-   */
-  void removeAllTask(boolean removeFile);
+    /**
+     * 删除所有任务
+     */
+    void removeAllTask(boolean removeFile);
 
-  /**
-   * 任务是否存在
-   *
-   * @param key 下载时为下载路径，上传时为文件路径
-   */
-  boolean taskExists(String key);
+    /**
+     * 任务是否存在
+     *
+     * @param key 下载时为下载路径，上传时为文件路径
+     */
+    boolean taskExists(String key);
 
-  /**
-   * 获取任务列表
-   */
-  List<ENTITY> getSimpleTaskList();
+    /**
+     * 获取任务列表
+     */
+    List<ENTITY> getSimpleTaskList();
 }

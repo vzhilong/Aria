@@ -22,7 +22,8 @@ import com.arialyy.aria.core.inf.AbsTask;
  * Created by Aria.Lao on 2017/7/17.
  */
 public class UploadExecutePool<TASK extends AbsTask> extends BaseExecutePool<TASK> {
-  @Override protected int getMaxSize() {
-    return AriaManager.getInstance(AriaManager.APP).getUploadConfig().getMaxTaskNum();
-  }
+    @Override
+    protected int getMaxSize() {
+        return AriaManager.getInstance(AriaManager.APP).getUploadConfig().getMaxTaskNum();
+    }
 }

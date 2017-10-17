@@ -22,8 +22,8 @@ import com.arialyy.aria.core.inf.ITask;
  */
 public interface IDownloadSchedulerListener<TASK extends ITask> extends ISchedulerListener<TASK> {
 
-  /**
-   * 支持断点的回调
-   */
-  public void onNoSupportBreakPoint(TASK task);
+    /**
+     * 支持断点的回调
+     */
+    public void onNoSupportBreakPoint(TASK task);
 }

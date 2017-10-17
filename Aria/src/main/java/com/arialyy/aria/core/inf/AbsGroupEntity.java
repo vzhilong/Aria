@@ -17,8 +17,10 @@ package com.arialyy.aria.core.inf;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.arialyy.aria.orm.NormalList;
 import com.arialyy.aria.orm.Primary;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,61 +28,66 @@ import java.util.List;
  * Created by AriaL on 2017/6/3.
  */
 public abstract class AbsGroupEntity extends AbsEntity implements Parcelable {
-  /**
-   * 组名，组名为任务地址相加的urlMd5
-   */
-  @Primary protected String groupName = "";
+    /**
+     * 组名，组名为任务地址相加的urlMd5
+     */
+    @Primary
+    protected String groupName = "";
 
-  /**
-   * 任务组别名
-   */
-  private String alias = "";
+    /**
+     * 任务组别名
+     */
+    private String alias = "";
 
-  /**
-   * 子任务链接组
-   */
-  @NormalList(clazz = String.class) private List<String> urls = new ArrayList<>();
+    /**
+     * 子任务链接组
+     */
+    @NormalList(clazz = String.class)
+    private List<String> urls = new ArrayList<>();
 
-  public List<String> getUrls() {
-    return urls;
-  }
+    public AbsGroupEntity() {
+    }
 
-  public void setUrls(List<String> urls) {
-    this.urls = urls;
-  }
+    protected AbsGroupEntity(Parcel in) {
+        super(in);
+        this.groupName = in.readString();
+        this.alias = in.readString();
+    }
 
-  public String getGroupName() {
-    return groupName;
-  }
+    public List<String> getUrls() {
+        return urls;
+    }
 
-  public String getAlias() {
-    return alias;
-  }
+    public void setUrls(List<String> urls) {
+        this.urls = urls;
+    }
 
-  @Override public String getKey() {
-    return groupName;
-  }
+    public String getGroupName() {
+        return groupName;
+    }
 
-  public void setAlias(String alias) {
-    this.alias = alias;
-  }
+    public String getAlias() {
+        return alias;
+    }
 
-  public AbsGroupEntity() {
-  }
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
 
-  @Override public int describeContents() {
-    return 0;
-  }
+    @Override
+    public String getKey() {
+        return groupName;
+    }
 
-  @Override public void writeToParcel(Parcel dest, int flags) {
-    super.writeToParcel(dest, flags);
-    dest.writeString(this.groupName);
-    dest.writeString(this.alias);
-  }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-  protected AbsGroupEntity(Parcel in) {
-    super(in);
-    this.groupName = in.readString();
-    this.alias = in.readString();
-  }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.groupName);
+        dest.writeString(this.alias);
+    }
 }

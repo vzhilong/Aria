@@ -24,13 +24,16 @@ import java.lang.annotation.Target;
  * Created by AriaL on 2017/7/4.
  * 一对多
  */
-@Target(ElementType.FIELD) @Retention(RetentionPolicy.RUNTIME) public @interface OneToMany {
-  /**
-   * 关联的表
-   */
-  Class<? extends DbEntity> table();
-  /**
-   * 关联的主键
-   */
-  String key();
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface OneToMany {
+    /**
+     * 关联的表
+     */
+    Class<? extends DbEntity> table();
+
+    /**
+     * 关联的主键
+     */
+    String key();
 }

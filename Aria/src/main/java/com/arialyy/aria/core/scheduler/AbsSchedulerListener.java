@@ -23,75 +23,84 @@ import com.arialyy.aria.core.inf.ITask;
  */
 public class AbsSchedulerListener<TASK extends ITask, SUB_ENTITY extends AbsNormalEntity> implements ISchedulerListener<TASK> {
 
-  @Override public void onPre(TASK task) {
+    @Override
+    public void onPre(TASK task) {
 
-  }
+    }
 
-  @Override public void onTaskPre(TASK task) {
+    @Override
+    public void onTaskPre(TASK task) {
 
-  }
+    }
 
-  @Override public void onTaskResume(TASK task) {
+    @Override
+    public void onTaskResume(TASK task) {
 
-  }
+    }
 
-  @Override public void onTaskStart(TASK task) {
+    @Override
+    public void onTaskStart(TASK task) {
 
-  }
+    }
 
-  @Override public void onTaskStop(TASK task) {
+    @Override
+    public void onTaskStop(TASK task) {
 
-  }
+    }
 
-  @Override public void onTaskCancel(TASK task) {
+    @Override
+    public void onTaskCancel(TASK task) {
 
-  }
+    }
 
-  @Override public void onTaskFail(TASK task) {
+    @Override
+    public void onTaskFail(TASK task) {
 
-  }
+    }
 
-  @Override public void onTaskComplete(TASK task) {
+    @Override
+    public void onTaskComplete(TASK task) {
 
-  }
+    }
 
-  @Override public void onTaskRunning(TASK task) {
+    @Override
+    public void onTaskRunning(TASK task) {
 
-  }
+    }
 
-  public void onNoSupportBreakPoint(TASK task) {
+    public void onNoSupportBreakPoint(TASK task) {
 
-  }
+    }
 
-  public void setListener(Object obj) {
+    public void setListener(Object obj) {
 
-  }
+    }
 
-  public void onSubTaskPre(TASK task, SUB_ENTITY subTask) {
+    public void onSubTaskPre(TASK task, SUB_ENTITY subTask) {
 
-  }
+    }
 
-  public void onSubTaskStart(TASK task, SUB_ENTITY subTask) {
+    public void onSubTaskStart(TASK task, SUB_ENTITY subTask) {
 
-  }
+    }
 
-  public void onSubTaskStop(TASK task, SUB_ENTITY subTask) {
+    public void onSubTaskStop(TASK task, SUB_ENTITY subTask) {
 
-  }
+    }
 
-  public void onSubTaskCancel(TASK task, SUB_ENTITY subTask) {
+    public void onSubTaskCancel(TASK task, SUB_ENTITY subTask) {
 
-  }
+    }
 
-  public void onSubTaskComplete(TASK task, SUB_ENTITY subTask) {
+    public void onSubTaskComplete(TASK task, SUB_ENTITY subTask) {
 
-  }
+    }
 
-  public void onSubTaskFail(TASK task, SUB_ENTITY subTask) {
+    public void onSubTaskFail(TASK task, SUB_ENTITY subTask) {
 
-  }
+    }
 
-  public void onSubTaskRunning(TASK task, SUB_ENTITY subTask) {
+    public void onSubTaskRunning(TASK task, SUB_ENTITY subTask) {
 
-  }
+    }
 }

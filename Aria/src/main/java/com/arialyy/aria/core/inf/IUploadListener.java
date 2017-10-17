@@ -15,8 +15,6 @@
  */
 package com.arialyy.aria.core.inf;
 
-import com.arialyy.aria.core.inf.IEventListener;
-
 /**
  * Created by lyy on 2017/2/9.
  * 上传监听

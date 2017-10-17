@@ -19,11 +19,13 @@ package com.arialyy.aria.core.download;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+
 import com.arialyy.aria.core.AriaManager;
 import com.arialyy.aria.core.common.IUtil;
 import com.arialyy.aria.core.download.downloader.SimpleDownloadUtil;
 import com.arialyy.aria.core.inf.AbsNormalTask;
 import com.arialyy.aria.core.scheduler.ISchedulers;
+
 import java.io.File;
 
 /**
@@ -31,153 +33,161 @@ import java.io.File;
  * 下载任务类
  */
 public class DownloadTask extends AbsNormalTask<DownloadTaskEntity> {
-  public static final String TAG = "DownloadTask";
+    public static final String TAG = "DownloadTask";
 
-  private DownloadListener mListener;
-  private DownloadEntity mEntity;
-  private IUtil mUtil;
+    private DownloadListener mListener;
+    private DownloadEntity mEntity;
+    private IUtil mUtil;
 
-  private DownloadTask(DownloadTaskEntity taskEntity, Handler outHandler) {
-    mTaskEntity = taskEntity;
-    mOutHandler = outHandler;
-    mContext = AriaManager.APP;
-    mListener = new DownloadListener(this, mOutHandler);
-    mUtil = new SimpleDownloadUtil(taskEntity, mListener);
-    mEntity = taskEntity.getEntity();
-  }
-
-  /**
-   * 获取文件保存路径
-   *
-   * @return 如果路径不存在，返回null
-   */
-  public String getDownloadPath() {
-    File file = new File(mEntity.getDownloadPath());
-    if (!file.exists()) {
-      return null;
-    }
-    return mEntity.getDownloadPath();
-  }
-
-  public DownloadEntity getEntity() {
-    return mTaskEntity.getEntity();
-  }
-
-  /**
-   * 获取当前下载任务的下载地址
-   *
-   * @see DownloadTask#getKey()
-   */
-  @Deprecated public String getDownloadUrl() {
-    return mEntity.getUrl();
-  }
-
-  @Override public String getKey() {
-    return mEntity.getUrl();
-  }
-
-  /**
-   * 任务下载状态
-   *
-   * @see DownloadTask#isRunning()
-   */
-  @Deprecated public boolean isDownloading() {
-    return mUtil.isRunning();
-  }
-
-  @Override public boolean isRunning() {
-    return isDownloading();
-  }
-
-  public DownloadEntity getDownloadEntity() {
-    return mEntity;
-  }
-
-  /**
-   * 暂停任务，并让任务处于等待状态
-   */
-  @Override public void stopAndWait() {
-    stop(true);
-  }
-
-  /**
-   * 设置最大下载速度，单位：kb
-   *
-   * @param maxSpeed 为0表示不限速
-   */
-  public void setMaxSpeed(double maxSpeed) {
-    mUtil.setMaxSpeed(maxSpeed);
-  }
-
-  /**
-   * 开始下载
-   */
-  @Override public void start() {
-    mListener.isWait = false;
-    if (mUtil.isRunning()) {
-      Log.d(TAG, "任务正在下载");
-    } else {
-      mUtil.start();
-    }
-  }
-
-  /**
-   * 停止下载
-   */
-  @Override public void stop() {
-    stop(false);
-  }
-
-  private void stop(boolean isWait) {
-    mListener.isWait = isWait;
-    if (mUtil.isRunning()) {
-      mUtil.stop();
-    } else {
-      mListener.onStop(mEntity.getCurrentProgress());
-    }
-  }
-
-  /**
-   * 取消下载
-   */
-  @Override public void cancel() {
-    if (!mUtil.isRunning()) {
-      mListener.onCancel();
-    }
-    mUtil.cancel();
-  }
-
-  public static class Builder {
-    DownloadTaskEntity taskEntity;
-    Handler outHandler;
-    String targetName;
-
-    public Builder(String targetName, DownloadTaskEntity taskEntity) {
-      this.targetName = targetName;
-      this.taskEntity = taskEntity;
+    private DownloadTask(DownloadTaskEntity taskEntity, Handler outHandler) {
+        mTaskEntity = taskEntity;
+        mOutHandler = outHandler;
+        mContext = AriaManager.APP;
+        mListener = new DownloadListener(this, mOutHandler);
+        mUtil = new SimpleDownloadUtil(taskEntity, mListener);
+        mEntity = taskEntity.getEntity();
     }
 
     /**
-     * 设置自定义Handler处理下载状态时间
+     * 获取文件保存路径
      *
-     * @param schedulers {@link ISchedulers}
+     * @return 如果路径不存在，返回null
      */
-    public Builder setOutHandler(ISchedulers schedulers) {
-      try {
-        outHandler = new Handler(schedulers);
-      } catch (Exception e) {
-        e.printStackTrace();
-        outHandler = new Handler(Looper.getMainLooper(), schedulers);
-      }
-      return this;
+    public String getDownloadPath() {
+        File file = new File(mEntity.getDownloadPath());
+        if (!file.exists()) {
+            return null;
+        }
+        return mEntity.getDownloadPath();
     }
 
-    public DownloadTask build() {
-      DownloadTask task = new DownloadTask(taskEntity, outHandler);
-      task.setTargetName(targetName);
-      taskEntity.getEntity().save();
-      taskEntity.save();
-      return task;
+    public DownloadEntity getEntity() {
+        return mTaskEntity.getEntity();
     }
-  }
+
+    /**
+     * 获取当前下载任务的下载地址
+     *
+     * @see DownloadTask#getKey()
+     */
+    @Deprecated
+    public String getDownloadUrl() {
+        return mEntity.getUrl();
+    }
+
+    @Override
+    public String getKey() {
+        return mEntity.getUrl();
+    }
+
+    /**
+     * 任务下载状态
+     *
+     * @see DownloadTask#isRunning()
+     */
+    @Deprecated
+    public boolean isDownloading() {
+        return mUtil.isRunning();
+    }
+
+    @Override
+    public boolean isRunning() {
+        return isDownloading();
+    }
+
+    public DownloadEntity getDownloadEntity() {
+        return mEntity;
+    }
+
+    /**
+     * 暂停任务，并让任务处于等待状态
+     */
+    @Override
+    public void stopAndWait() {
+        stop(true);
+    }
+
+    /**
+     * 设置最大下载速度，单位：kb
+     *
+     * @param maxSpeed 为0表示不限速
+     */
+    public void setMaxSpeed(double maxSpeed) {
+        mUtil.setMaxSpeed(maxSpeed);
+    }
+
+    /**
+     * 开始下载
+     */
+    @Override
+    public void start() {
+        mListener.isWait = false;
+        if (mUtil.isRunning()) {
+            Log.d(TAG, "任务正在下载");
+        } else {
+            mUtil.start();
+        }
+    }
+
+    /**
+     * 停止下载
+     */
+    @Override
+    public void stop() {
+        stop(false);
+    }
+
+    private void stop(boolean isWait) {
+        mListener.isWait = isWait;
+        if (mUtil.isRunning()) {
+            mUtil.stop();
+        } else {
+            mListener.onStop(mEntity.getCurrentProgress());
+        }
+    }
+
+    /**
+     * 取消下载
+     */
+    @Override
+    public void cancel() {
+        if (!mUtil.isRunning()) {
+            mListener.onCancel();
+        }
+        mUtil.cancel();
+    }
+
+    public static class Builder {
+        DownloadTaskEntity taskEntity;
+        Handler outHandler;
+        String targetName;
+
+        public Builder(String targetName, DownloadTaskEntity taskEntity) {
+            this.targetName = targetName;
+            this.taskEntity = taskEntity;
+        }
+
+        /**
+         * 设置自定义Handler处理下载状态时间
+         *
+         * @param schedulers {@link ISchedulers}
+         */
+        public Builder setOutHandler(ISchedulers schedulers) {
+            try {
+                outHandler = new Handler(schedulers);
+            } catch (Exception e) {
+                e.printStackTrace();
+                outHandler = new Handler(Looper.getMainLooper(), schedulers);
+            }
+            return this;
+        }
+
+        public DownloadTask build() {
+            DownloadTask task = new DownloadTask(taskEntity, outHandler);
+            task.setTargetName(targetName);
+            taskEntity.getEntity().save();
+            taskEntity.save();
+            return task;
+        }
+    }
 }

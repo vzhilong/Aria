@@ -22,22 +22,22 @@ import com.arialyy.aria.core.AriaManager;
  * 下载任务池，该池子为简单任务和任务组共用
  */
 public class DownloadSharePool {
-  private static volatile DownloadSharePool INSTANCE;
+    private static volatile DownloadSharePool INSTANCE;
 
-  public DownloadExecutePool executePool;
-  public BaseCachePool cachePool;
+    public DownloadExecutePool executePool;
+    public BaseCachePool cachePool;
 
-  private DownloadSharePool() {
-    executePool = new DownloadExecutePool<>();
-    cachePool = new BaseCachePool<>();
-  }
-
-  public static DownloadSharePool getInstance() {
-    if (INSTANCE == null) {
-      synchronized (AriaManager.LOCK) {
-        INSTANCE = new DownloadSharePool();
-      }
+    private DownloadSharePool() {
+        executePool = new DownloadExecutePool<>();
+        cachePool = new BaseCachePool<>();
     }
-    return INSTANCE;
-  }
+
+    public static DownloadSharePool getInstance() {
+        if (INSTANCE == null) {
+            synchronized (AriaManager.LOCK) {
+                INSTANCE = new DownloadSharePool();
+            }
+        }
+        return INSTANCE;
+    }
 }

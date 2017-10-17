@@ -20,21 +20,21 @@ package com.arialyy.aria.core.command;
  */
 
 public interface ICmd {
-  /**
-   * 单任务下载任务
-   */
-  int TASK_TYPE_DOWNLOAD = 0x01;
-  /**
-   * 任务组下载任务
-   */
-  int TASK_TYPE_DOWNLOAD_GROUP = 0x02;
-  /**
-   * 上传任务
-   */
-  int TASK_TYPE_UPLOAD = 0x10;
+    /**
+     * 单任务下载任务
+     */
+    int TASK_TYPE_DOWNLOAD = 0x01;
+    /**
+     * 任务组下载任务
+     */
+    int TASK_TYPE_DOWNLOAD_GROUP = 0x02;
+    /**
+     * 上传任务
+     */
+    int TASK_TYPE_UPLOAD = 0x10;
 
-  /**
-   * 执行命令
-   */
-  void executeCmd();
+    /**
+     * 执行命令
+     */
+    void executeCmd();
 }
